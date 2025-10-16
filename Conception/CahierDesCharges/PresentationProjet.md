@@ -37,3 +37,9 @@
 - **Système de groupes ou clans** : permettre aux utilisateurs de créer ou rejoindre des équipes pour réaliser des défis collaboratifs.
 - **Support multilingue** : au moins anglais et français.
 
+## Les navigateurs compatibles
+
+* Firefox
+* Chrome
+* Safari
+

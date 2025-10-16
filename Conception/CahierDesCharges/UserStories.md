@@ -35,6 +35,6 @@
 |utilisateur|envoyer des messages privés|pour discuter avec d'autres utilisateurs|
 |utilisateur|m'inscrire à un évenements communautaire| participer à un tournoi|
 |utilisateur|voir le détail de mes statistiques|lister mes défis réalisés, mes votes obtenus, mes commentaires reçus |
-|utilisateur|voir le détail des statistiques d'un autre utilisateurur|lister ses défis réalisés, ses votes obtenus, ses commentaires reçus |
+|utilisateur|voir le détail des statistiques d'un autre utilisateur|lister ses défis réalisés, ses votes obtenus, ses commentaires reçus |
 |utilisateur|créer ou rejoindre un clan/équipe|réaliser des défis collaboratifs|
 |admin|supprimer une participation | modérer l'application|
