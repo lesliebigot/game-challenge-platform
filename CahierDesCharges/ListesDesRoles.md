@@ -6,4 +6,4 @@
 
 * __Lead Dev front__ : Virgile
 
-* __Lead Dev back__ : Sammy et Alexis.
+* __Lead Devs back__ : Sammy et Alexis.

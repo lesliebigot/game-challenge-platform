@@ -15,10 +15,9 @@
 |utilisateur|créer un challenge| |
 |utilisateur|modifier son challenge| |
 |utilisateur|supprimer son challenge| |
-|utilisateur|accepter un challenge| |
-|utilisateur|uploader une preuve (vidéo)|valider un challenge |
-|utilisateur|liker un challenge| pour l'ajouter à mes favoris |
-|utilisateur|noter une participation à un challenge| pour trier les meilleures participations |
+|utilisateur|uploader une preuve (vidéo)|participer à un challenge |
+|utilisateur|liker un challenge| |
+|utilisateur|liker un jeu | pour l'ajouter à mes favoris |
 |admin|supprimer ou modifier un challenge |modérer l'application|
 |admin|ajouter ou supprimer un jeu à la liste de jeux||
 |admin|supprimer un utilisateur||
@@ -38,4 +37,5 @@
 |utilisateur|voir le détail de mes statistiques|lister mes défis réalisés, mes votes obtenus, mes commentaires reçus |
 |utilisateur|voir le détail des statistiques d'un autre utilisateur|lister ses défis réalisés, ses votes obtenus, ses commentaires reçus |
 |utilisateur|créer ou rejoindre un clan/équipe|réaliser des défis collaboratifs|
+|utilisateur|noter une participation à un challenge| pour trier les meilleures participations |
 |admin|supprimer une participation | modérer l'application|
