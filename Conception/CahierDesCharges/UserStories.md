@@ -21,6 +21,7 @@
 |utilisateur|noter une participation à un challenge| pour trier les meilleures participations |
 |admin|supprimer ou modifier un challenge |modérer l'application|
 |admin|ajouter ou supprimer un jeu à la liste de jeux||
+|admin|supprimer un utilisateur||
 
 
 ## Evolutions possibles
