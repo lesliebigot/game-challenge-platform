@@ -1,0 +1,97 @@
+@startuml
+skinparam linetype ortho
+
+entity UTILISATEUR {
+  + id_utilisateur : INT [PK]
+  --
+  nom : TEXT
+  prenom : TEXT
+  email : TEXT [UK]
+  mot_de_passe : TEXT
+  date_naissance : DATE
+  id_role : INT [FK]
+}
+
+entity CHALLENGE {
+  + id_challenge : INT [PK]
+  --
+  nom : TEXT
+  description : TEXT
+  id_utilisateur : INT [FK]
+  id_jeu : INT [FK]
+}
+
+entity JEU {
+  + id_jeu : INT [PK]
+  --
+  nom : TEXT
+  description : TEXT
+  image : TEXT
+  id_editeur : INT [FK]
+  id_genre : INT [FK]
+}
+
+entity EDITEUR {
+  + id_editeur : INT [PK]
+  --
+  nom : TEXT
+}
+
+entity GENRE {
+  + id_genre : INT [PK]
+  --
+  nom : TEXT
+}
+
+entity PLATEFORME {
+  + id_plateforme : INT [PK]
+  --
+  nom : TEXT
+}
+
+entity ROLE {
+  + id_role : INT [PK]
+  --
+  nom : TEXT
+}
+
+entity PARTICIPE {
+  + id_utilisateur : INT [PK, FK]
+  + id_challenge : INT [PK, FK]
+  --
+  preuve_video : TEXT
+}
+
+entity AIME {
+  + id_utilisateur : INT [PK, FK]
+  + id_challenge : INT [PK, FK]
+}
+
+entity PREFERE {
+  + id_utilisateur : INT [PK, FK]
+  + id_jeu : INT [PK, FK]
+}
+
+entity OPERE {
+  + id_jeu : INT [PK, FK]
+  + id_plateforme : INT [PK, FK]
+}
+
+UTILISATEUR ||--o{ CHALLENGE
+JEU ||--o{ CHALLENGE
+EDITEUR ||--|{ JEU
+GENRE ||--|{ JEU
+ROLE ||--|{ UTILISATEUR
+
+UTILISATEUR }|--|{ PARTICIPE
+CHALLENGE }|--|{ PARTICIPE
+
+UTILISATEUR }|--|{ AIME
+CHALLENGE }|--|{ AIME
+
+UTILISATEUR }|--|{ PREFERE
+JEU }|--|{ PREFERE
+
+JEU }|--|{ OPERE
+PLATEFORME }|--|{ OPERE
+@enduml
