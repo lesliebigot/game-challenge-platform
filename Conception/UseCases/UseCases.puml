@@ -27,7 +27,7 @@ rectangle {
 }
 
 Visiteur-->(créer un compte)
-Visiteur-->(se connecter)
+Utilisateur-->(se connecter)
 Visiteur-->(consulter le leaderboard)
 Visiteur-->(consulter la liste des jeux)
 Visiteur-->(consulter la liste des challenges par jeu)

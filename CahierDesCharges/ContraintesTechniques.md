@@ -32,7 +32,7 @@ Utilisation de tokenCSRF pout contrer les attaques CSRF.
 
 ### Protection des données
 
-* Chiffrement des mots de passes: argon2
+* Hashage des mots de passes: argon2
 * Variables d'environnement pour les secrets (clés API, etc.) via un fichier .env
 
 ### Sécurité des API
