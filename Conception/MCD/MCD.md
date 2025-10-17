@@ -1,7 +1,7 @@
 # MCD
 ``` 
 CREER, 11 CHALLENGE, 0N UTILISATEUR
-CHALLENGE: nom, description, auteur
+CHALLENGE: nom, description
 A, 0N JEU, 11 CHALLENGE
 EDITE, 1N EDITEUR, 11 JEU
 EDITEUR: nom
