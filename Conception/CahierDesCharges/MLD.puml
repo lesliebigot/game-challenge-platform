@@ -1,0 +1,98 @@
+@startuml
+
+entity UTILISATEUR {
+  + id_utilisateur [PK, INT]
+  --
+  nom [TEXT(50)]
+  prenom [TEXT(50)]
+  email [TEXT(100), UK]
+  mot_de_passe [TEXT(255)]
+  date_naissance [DATE]
+  id_role [FK, INT]
+}
+
+entity CHALLENGE {
+  + id_challenge [PK, INT]
+  --
+  nom [TEXT(100)]
+  description [TEXT]
+  id_utilisateur [FK, INT]
+  id_jeu [FK, INT]
+}
+
+entity JEU {
+  + id_jeu [PK, INT]
+  --
+  nom [TEXT(100)]
+  description [TEXT]
+  image [TEXT(255)]
+  id_editeur [FK, INT]
+  id_genre [FK, INT]
+}
+
+entity EDITEUR {
+  + id_editeur [PK, INT]
+  --
+  nom [TEXT(100)]
+}
+
+entity GENRE {
+  + id_genre [PK, INT]
+  --
+  nom [TEXT(50)]
+}
+
+entity PLATEFORME {
+  + id_plateforme [PK, INT]
+  --
+  nom [TEXT(50)]
+}
+
+entity ROLE {
+  + id_role [PK, INT]
+  --
+  nom [TEXT(50)]
+}
+
+entity PARTICIPE {
+  + id_utilisateur [PK, FK, INT]
+  + id_challenge [PK, FK, INT]
+  --
+  preuve_video [TEXT(255)]
+}
+
+entity AIME {
+  + id_utilisateur [PK, FK, INT]
+  + id_challenge [PK, FK, INT]
+}
+
+entity PREFERE {
+  + id_utilisateur [PK, FK, INT]
+  + id_jeu [PK, FK, INT]
+}
+
+entity OPERE {
+  + id_jeu [PK, FK, INT]
+  + id_plateforme [PK, FK, INT]
+}
+
+UTILISATEUR ||--o{ CHALLENGE : "CREER"
+JEU ||--o{ CHALLENGE : "A"
+EDITEUR ||--|{ JEU : "EDITE"
+GENRE ||--|{ JEU : "POSSEDE"
+ROLE ||--|{ UTILISATEUR : "APPARTIENT A"
+
+UTILISATEUR }|--|{ PARTICIPE : "PARTICIPE"
+CHALLENGE }|--|{ PARTICIPE : ""
+PARTICIPE : preuve_video
+
+UTILISATEUR }|--|{ AIME : "AIME"
+CHALLENGE }|--|{ AIME : ""
+
+UTILISATEUR }|--|{ PREFERE : "PREFERE"
+JEU }|--|{ PREFERE : ""
+
+JEU }|--|{ OPERE : "OPERE"
+PLATEFORME }|--|{ OPERE : ""
+
+@enduml
