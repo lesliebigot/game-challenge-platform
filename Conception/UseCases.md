@@ -1,6 +1,6 @@
 # Use cases
 
-![]https://editor.plantuml.com/uml/ZPHDSi8m38NtEeMMiCW5M33q4EtUZKKGTUoCVsOwq_OktN8EBbOn2M07dEbEyViKlUGfsOMeV4oz0KFxYD6Xv-uGKREdDhApi7cDR3YeICblOFF6WQVoHVTiEKG_QP2Hs3JVMxp2KAAZcD40bsdATeRm2rQjFv_8OxBOkdw8j8PL8Acj5OgyN4eTaf4QfSEGqkJVdVAwb1JAW4YeAU2HqcTTRG_A6BATb8Fo5rXOST6cuNpoGWTdiNVoNaY042wMCfVNRZdjdUOzFvw7D0oU--bMkMBuOyJ7gRVBibryYfti5OZFo2qFXEVV-Z2NiEP87LsA8tBdRpQAetIFQWq_0DTScsRx9AnSBNCh-geHLgZ7DFy1FWisRrlEE5lHwM7A46RwqusOCPKqvfDgspBZojsfYGitMDYYyfijNTNNwh5hSS-MXimN3s17Lik_wWy0()
+![]<https://editor.plantuml.com/uml/ZPHDSi8m38NtEeMMiCW5M33q4EtUZKKGTUoCVsOwq_OktN8EBbOn2M07dEbEyViKlUGfsOMeV4oz0KFxYD6Xv-uGKREdDhApi7cDR3YeICblOFF6WQVoHVTiEKG_QP2Hs3JVMxp2KAAZcD40bsdATeRm2rQjFv_8OxBOkdw8j8PL8Acj5OgyN4eTaf4QfSEGqkJVdVAwb1JAW4YeAU2HqcTTRG_A6BATb8Fo5rXOST6cuNpoGWTdiNVoNaY042wMCfVNRZdjdUOzFvw7D0oU--bMkMBuOyJ7gRVBibryYfti5OZFo2qFXEVV-Z2NiEP87LsA8tBdRpQAetIFQWq_0DTScsRx9AnSBNCh-geHLgZ7DFy1FWisRrlEE5lHwM7A46RwqusOCPKqvfDgspBZojsfYGitMDYYyfijNTNNwh5hSS-MXimN3s17Lik_wWy0()>
 
 ## Use Case 1 : Créer un compte
 
@@ -70,7 +70,6 @@
 * __Résultat attendu__ :
   * Création du challenge dans le système et redirection vers page détails du jeu.
   
-
 ## Use Case 6: Participer à un challenge
 
 ### Acteur principal: Utilisateur
@@ -82,7 +81,7 @@
 * __Alternatives / erreurs__ :
   * Si utilisateur non connecté, redirection vers la page de connexion, message : "il faut etre connecté pour effectuer cette action".
 * __Résultat attendu__ :
-  * Ajout 
+  * Ajout
 
 ## Use Case 7 : Modifier/supprimer sa participation à un challenge
 
@@ -121,13 +120,11 @@
 * __Résultat attendu__ :
   * Challenge supprimé ou modifié dans le système. Redirection vers la page du challenge.
 
-
-
 ## Evolutions possibles
 
 ### Use Case : Voter pour une participation à un challenge
 
-#### Acteur principal: Utilisateur
+#### Acteur principal:Utilisateur
 
 * __Objectif__: Evaluer un challenge avec une note de 1 à 5.
 * __Préconditions__ : Etre connecté.
@@ -137,4 +134,3 @@
   * Si utilisateur non connecté, redirection vers la page de connexion, message : "il faut etre connecté pour effectuer cette action".
 * __Résultat attendu__ :
   * Ajout de la note dans le systeme, modification de la moyenne de la preuve et changement de l'icone de notation.
-

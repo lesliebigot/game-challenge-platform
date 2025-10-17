@@ -1,0 +1,17 @@
+@startuml
+!theme plain
+title Création d'un challenge
+
+actor "Utilisateur" as User
+participant "Client Web" as Front
+participant "API" as Back
+participant "Base de données" as BDD
+
+User -> Front : Remplit le formulaire de création du challenge
+Front -> Back : POST /challenge {nom, description, Userid, gameid}
+Back -> BDD : INSERT INTO challenge (nom, description, Userid, gameid) VALUES (...)
+BDD --> Back : retourne les infos du challenge
+Back --> Front : retourne "création de challenge réussie" 201 Created + infos du challenge
+Front --> User : affiche page du jeu avec tous les challenges incluant le nouveau challenge
+
+@enduml

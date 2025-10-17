@@ -1,0 +1,67 @@
+@startuml
+!theme plain
+title ERD - Application de Challenges
+
+entity "Utilisateur" as utilisateur {
+  *id : int <<PK>>
+  --
+  nom : varchar
+  prenom : varchar
+  email : varchar
+  mot de passe : varchar
+  date de naissance : date
+  roleId : int <<FK>>
+}
+
+entity "Rôle" as rôle {
+  *id : int <<PK>>
+  --
+  nom : varchar
+}
+
+entity "Jeu" as jeu {
+  *id : int <<PK>>
+  --
+  nom : varchar
+  description : varchar
+  image : texte
+  editorId : int <<FK>>
+  genreId : int <<FK>>
+}
+
+entity "Challenge" as challenge {
+  *id : int <<PK>>
+  --
+  nom : varchar
+  description : text
+  userId : int <<FK>>
+  gameId : int <<FK>>
+}
+
+entity "Editeur" as editeur {
+*id : int <<PK>>
+--
+nom : varchar
+}
+entity "Genre" as genre {
+*id : int <<PK>>
+--
+nom : varchar
+}
+entity "Plateforme" as plateforme {
+*id : int <<PK>>
+--
+nom : varchar
+gameId : int <<FK>>
+}
+
+utilisateur ||--o{ challenge : "créer, participer, aime"
+utilisateur ||--o{ jeu : "préfère"
+rôle ||--o{ utilisateur : "possède"
+
+jeu ||--o{ challenge : "contient"
+editeur ||--o{ jeu : "édite"
+jeu ||--o{ genre : "possède"
+plateforme ||--o{ jeu : "opère"
+
+@enduml
