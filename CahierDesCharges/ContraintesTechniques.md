@@ -9,17 +9,17 @@ Ces technologies permettent de couvrir tous les aspects du développement full-s
 SPA : React + Typescript: composants réutilisables, écosystème riche, compatibilité avec le mobile-first.
 CSS : DaisyUI inclut une bonne base d'accessibilité. Les composants sont construits avec les bonnes pratiques (balises sémantiques, contraste). Il faut néanmoins ajouter les attributs "aria-label" et les "alt".
 
-### Backend + API
+### Backend (API)
 
 Node.js + Express: Légereté, rapidité de développement, cohérence avec Typescript en frontend.
 l'API Restful en backend permet une séparation claire des responsabilités backend/frontend et une séparation du déploiement. On peut faire évoluer backend et frontend séparément. Plus facile à maintenir et à débugger.
 Pour tester les endpoints, nous utiliserons Postman ou RestClient.
-
+ORM : Un ORM permet de gérér les opérations CRUD simplement. Nous utiliserons Sequelize.
 
 ### Base de données
 
 PostgreSQL : robuste, sécurisé, gère bien les relations (utilisateurs, challenges, votes, participations).
-ORM : Un ORM inclut automatiquement les requêtes préparées, donc protège des injection SQL. Nous utiliserons Sequelize.
+
 
 ## Sécurité
 
@@ -32,7 +32,7 @@ Utilisation de tokenCSRF pout contrer les attaques CSRF.
 
 ### Protection des données
 
-* Chiffrement des mots de passes: argon2
+* Hashage des mots de passes: argon2
 * Variables d'environnement pour les secrets (clés API, etc.) via un fichier .env
 
 ### Sécurité des API
@@ -90,7 +90,7 @@ Le déploiement du projet s'effectue selon les étapes suivantes :
 
 ## Responsive
 
-DaiyUI : bibliothèque simple et rapide à utiliser, basée sur Tailwind CSS, qui intègre automatiquement les bonnes pratiques du responsive design. Les composants sont déjà optimisés pour s’adapter parfaitement à toutes les tailles d’écran (mobile, tablette, ordinateur).
+DaisyUI : bibliothèque simple et rapide à utiliser, basée sur Tailwind CSS, qui intègre automatiquement les bonnes pratiques du responsive design. Les composants sont déjà optimisés pour s’adapter parfaitement à toutes les tailles d’écran (mobile, tablette, ordinateur).
 
 ## Accessibilité
 * Utiliser des balises sémantiques HTML correctes (``<button>, <label>, <header>, <nav>, <main>, <article>`` etc.). 

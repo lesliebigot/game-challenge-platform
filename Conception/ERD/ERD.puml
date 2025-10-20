@@ -1,0 +1,46 @@
+@startuml
+skinparam linetype ortho
+
+entity UTILISATEUR {
+  nom 
+  prenom 
+  email 
+  mot_de_passe 
+  date_naissance 
+}
+
+entity CHALLENGE {
+  nom 
+  description
+}
+
+entity JEU {
+  nom
+  description
+  image 
+}
+
+entity EDITEUR {
+  nom
+}
+
+entity GENRE {
+  nom
+}
+
+entity PLATEFORME {
+  nom
+}
+
+entity ROLE {
+  nom
+}
+
+
+UTILISATEUR ||--o{ CHALLENGE
+JEU ||--o{ CHALLENGE
+EDITEUR ||--|{ JEU
+GENRE ||--|{ JEU
+PLATEFORME ||--|{ JEU
+ROLE ||--|{ UTILISATEUR
+@enduml
