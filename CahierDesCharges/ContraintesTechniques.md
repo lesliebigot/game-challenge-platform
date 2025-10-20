@@ -104,6 +104,7 @@ DaisyUI : bibliothèque simple et rapide à utiliser, basée sur Tailwind CSS, q
 ## RGPD et mentions légales
 Dans le footer, un lien vers la page des mentions légales :
 * Identité de l'éditeur du site (projet o'clock) + email de contact
+* Gestion des cookies : librairie [Tarte au Citron](https://tarteaucitron.io/)
 
 ### Politique de confidentialité (conforme RGPD)
 C'est le document clé du RGPD :
@@ -130,11 +131,11 @@ L'api IGDB, gérée par Twitch, permet d'accéder à une large base de données 
 
 ## SEO
 
-* Structure du site optimisée : balises sémantiques HTML ( <h1> ,  <main> ,  <nav> ,  <article> ,  <section> ), titres clairs et hiérarchisés.
+* Structure du site optimisée : balises sémantiques HTML ( ```<h1> ,  <main> ,  <nav> ,  <article> ,  <section>``` ), titres clairs et hiérarchisés.
 * URLs lisibles et pertinentes, contenant les mots-clés importants.
 * Rapidité de chargement des pages.
 * Site 100 % responsive et adapté au mobile (mobile-first).
-* Utilisation de balises meta :  <title> ,  <meta name="description"> , balises OpenGraph pour le partage social.
+* Utilisation de balises meta :    ```<title> ,<meta name="description"> ```, balises OpenGraph pour le partage social.
 * Respect de l’accessibilité numérique : textes alternatifs ( alt ) sur les images, navigation clavier, contraste suffisant.
 * Surveillance des liens cassés et redirections 301 pour préserver le référencement.
 * Sécurisation du site en HTTPS.
@@ -143,6 +144,7 @@ L'api IGDB, gérée par Twitch, permet d'accéder à une large base de données 
 * tests unitaires et intégration : Jest
 * tests end2end : Cypress ou Playwright
 * CI avec gitHub actions à étudier
+* __! TODO__ : plan de tests dans documents (tableaux des cas testés avec résultats)
 
 ## Conteneurisation 
 Docker 
