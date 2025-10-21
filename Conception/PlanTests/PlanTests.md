@@ -5,13 +5,13 @@
  * Action : Remplir le formulaire d'inscription avec email valide, nom, pseudo unique et mot de passe valide, puis cliquer "S'inscrire"
  * Résultat attendu : Message de succès, redirection vers la page x  
 
-Test 2 : Inscription avec email déjà existant :
+### Test 2 : Inscription avec email déjà existant :
 *	Action : Essayer de créer un compte avec un email déjà utilisé
 *	Résultat attendu : Message d'erreur "Cet email est déjà enregistré"
-Test 3 : Inscription avec mot de passe invalide :
+### Test 3 : Inscription avec mot de passe invalide :
 *	Action : Remplir le formulaire avec un mot de passe de 5 caractères
 *	Résultat attendu : Message d'erreur "Le mot de passe doit contenir au moins 8 caractères"
-Test 4 : Connexion avec identifiants valides :
+### Test 4 : Connexion avec identifiants valides :
 *	Action : Entrer un email et mot de passe corrects, puis cliquer "Se connecter"
 *	Résultat attendu : Redirection vers la page d'accueil.
 Test 5 : Connexion avec mot de passe incorrect :
