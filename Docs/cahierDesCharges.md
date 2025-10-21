@@ -19,11 +19,12 @@
     - [5.1 Contraintes techniques](#51-contraintes-techniques)
     - [5.2 Modèle de données](#52-modèle-de-données)
   - [6. Gestion des risques](#6-gestion-des-risques)
-  - [7. Annexes](#7-annexes)
-    - [7.1 Documents de référence](#71-documents-de-référence)
-    - [7.2 Diagrammes et modèles](#72-diagrammes-et-modèles)
-    - [7.3 Ressources design](#73-ressources-design)
-    - [7.4 Glossaire](#74-glossaire)
+  - [7. Plan de tests](#7-plan-de-tests)
+  - [8. Annexes](#8-annexes)
+    - [8.1 Documents de référence](#81-documents-de-référence)
+    - [8.2 Diagrammes et modèles](#82-diagrammes-et-modèles)
+    - [8.3 Ressources design](#83-ressources-design)
+    - [8.4 Glossaire](#84-glossaire)
 
 ---
 
@@ -69,13 +70,11 @@ La charte graphique définit l'identité visuelle de la plateforme Gamer Challen
 
 ### 4.2 Wireframes
 📋 **Documents détaillés :**
-- [Wireframes généraux](./Design/Wireframes/Wireframes.md) *(À créer)*
-- [Wireframes desktop](./Design/Wireframes/Desktop/) *(À créer)*
-- [Wireframes mobile](./Design/Wireframes/Mobile/) *(À créer)*
+- [Wireframes desktop](./Conception/Wireframes/Wireframes%20Desktop.pdf)
+- [Wireframes mobile](./Conception/Wireframes/Wireframes%20Mobile.pdf)
 
 ### 4.3 Maquettes
 📋 **Documents détaillés :**
-- [Maquettes finales](./Design/Maquettes/Maquettes.md) *(À créer)*
 - [Maquettes desktop](./Design/Maquettes/Desktop/) *(À créer)*
 - [Maquettes mobile](./Design/Maquettes/Mobile/) *(À créer)*
 - [Prototypes interactifs](./Design/Maquettes/Prototypes/) *(À créer)*
@@ -102,26 +101,31 @@ La charte graphique définit l'identité visuelle de la plateforme Gamer Challen
 
 ---
 
-## 7. Annexes
+## 7. Plan de tests
 
-### 7.1 Documents de référence
+📋 **Document détaillé :** [Plan de tests](./Conception/PlanTests/PlanTests.md)
+
+---
+
+## 8. Annexes
+
+### 8.1 Documents de référence
 - [User Stories détaillées](./CahierDesCharges/UserStories.md)
 - [Spécifications techniques complètes](./CahierDesCharges/ContraintesTechniques.md)
 - [Documentation de l'API](./CahierDesCharges/Endpoints.md)
+- [Plan de tests complet](./Conception/PlanTests/PlanTests.md)
 
-### 7.2 Diagrammes et modèles
+### 8.2 Diagrammes et modèles
 - [Diagrammes UML](./Conception/)
 - [Modèles de données](./Conception/MCD/)
 - [Architecture système](./Conception/ERD/)
 
-### 7.3 Ressources design
+### 8.3 Ressources design
 - [Charte graphique complète](./Conception/CharteGraphique/CharteGraphique.md)
-- [Bibliothèque de wireframes](./Design/Wireframes/) *(À créer)*
+- [Bibliothèque de wireframes](./Conception/Wireframes/) 
 - [Kit de maquettes](./Design/Maquettes/) *(À créer)*
-- [Assets graphiques](./Design/Assets/) *(À créer)*
-- [Guide d'intégration UI](./Design/Integration/) *(À créer)*
 
-### 7.4 Glossaire
+### 8.4 Glossaire
 - **Challenge** : Compétition organisée sur un jeu spécifique
 - **Ranking** : Classement basé sur les performances
 - **Organisateur** : Utilisateur autorisé à créer des challenges
@@ -129,5 +133,7 @@ La charte graphique définit l'identité visuelle de la plateforme Gamer Challen
 - **Wireframe** : Maquette fonctionnelle basse-fidélité
 - **Mockup** : Maquette graphique haute-fidélité
 - **UI/UX** : Interface utilisateur et expérience utilisateur
+- **Test unitaire** : Test d'un composant isolé
+- **Test d'intégration** : Test des interactions entre composants
 
 ---
