@@ -1,0 +1,27 @@
+@startuml
+!theme plain
+title Création de compte et affichage de la page mon profil
+
+start
+:Affichage page d'inscription;
+:Saisie des informations;
+if (Données saisies?) then (oui)
+    :Validation des données;
+    if (Données valides?) then (oui)
+        :Envoi des données à la BDD;
+        if (Compte créé?) then (oui)
+            :Redirection vers la page mon profil;
+            :Affichage page mon profil;
+            stop
+        else (non)
+            :Afficher erreur;
+            :Affichage page d'inscription;
+        endif
+    else (non)
+        :Afficher erreurs;
+        :Affichage page d'inscription;
+    endif
+else (non)
+    :Affichage page d'inscription;
+endif
+@enduml
