@@ -7,6 +7,7 @@
   - [2. Analyse des besoins](#2-analyse-des-besoins)
     - [2.1 Besoins fonctionnels](#21-besoins-fonctionnels)
     - [2.2 Cas d'usage](#22-cas-dusage)
+    - [2.3 Diagrammes](#23-diagrammes)
   - [3. Spécifications fonctionnelles](#3-spécifications-fonctionnelles)
     - [3.1 Architecture de l'information](#31-architecture-de-linformation)
     - [3.2 API et endpoints](#32-api-et-endpoints)
@@ -45,6 +46,12 @@
 📋 **Documents détaillés :**
 - [Use Cases](./Conception/UseCases/UseCases.md)
 - [Diagramme Use Cases](./Conception/UseCases/UseCases.puml)
+
+### 2.3 Diagrammes
+📋 **Documents détaillés :**
+- [Diagramme De séquence](./Conception/Diagrammes/diagSeq.png)
+- [Diagramme D'activité](./Conception/Diagrammes/diagActivite.png)
+- [Diagramme D'archtecture](./Conception/Diagramme%20d'architecture.png)
 
 ---
 
