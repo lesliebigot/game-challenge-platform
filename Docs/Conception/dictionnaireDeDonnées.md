@@ -7,6 +7,7 @@
 | Attribut            | Type         | Clé          | Description                     |
 |---------------------|--------------|--------------|---------------------------------|
 | id_utilisateur      | INT          | PK           | Identifiant unique              |
+| pseudo                 | TEXT(50)  |              |               Pseudo de l'utilisateur                  |
 | nom                 | TEXT(50)  |              |               Nom de l'utilisateur                  |
 | prenom              | TEXT(50)  |              |                Prenom de l'utilisateur                 |
 | email               | TEXT(100) | UK           | Unique   / Email de l'utilisateur                       |
@@ -20,7 +21,7 @@
 | Attribut            | Type         | Clé          | Description                     |
 |---------------------|--------------|--------------|---------------------------------|
 | id_challenge        | INT          | PK           | Identifiant unique              |
-| nom                 | TEXT(100) |              |       Titre du challenge                          |
+| titre                 | TEXT(100) |              |       Titre du challenge                          |
 | description         | TEXT         |              |         Description du challenge                        |
 | id_utilisateur      | INT          | FK(UTILISATEUR) | Auteur du challenge          |
 | id_jeu              | INT          | FK(JEU)      | Jeu associé                     |
@@ -31,7 +32,7 @@
 | Attribut            | Type         | Clé          | Description                     |
 |---------------------|--------------|--------------|---------------------------------|
 | id_jeu              | INT          | PK           | Identifiant unique              |
-| nom                 | TEXT(100) |              |            Titre du jeu                     |
+| titre                 | TEXT(100) |              |            Titre du jeu                     |
 | description         | TEXT         |              |       Description du jeu                          |
 | image               | TEXT(255) |              | URL ou chemin de l’image        |
 | id_editeur          | INT          | FK(EDITEUR)  | Editeur du jeu                  |

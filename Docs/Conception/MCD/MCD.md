@@ -1,7 +1,7 @@
 # MCD
 ``` 
 CREER, 11 CHALLENGE, 0N UTILISATEUR
-CHALLENGE: nom, description
+CHALLENGE: titre, description
 A, 0N JEU, 11 CHALLENGE
 EDITE, 1N EDITEUR, 11 JEU
 EDITEUR: nom
@@ -10,12 +10,12 @@ EDITEUR: nom
 :
 PARTICIPE, 0N UTILISATEUR, 0N CHALLENGE:preuve video
 AIME, 0N UTILISATEUR, 0N CHALLENGE
-JEU: nom, description, image
+JEU: titre, description, image
 POSSEDE, 1N GENRE, 11 JEU
 GENRE: nom
 
 :
-UTILISATEUR: nom, prenom, email, mot de passe, date de naissance
+UTILISATEUR: pseudo, nom, prenom, email, mot de passe, date de naissance
 PREFERE, 0N UTILISATEUR, 0N JEU
 OPERE, 1N JEU, 1N PLATEFORME
 PLATEFORME: nom
@@ -24,6 +24,7 @@ PLATEFORME: nom
 :
 APPARTIENT A, 11 UTILISATEUR, 1N ROLE
 ROLE: nom
+
 :
 :
 :
