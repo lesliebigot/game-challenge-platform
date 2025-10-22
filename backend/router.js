@@ -10,4 +10,14 @@ router.get("/games", gameController.getAll);
 router.get("/games/:id", gameController.getOne, gameController.getGameChallenges);
 router.get("/profil/challenges", profilController.getUserChallenges);
 
-router.post("/");
+router.post("/register");
+router.post("/signin");
+router.post("/challenge");
+router.post("/participate");
+
+router.patch("challenge");
+router.patch("particpate");
+router.patch("profil");
+
+router.delete("/challenge");
+router.delete("/participate");
