@@ -2,6 +2,8 @@ import { Router } from "express";
 import { gameController } from "./controllers/game.js";
 import { challengeController } from "./controllers/challenge.js";
 import { profilController } from "./controllers/profil.js";
+import { userController } from "./controllers/user.js";
+import { authentificationController } from "./controllers/authentification.js";
 
 export const router = Router();
 
@@ -10,8 +12,8 @@ router.get("/games", gameController.getAll);
 router.get("/games/:id", gameController.getOne, gameController.getGameChallenges);
 router.get("/profil/challenges", profilController.getUserChallenges);
 
-router.post("/register");
-router.post("/signin");
+router.post("/register", userController.createOne);
+router.post("/signin", authentificationController.signin);
 router.post("/challenge");
 router.post("/participate");
 
