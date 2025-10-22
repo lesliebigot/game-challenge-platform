@@ -63,6 +63,13 @@ body {
   margin: 0 auto;
 }
 
+.gameList{
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
 /* Stats Section */
 .stat {
   transition: all 0.3s ease;
@@ -155,8 +162,8 @@ body {
 
 
 .footer-title {
-  font-family: var(--font-pixel);
-  font-size: 0.75rem;
+  font-family: var(--font-main);
+  font-size: 1.25rem;
   color: hsl(var(--p));
 }
 
