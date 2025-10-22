@@ -1,5 +1,7 @@
 import {User} from "../models/user.js";
 import argon2 from "argon2";
+import { userSignupSchema } from "../schemas/userSchema.js";
+
 
 export const userController = {
   
@@ -10,7 +12,15 @@ export const userController = {
   },
 
   async createOne(req, res) {
-    const data = req.body;
+    
+    // Validation des données avec Zod
+    const parsed = userSignupSchema.safeParse(req.body);
+    if (!parsed.success) {
+      // Zod renvoie un tableau d'erreurs détaillées
+      return res.status(400).json({ errors: parsed.error.flatten().fieldErrors });
+    }
+
+    const data = parsed.data; // Données validées et nettoyées
 
     // Hachage du mot de passe avec Argon2
     if (data.password) {

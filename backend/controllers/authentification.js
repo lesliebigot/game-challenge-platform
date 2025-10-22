@@ -1,22 +1,26 @@
 import { User } from "../models/user.js";
 import argon2 from "argon2";
+import { userSigninSchema } from "../schemas/userSchema.js";
 
 export const authentificationController = {
+
   async signin(req, res) {
-    const { email, password } = req.body;
-  
-    // Vérifie la présence des champs requis
-    if (!email || !password) {
-      return res.status(400).json({ error: "Email et mot de passe requis" });
+
+    // Validation des entrées
+    const parsed = userSigninSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ errors: parsed.error.flatten().fieldErrors });
     }
   
-    // Recherche l'utilisateur en base
+    const { email, password } = parsed.data;
+  
+    // Recherche de l’utilisateur
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(401).json({ error: "Identifiants incorrects" });
     }
   
-    // Vérifie le mot de passe via Argon2
+    // Vérification du mot de passe
     const isPasswordValid = await argon2.verify(user.password, password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Identifiants incorrects" });
