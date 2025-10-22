@@ -5,7 +5,8 @@ export class Role extends Model {}
 
 Role.init({
     name: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
+        allowNull: false,
         defaultValue: "visitor",
     },
 }, {

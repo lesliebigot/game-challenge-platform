@@ -5,8 +5,7 @@ export class Editor extends Model {}
 
 Editor.init({
     name: {
-        type: DataTypes.TEXT,
-        allowNull: true
+        type: DataTypes.STRING
     },
 }, {
     sequelize,

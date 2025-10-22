@@ -1,15 +1,15 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "./sequelizeClient.js";
 
-export class Gender extends Model {}
+export class Genre extends Model {}
 
-Gender.init({
+Genre.init({
     name: {
-        type: DataTypes.TEXT,
+        type: DataTypes.SRING,
         allowNull: false
     },
 }, {
     sequelize,
-    modelName: "Gender",
-    tableName: "gender"
+    modelName: "Genre",
+    tableName: "genre"
 });
