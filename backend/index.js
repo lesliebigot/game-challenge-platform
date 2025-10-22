@@ -6,12 +6,10 @@ import { router } from "./router.js";
 
 export const app = express();
 
-const PORT = process.env.PORT || 3000;
+// on a besoin d'un parser pour récuperer les données en json
+app.use(express.json());
 
-// test Configuration
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+const PORT = process.env.PORT || 3000;
 
 app.use(router);
 
