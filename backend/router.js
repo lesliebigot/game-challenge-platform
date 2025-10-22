@@ -7,4 +7,7 @@ export const router = Router();
 
 router.get("/", challengeController.getAll);
 router.get("/games", gameController.getAll);
+router.get("/games/:id", gameController.getOne, gameController.getGameChallenges);
 router.get("/profil/challenges", profilController.getUserChallenges);
+
+router.post("/");

@@ -1,6 +1,7 @@
 import { Editor } from "../models/editor.js";
 
 export const editorController = {
+  
   async getOne(req, res) {
     
     const editorId = parseInt(req.params.id, 10);

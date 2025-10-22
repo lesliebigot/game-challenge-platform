@@ -1,6 +1,7 @@
 import { Platform } from "../models/platform.js";
 
 export const platformController = {
+  
   async getOne(req, res) {
     const platformId = parseInt(req.params.id, 10);
     const platform = await Platform.findByPk(platformId);
