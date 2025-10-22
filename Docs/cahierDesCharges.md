@@ -77,14 +77,13 @@ La charte graphique définit l'identité visuelle de la plateforme Gamer Challen
 
 ### 4.2 Wireframes
 📋 **Documents détaillés :**
-- [Wireframes desktop](./Conception/Wireframes/Wireframes%20Desktop.pdf)
-- [Wireframes mobile](./Conception/Wireframes/Wireframes%20Mobile.pdf)
+- [Wireframes desktop](./Conception/Wireframes/WireframesDesktop.pdf)
+- [Wireframes mobile](./Conception/Wireframes/WireframesMobile.pdf)
 
 ### 4.3 Maquettes
 📋 **Documents détaillés :**
-- [Maquettes desktop](./Design/Maquettes/Desktop/) *(À créer)*
-- [Maquettes mobile](./Design/Maquettes/Mobile/) *(À créer)*
-- [Prototypes interactifs](./Design/Maquettes/Prototypes/) *(À créer)*
+- [Maquettes desktop](./Conception/Maquette/DesktopMaquette.pdf)
+- [Maquettes mobile](./Conception/Maquette/MobileMaquette.pdf)
 
 ---
 
@@ -130,7 +129,7 @@ La charte graphique définit l'identité visuelle de la plateforme Gamer Challen
 ### 8.3 Ressources design
 - [Charte graphique complète](./Conception/CharteGraphique/CharteGraphique.md)
 - [Bibliothèque de wireframes](./Conception/Wireframes/) 
-- [Kit de maquettes](./Design/Maquettes/) *(À créer)*
+- [Kit de maquettes](./Conception/Maquette/)
 
 ### 8.4 Glossaire
 - **Challenge** : Compétition organisée sur un jeu spécifique
