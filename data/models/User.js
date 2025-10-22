@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "./sequelizeClient.js";
 
-export class Game extends Model {}
+export class User extends Model {}
 
 //La différence entre Sequelize.STRING et Sequelize.TEXT
 // réside dans la longueur des données qu'ils peuvent stocker : 

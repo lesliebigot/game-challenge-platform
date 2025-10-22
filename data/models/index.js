@@ -7,7 +7,7 @@ import { Game } from "./Game.js";
 import { Genre } from "./genre.js";
 import { Platform } from "./platform.js";
 import { Editor } from "./editor.js";
-import { Participate } from "./participate.js";
+import { Participate } from "./partcipate.js";
 
 //**ASSOCIATIONS One-to-Many**
 
@@ -118,3 +118,15 @@ Challenge.belongsToMany(User, {
   otherKey: "user_id",
   as: "participantUsers" // Utilisateurs ayant participé à ce challenge
 });
+
+export {
+  sequelize,
+  Game,
+  User,
+  Role,
+  Challenge,
+  Genre,
+  Platform,
+  Editor,
+  Participate,
+};
