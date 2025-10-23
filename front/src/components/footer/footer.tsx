@@ -4,7 +4,7 @@ import "./footer.css";
 export function Footer() {
   return (
     <>
-      <footer className="p-10 bg-base-300 text-base-content flex gap-8 justify-between"> 
+      <footer className="p-10 bg-base-300 text-base-content flex flex-wrap gap-8 justify-between"> 
         <nav className="flex flex-col">
           <header className="footer-title">À propos</header>
           <a className="link link-hover">Notre équipe</a>

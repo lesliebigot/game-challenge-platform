@@ -13,7 +13,7 @@ export function CardGame(){
         </p>
         <div className="card-actions justify-between">
           <button className="btn btn-primary">Voir les challenges</button>
-          <button className="btn btn-sm">
+          <button className="btn btn-sm btn-ghost ">
             <i className="fa-regular fa-star text-xl"></i>
           </button>
         </div>

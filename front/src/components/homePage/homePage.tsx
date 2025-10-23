@@ -50,8 +50,8 @@ export function HomePage(){
         {/* Popular Games Section */}
         <section className="section max-w-[80%]">
           <div className="mt-4">
-            <div className="form-control mb-12">
-              <input type="text" placeholder="Rechercher..." className="input input-bordered w-20 md:w-auto" />
+            <div className="form-control mb-12 flex flex-row justify-center">
+              <input type="text" placeholder="Rechercher..." className="input input-bordered w-50 md:w-100 lg:w-200" />
             </div>
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold pixel-font mb-4">Jeux populaires</h2>
