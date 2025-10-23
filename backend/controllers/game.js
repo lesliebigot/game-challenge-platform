@@ -7,7 +7,7 @@ export const gameController = {
     const games = await Game.findAll({
       include: [{
         association: "challenges",
-        attributes: ["title", "description"]       
+        attributes: ["id","title", "description"]       
       }]
     });
 
@@ -18,14 +18,24 @@ export const gameController = {
   async getOne(req, res, next) {
     
     const gameId = parseInt(req.params.id, 10);
-    const game = await Game.findByPk(gameId);
+    // Vérifier que l'ID est valide
+    if (isNaN(gameId)) {
+      return res.status(400).json({ error: "ID invalide" });
+    }
+    const game = await Game.findByPk(gameId,{
+      include: [{
+        association: "challenges",
+        attributes: ["id","title", "description"]       
+      }]
+    });
 
     if (!game) {
       return res.status(404).json({ error: "Jeu non trouvé" });
     }
-
-    req.game = game; // on stocke le résultat dans req pour la prochaine fonction
-    next(); // passe à getGameChallenge
+    //console.log(game);
+    res.status(200).json(game);
+    //req.game = game; // on stocke le résultat dans req pour la prochaine fonction
+    //next(); // passe à getGameChallenge
   },
 
   async getGameChallenges(req, res) {
