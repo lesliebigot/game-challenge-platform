@@ -1,4 +1,4 @@
-import { User } from "../models/user.js";
+import { User } from "../data/models/index.js";
 import argon2 from "argon2";
 import { userSigninSchema } from "../schemas/userSchema.js";
 import jwt from "jsonwebtoken";

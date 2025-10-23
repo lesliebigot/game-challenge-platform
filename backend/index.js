@@ -17,7 +17,7 @@ app.use(router);
 // eslint-disable-next-line no-unused-vars
 app.use((error, req, res, next) => {
   console.error(error);
-  res.status(500).render("pages/500");
+  res.status(500).send("pages/500");
 });
 
 app.listen(PORT, () => {

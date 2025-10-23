@@ -10,18 +10,18 @@ export const router = Router();
 
 router.get("/", challengeController.getAll, challengeController.getTopLiked);
 router.get("/games", gameController.getAll);
-router.get("/games/:id", gameController.getOne, gameController.getGameChallenges);
-router.get("/profil/challenges", profilController.getUserChallenges);
-router.get("/challenge/:id", challengeController.getOne);
+//router.get("/games/:id", gameController.getOne, gameController.getGameChallenges);
+//router.get("/profil/challenges", profilController.getUserChallenges);
+//router.get("/challenge/:id", challengeController.getOne);
 
-router.post("/register", userController.createOne);
-router.post("/signin", authentificationController.signin);
-router.post("/challenge", authMiddleware, challengeController.createOne);
-router.post("/challenge/:id/participate");
-
-router.patch("challenge");
-router.patch("particpate");
-router.patch("profil");
-
-router.delete("/challenge");
-router.delete("/participate");
+//router.post("/register", userController.createOne);
+//router.post("/signin", authentificationController.signin);
+//router.post("/challenge", authMiddleware, challengeController.createOne);
+//router.post("/challenge/:id/participate");
+//
+//router.patch("challenge");
+//router.patch("particpate");
+//router.patch("profil");
+//
+//router.delete("/challenge");
+//router.delete("/participate");

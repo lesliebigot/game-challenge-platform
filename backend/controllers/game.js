@@ -1,5 +1,4 @@
-import {Game} from "../models/game.js";
-import {Challenge} from "../models/challenge.js";
+import { Game, Challenge } from "../data/models/index.js";
 
 export const gameController = {
 
