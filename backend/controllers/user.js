@@ -16,8 +16,17 @@ export const userController = {
     // Validation des données avec Zod
     const parsed = userSignupSchema.safeParse(req.body);
     if (!parsed.success) {
-      // Zod renvoie un tableau d'erreurs détaillées
-      return res.status(400).json({ errors: parsed.error.flatten().fieldErrors });
+      const fieldErrors = {};
+
+      for (const err of parsed.error.errors) {
+        const field = err.path[0]; 
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = [];
+        }
+        fieldErrors[field].push(err.message);
+      }
+
+      return res.status(400).json({ errors: fieldErrors });
     }
 
     const data = parsed.data; // Données validées et nettoyées

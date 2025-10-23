@@ -1,5 +1,6 @@
-import {Challenge} from "../models/challenge.js";
+import { Challenge } from "../models/challenge.js";
 import { User } from "../models/user.js";
+import { challengeSchema } from "../schemas/userSchema.js";
 
 export const challengeController = {
   
@@ -35,5 +36,38 @@ export const challengeController = {
     });
 
     res.json({challenges: req.challenges, topChallenges,});
+  },
+
+  async createOne(req, res) {
+  
+    // Validation des entrées
+    const parsed = challengeSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const fieldErrors = {};
+  
+      for (const err of parsed.error.errors) {
+        const field = err.path[0]; 
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = [];
+        }
+        fieldErrors[field].push(err.message);
+      }
+  
+      return res.status(400).json({ errors: fieldErrors });
+    }
+    
+    const data = parsed.data;
+    
+    // Création de l'utilisateur
+    const challenge = await Challenge.create(data);
+
+    res.status(201).json({
+      message: "Challenge créé avec succès",
+      challenge: {
+        id: challenge.id,
+        title: challenge.title,
+        description: challenge.description,
+      },
+    });
   },
 };
