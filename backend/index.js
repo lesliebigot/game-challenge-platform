@@ -14,10 +14,19 @@ const PORT = process.env.PORT || 3000;
 app.use(router);
 
 // Try/Catch global
-// eslint-disable-next-line no-unused-vars
+ 
 app.use((error, req, res, next) => {
-  console.error(error);
-  res.status(500).render("pages/500");
+  console.error("Erreur globale :", error);
+
+  // Si la réponse a déjà été envoyée, passe au middleware suivant
+  if (res.headersSent) {
+    return next(error);
+  }
+
+  res.status(error.status || 500).json({
+    success: false,
+    message: error.message || "Une erreur interne est survenue.",
+  });
 });
 
 app.listen(PORT, () => {

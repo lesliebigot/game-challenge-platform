@@ -4,16 +4,16 @@ import sequelize from "./sequelizeClient.js";
 export class Challenge extends Model {}
 
 Challenge.init({
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    description: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
 }, {
-    sequelize,
-    modelName: "Challenge",
-    tableName: "challenge"
+  sequelize,
+  modelName: "Challenge",
+  tableName: "challenge"
 });

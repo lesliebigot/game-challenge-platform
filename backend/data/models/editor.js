@@ -4,11 +4,11 @@ import sequelize from "./sequelizeClient.js";
 export class Editor extends Model {}
 
 Editor.init({
-    name: {
-        type: DataTypes.STRING
-    },
+  name: {
+    type: DataTypes.STRING
+  },
 }, {
-    sequelize,
-    modelName: "Editor",
-    tableName: "editor"
+  sequelize,
+  modelName: "Editor",
+  tableName: "editor"
 });
