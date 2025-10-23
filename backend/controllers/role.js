@@ -1,4 +1,4 @@
-import { Role } from "../models/role.js";
+import { Role } from "../data/models/index.js";
 
 export const roleController = {
   
