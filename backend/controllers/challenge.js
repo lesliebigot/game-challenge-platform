@@ -1,6 +1,7 @@
 import { Challenge } from "../models/challenge.js";
 import { User } from "../models/user.js";
-import { challengeSchema } from "../schemas/userSchema.js";
+import { createChallengeSchema } from "../schemas/challengeSchema.js";
+import { participateChallengeSchema } from "../schemas/challengeSchema.js";
 
 export const challengeController = {
   
@@ -8,6 +9,18 @@ export const challengeController = {
     const challenges = await Challenge.findAll();
     req.challenges = challenges; // on stocke le résultat dans req
     next();
+  },
+
+  async getOne(req, res) {
+    
+    const challengeId = parseInt(req.params.id, 10);
+    const challenge = await Challenge.findByPk(challengeId);
+
+    if (!challenge) {
+      return res.status(404).json({ error: "Jeu non trouvé" });
+    }
+
+    res.status(200).json(challenge);
   },
 
   async getTopLiked(req, res) {
@@ -41,7 +54,7 @@ export const challengeController = {
   async createOne(req, res) {
   
     // Validation des entrées
-    const parsed = challengeSchema.safeParse(req.body);
+    const parsed = createChallengeSchema.safeParse(req.body);
     if (!parsed.success) {
       const fieldErrors = {};
   
@@ -58,7 +71,7 @@ export const challengeController = {
     
     const data = parsed.data;
     
-    // Création de l'utilisateur
+    // Création du challenge
     const challenge = await Challenge.create(data);
 
     res.status(201).json({
@@ -70,4 +83,37 @@ export const challengeController = {
       },
     });
   },
+
+  async submitToChallenge(req, res) {
+
+    // Validation des entrées
+    const parsed = participateChallengeSchema.safeParse(req.body);
+    if (!parsed.success) {
+      const fieldErrors = {};
+      
+      for (const err of parsed.error.errors) {
+        const field = err.path[0]; 
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = [];
+        }
+        fieldErrors[field].push(err.message);
+      }
+      
+      return res.status(400).json({ errors: fieldErrors });
+    }
+        
+    const data = parsed.data;
+        
+    // Création de l'utilisateur
+    const challenge = await Challenge.create(data);
+    
+    res.status(201).json({
+      message: "Challenge créé avec succès",
+      challenge: {
+        id: challenge.id,
+        title: challenge.title,
+        description: challenge.description,
+      },
+    });
+  }
 };
