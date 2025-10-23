@@ -3,7 +3,7 @@ import "./header.css";
 
 export function Header() {
   return (
-    <header className="navbar bg-base-100 shadow-lg z-50 relative top-0 mb-10">
+    <header className="navbar bg-base-100 shadow-lg z-50 relative top-0 mb-1">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex="0" role="button" className="btn btn-ghost lg:hidden">
@@ -12,9 +12,9 @@ export function Header() {
             </svg>
           </div>
           <ul tabIndex="0" className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li><a href="#">Accueil</a></li>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/games">Jeux</a></li>
             <li><a href="#">Challenges</a></li>
-            <li><a href="#">Jeux</a></li>
             <li><a href="#">Classements</a></li>
           </ul>
         </div>
@@ -26,9 +26,9 @@ export function Header() {
         
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li><a href="#" className="btn btn-ghost">Accueil</a></li>
+          <li><a href="/" className="btn btn-ghost">Accueil</a></li>
+          <li><a href="/games" className="btn btn-ghost">Jeux</a></li>
           <li><a href="#" className="btn btn-ghost">Challenges</a></li>
-          <li><a href="#" className="btn btn-ghost">Jeux</a></li>
           <li><a href="#" className="btn btn-ghost">Classements</a></li>
         </ul>
       </div>

@@ -1,11 +1,11 @@
 import "./cardGame.css";
 
-export function cardGame(){
+export function CardGame(){
   return (
     <div className="card bg-base-100 w-96 shadow-sm">
       <figure>
         <img
-          src="bf6.webp" alt="Battlefield 6"/>
+          src="../../images/bf6.webp" alt="Battlefield 6"/>
       </figure>
       <div className="card-body">
         <h2 className="card-title text-center">Battlefield 6</h2>

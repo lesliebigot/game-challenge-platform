@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
 :root {
   --font-pixel: 'Press Start 2P', cursive;
   --font-main: 'Roboto', sans-serif;
