@@ -8,7 +8,7 @@ export function HomePage(){
     <>
       <main>
         {/* Hero Section */}
-        <section className="hero min-h-[60vh] max-w-[80%] mt-20">
+        <section className="hero min-h-[60vh] max-w-[80%]">
           <div className="hero-content text-center text-neutral-content">
             <div>
               <h1 className="mb-5 text-5xl font-bold pixel-font text-white">Relevez les défis</h1>
