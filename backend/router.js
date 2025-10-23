@@ -14,7 +14,7 @@ router.get("/profil/challenges", profilController.getUserChallenges);
 
 router.post("/register", userController.createOne);
 router.post("/signin", authentificationController.signin);
-router.post("/challenge");
+router.post("/challenge", challengeController.createOne);
 router.post("/participate");
 
 router.patch("challenge");
