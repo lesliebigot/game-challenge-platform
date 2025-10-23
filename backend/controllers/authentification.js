@@ -1,6 +1,7 @@
 import { User } from "../models/user.js";
 import argon2 from "argon2";
 import { userSigninSchema } from "../schemas/userSchema.js";
+import jwt from "jsonwebtoken";
 
 export const authentificationController = {
 
@@ -43,6 +44,7 @@ export const authentificationController = {
         username: user.username,
         email: user.email,
       },
+      token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" }),
     });
   },
 };
