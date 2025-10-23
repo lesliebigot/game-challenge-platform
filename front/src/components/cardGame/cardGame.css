@@ -1,0 +1,26 @@
+/* Game Cards */
+.card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  }
+  
+  .card figure img {
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover figure img {
+    transform: scale(1.05);
+  }
+  
+  .card-actions .btn {
+    transition: all 0.2s ease;
+  }
+  
+  .card-actions .btn:hover {
+    transform: scale(1.1);
+  }
