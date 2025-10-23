@@ -1,9 +1,9 @@
 // ASSOCIATIONS
 
-import { User } from "./User.js";
+import { User } from "./user.js";
 import { Role } from "./role.js";
-import { Challenge } from "./Challenge.js";
-import { Game } from "./Game.js";
+import { Challenge } from "./challenge.js";
+import { Game } from "./game.js";
 import { Genre } from "./genre.js";
 import { Platform } from "./platform.js";
 import { Editor } from "./editor.js";
