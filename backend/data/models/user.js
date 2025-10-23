@@ -9,34 +9,34 @@ export class User extends Model {}
 // tandis que TEXT est destiné à des textes plus longs.
 
 User.init({
-    pseudo: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        unique: true,
-    },
-    lastname: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    firstname: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
-    password: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    birthdate: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
+  pseudo: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+    unique: true,
+  },
+  lastname: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  firstname: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  password: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  birthdate: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
 }, {
-    sequelize,
-    modelName: "User",
-    tableName: "user"
+  sequelize,
+  modelName: "User",
+  tableName: "user"
 });
