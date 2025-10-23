@@ -5,7 +5,7 @@ export class Challenge extends Model {}
 
 Challenge.init({
     title: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false
     },
     description: {

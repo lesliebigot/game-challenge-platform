@@ -1,7 +1,12 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "./sequelizeClient.js";
 
-export class Game extends Model {}
+export class User extends Model {}
+
+//La différence entre Sequelize.STRING et Sequelize.TEXT
+// réside dans la longueur des données qu'ils peuvent stocker : 
+// STRING est utilisé pour des chaînes de caractères de longueur limitée, 
+// tandis que TEXT est destiné à des textes plus longs.
 
 User.init({
     pseudo: {
@@ -9,7 +14,7 @@ User.init({
         allowNull: false,
         unique: true,
     },
-    name: {
+    lastname: {
         type: DataTypes.TEXT,
         allowNull: false
     },
@@ -18,7 +23,7 @@ User.init({
         allowNull: false
     },
     email: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true
     },

@@ -5,7 +5,7 @@ export class Platform extends Model {}
 
 Platform.init({
     name: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         defaultValue: "PC",
     },
 }, {

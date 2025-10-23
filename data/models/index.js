@@ -1,18 +1,19 @@
 // ASSOCIATIONS
 
-import { User } from "./User.js";
+import { User } from "./user.js";
 import { Role } from "./role.js";
-import { Challenge } from "./Challenge.js";
-import { Game } from "./Game.js";
-import { Gender } from "./gender.js";
+import { Challenge } from "./challenge.js";
+import { Game } from "./game.js";
+import { Genre } from "./genre.js";
 import { Platform } from "./platform.js";
 import { Editor } from "./editor.js";
+import { Participate } from "./partcipate.js";
 
 //**ASSOCIATIONS One-to-Many**
 
 // User et Role (1,1 - 1,N)
 User.belongsTo(Role, {
-  foreignKey: "role_id",
+  foreignKey: { name: "role_id", allowNull: false }, // Garantit que chaque utilisateur a un rôle
   as: "role" // l'utilisateur a ce role
 });
 Role.hasMany(User, {
@@ -30,13 +31,13 @@ Challenge.belongsTo(User, {
   as: "creatorUser" // challenge créé par cet utilisateur
 });
 
-// Game et Gender (1,1 - 1,N)
-Game.belongsTo(Gender, {
-    foreignKey: "gender_id",
-    as: "gender" // un jeu a ce genre
+// Game et Genre (1,1 - 1,N)
+Game.belongsTo(Genre, {
+    foreignKey: "Genre_id",
+    as: "Genre" // un jeu a ce genre
 });
-Gender.hasMany(Game, {
-  foreignKey: "gender_id",
+Genre.hasMany(Game, {
+  foreignKey: "Genre_id",
   as: "games" // ce genre appartient à plusieurs jeux
 });
 
@@ -62,63 +63,70 @@ Game.hasMany(Challenge, {
 
 //**ASSOCIATIONS Many-to-Many**
 
-// Game et Platform (via operate)
+// Game et Platform (via game_available_on_platform)
 Game.belongsToMany(Platform, {
-  through: "operate",
+  through: "game_available_on_platform",
   foreignKey: "game_id",
   otherKey: "platform_id",
   as: "platforms" // un jeu a plusieurs plateformes
 });
 Platform.belongsToMany(Game, {
-  through: "operate",
+  through: "game_available_on_platform",
   foreignKey: "platform_id",
   otherKey: "game_id",
   as: "games" // une plateforme a plusieurs jeux
 });
 
-// User et Game (via favorite)
+// User et Game (via user_favorite_game)
 User.belongsToMany(Game, {  
-  through: "favorite",
+  through: "user_favorite_game",
   foreignKey: "user_id",
   otherKey: "game_id",
   as: "favoriteGames" // un utilisateur a plusieurs jeux en favoris
 });
 Game.belongsToMany(User, {
-  through: "favorite",
+  through: "user_favorite_game",
   foreignKey: "game_id",
   otherKey: "user_id",
   as: "favoritedByUsers" // un jeu peut être dans les favoris de plusieurs utilisateurs
 });
 
-// User et Challenge (via like)
+// User et Challenge (via user_like_challenge)
 User.belongsToMany(Challenge, {
-  through: "like",
+  through: "user_like_challenge",
   foreignKey: "user_id",
   otherKey: "challenge_id",
-  as: "likedChallenges" // challenges likés par cet 
+  as: "likedChallenges" // challenges likés par cet utilisateur
 });
 Challenge.belongsToMany(User, {
-  through: "like",
+  through: "user_like_challenge",
   foreignKey: "challenge_id",
   otherKey: "user_id",
-  as: "likedByUsers"
+  as: "likedByUsers" // utilisateurs ayant liké ce challenge
 });
 
 // User et Challenge (via participate)
 User.belongsToMany(Challenge, {
-  through: "participate",
-  // TODO : est-ce la bonne solution pour ajouter la preuve vidéo ?
-  //through: {
-  //  model: "participate",
-  //  attributes: ["preuve"]  // spécifier l'attribut supplémentaire
-  //},
+  through: Participate, // Modèle pour la table de liaison pour la participation entre User et Challenge avec ajout de l'attribut "proof"
   foreignKey: "user_id",
   otherKey: "challenge_id",
   as: "participatedChallenges" // Challenges auxquels l'utilisateurs a partcipé
 });
 Challenge.belongsToMany(User, {
-  through: "participate",
+  through: Participate,
   foreignKey: "challenge_id",
   otherKey: "user_id",
   as: "participantUsers" // Utilisateurs ayant participé à ce challenge
 });
+
+export {
+  sequelize,
+  Game,
+  User,
+  Role,
+  Challenge,
+  Genre,
+  Platform,
+  Editor,
+  Participate,
+};
