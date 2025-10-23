@@ -31,38 +31,31 @@ export const challengeController = {
   },
 
   async getTopLiked(req, res) {
-    // Recherche de tous les challenges 
+    
     const topChallenges = await Challenge.findAll({
-      // qui ont au moins 1 like
       include: [
         {
           model: User,
-          as: "likedByUsers", 
-          attributes: [],     // on ne récupère pas les infos users
-          through: { attributes: [] } // on ne récupère pas la table de liaison
-        }
+          as: "likedByUsers", // nom de l'association dans notre modèle
+          attributes: [], // on ne veut pas les infos des users
+          through: { attributes: [] }, // on cache la table de liaison
+        },
       ],
-      // Sélectionne quelles colonnes récupérer
       attributes: {
         include: [
+          // ajoute le nombre de likes
           [
-            // Appel de la fonction COUNT via sequelize
-            Challenge.sequelize.fn("COUNT", 
-              // Cible directement la colonne dans la base de données
-              Challenge.sequelize.col("likedByUsers.id")),
-            // Nom donné à la colonne formée
-            "likeCount"
-          ]
-        ]
+            Challenge.sequelize.fn("COUNT", Challenge.sequelize.col("likedByUsers.id")),
+            "likeCount",
+          ],
+        ],
       },
-      // Groupement nécessaire pour utiliser COUNT avec d'autres colonnes
-      group: ["Challenge.id"],
-      // Trie les résultats selon la colonne calculée likeCount.
-      order: [[Challenge.sequelize.literal("likeCount"), "DESC"]],
-      limit: 3
+      group: ["Challenge.id"], // groupement pour le COUNT
+      order: [[Challenge.sequelize.literal("likeCount"), "DESC"]], // tri décroissant
+      limit: 3, // on garde les 3 premiers
     });
-    // Renvoi des données
-    res.json({ topChallenges });
+
+    res.json({challenges: req.challenges, topChallenges,});
   },
 
   async createOne(req, res) {

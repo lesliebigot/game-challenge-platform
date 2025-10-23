@@ -8,7 +8,7 @@ import { authMiddleware } from "./middlewares/authMiddleware.js";
 
 export const router = Router();
 
-router.get("/", challengeController.getAll, challengeController.getTopLiked);
+router.get("/", challengeController.getAll); //challengeController.getTopLiked);
 router.get("/games", gameController.getAll);
 router.get("/games/:id", gameController.getOneWithChallenges);
 router.get("/profil/challenges", authMiddleware, profilController.getUserChallenges);
