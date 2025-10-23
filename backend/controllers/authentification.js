@@ -9,6 +9,7 @@ export const authentificationController = {
 
     // Validation des entrées
     const parsed = userSigninSchema.safeParse(req.body);
+    // Gestion d'une erreur Zod
     if (!parsed.success) {
       const fieldErrors = {};
 
@@ -23,6 +24,7 @@ export const authentificationController = {
       return res.status(400).json({ errors: fieldErrors });
     }
   
+    // Récupère les données validées et netoyées par Zod
     const { email, password } = parsed.data;
   
     // Recherche de l’utilisateur
@@ -37,6 +39,7 @@ export const authentificationController = {
       return res.status(401).json({ error: "Identifiants incorrects" });
     }
   
+    // Renvoi des données
     res.status(200).json({
       message: "Connexion réussie",
       user: {

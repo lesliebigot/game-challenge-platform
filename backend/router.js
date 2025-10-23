@@ -10,8 +10,8 @@ export const router = Router();
 
 router.get("/", challengeController.getAll, challengeController.getTopLiked);
 router.get("/games", gameController.getAll);
-router.get("/games/:id", gameController.getOne, gameController.getGameChallenges);
-router.get("/profil/challenges", profilController.getUserChallenges);
+router.get("/games/:id", gameController.getOneWithChallenges);
+router.get("/profil/challenges", authMiddleware, profilController.getUserChallenges);
 router.get("/challenge/:id", challengeController.getOne);
 
 router.post("/register", userController.createOne);
