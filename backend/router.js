@@ -17,7 +17,7 @@ router.get("/challenge/:id", challengeController.getOne);
 router.post("/register", userController.createOne);
 router.post("/signin", authentificationController.signin);
 router.post("/challenge", authMiddleware, challengeController.createOne);
-router.post("/challenge/:id/participate");
+router.post("/challenge/:id/participate", authMiddleware, challengeController.submitToChallenge);
 
 router.patch("challenge");
 router.patch("particpate");

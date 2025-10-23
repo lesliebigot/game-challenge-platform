@@ -1,5 +1,6 @@
 import { Challenge } from "../models/challenge.js";
 import { User } from "../models/user.js";
+import { Participate } from "../models/participate.js";
 import { createChallengeSchema } from "../schemas/challengeSchema.js";
 import { participateChallengeSchema } from "../schemas/challengeSchema.js";
 
@@ -53,8 +54,10 @@ export const challengeController = {
 
   async createOne(req, res) {
   
-    // Validation des entrées
+    // Validation des données avec Zod
     const parsed = createChallengeSchema.safeParse(req.body);
+
+    // Gestion d'une erreur Zod
     if (!parsed.success) {
       const fieldErrors = {};
   
@@ -69,11 +72,16 @@ export const challengeController = {
       return res.status(400).json({ errors: fieldErrors });
     }
     
+    // Récupère les données validées et netoyées par Zod
     const data = parsed.data;
+
+    // Associe le nouvel objet créé à l'utilisateur connecté
+    data.creator_id = req.user.id;
     
     // Création du challenge
     const challenge = await Challenge.create(data);
 
+    // Renvoi des données
     res.status(201).json({
       message: "Challenge créé avec succès",
       challenge: {
@@ -86,11 +94,13 @@ export const challengeController = {
 
   async submitToChallenge(req, res) {
 
-    // Validation des entrées
+    // Validation des données avec Zod
     const parsed = participateChallengeSchema.safeParse(req.body);
+
+    // Gestion d'une erreur Zod
     if (!parsed.success) {
       const fieldErrors = {};
-      
+  
       for (const err of parsed.error.errors) {
         const field = err.path[0]; 
         if (!fieldErrors[field]) {
@@ -98,22 +108,49 @@ export const challengeController = {
         }
         fieldErrors[field].push(err.message);
       }
-      
+  
       return res.status(400).json({ errors: fieldErrors });
     }
-        
-    const data = parsed.data;
-        
-    // Création de l'utilisateur
-    const challenge = await Challenge.create(data);
     
+    // Récupère les données validées et netoyées par Zod
+    const data = parsed.data;
+
+    // Récupère l'id de l'utilisateur et du challenge
+    const userId = req.user.id;
+    const challengeId = parseInt(req.params.id, 10);
+
+    // Vérifie que le challenge existe
+    const challenge = await Challenge.findByPk(challengeId);
+    if (!challenge) {
+      return res.status(404).json({ error: "Challenge non trouvé" });
+    }
+
+    // Vérifie si l'utilisateur a déjà participé
+    const existingParticipation = await Participate.findOne({
+      where: { user_id: userId, challenge_id: challengeId }
+    });
+    if (existingParticipation) {
+      return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
+    }
+
+    // Crée la participation
+    const participation = await Participate.create({
+      user_id: userId,
+      challenge_id: challengeId,
+      proof: data.URL,
+      // proof_description: data.description
+    });
+
+    // Renvoi des données
     res.status(201).json({
-      message: "Challenge créé avec succès",
-      challenge: {
-        id: challenge.id,
-        title: challenge.title,
-        description: challenge.description,
-      },
+      message: "Participation enregistrée avec succès",
+      participation: {
+        id: participation.id,
+        user_id: userId,
+        challenge_id: challengeId,
+        url: data.URL,
+        // description: data.description
+      }
     });
   }
 };

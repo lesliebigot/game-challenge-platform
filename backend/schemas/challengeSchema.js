@@ -14,7 +14,7 @@ export const participateChallengeSchema = z.object({
     .refine((val) => val.startsWith("https://"), {
       message: "L’URL doit commencer par https://",
     }),
-  description: z.string()
+  /* description: z.string()
     .min(10, "La description du challenge est trop courte")
-    .max(500, "La description du challenge est trop longue"),
+    .max(500, "La description du challenge est trop longue"),*/
 });
