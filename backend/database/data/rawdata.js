@@ -1,4 +1,4 @@
-const data =
+const rawdata =
   [
     {
       "id": 239060,
@@ -5128,6 +5128,6 @@ const data =
         }
       ]
     }
-  ]
+  ];
 
-  export default data
+export default rawdata;

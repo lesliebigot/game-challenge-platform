@@ -31,15 +31,15 @@ Challenge.belongsTo(User, {
   as: "creatorUser" // challenge créé par cet utilisateur
 });
 
-// Game et Genre (1,1 - 1,N)
-Game.belongsTo(Genre, {
-  foreignKey: "Genre_id",
-  as: "Genre" // un jeu a ce genre
-});
-Genre.hasMany(Game, {
-  foreignKey: "Genre_id",
-  as: "games" // ce genre appartient à plusieurs jeux
-});
+// // Game et Genre (1,1 - 1,N)
+// Game.belongsTo(Genre, {
+//   foreignKey: "Genre_id",
+//   as: "Genre" // un jeu a ce genre
+// });
+// Genre.hasMany(Game, {
+//   foreignKey: "Genre_id",
+//   as: "games" // ce genre appartient à plusieurs jeux
+// });
 
 // Game et Editor (1,1 - 1,N)
 Game.belongsTo(Editor, {
@@ -117,6 +117,20 @@ Challenge.belongsToMany(User, {
   foreignKey: "challenge_id",
   otherKey: "user_id",
   as: "participantUsers" // Utilisateurs ayant participé à ce challenge
+});
+
+// Remplace la relation One-to-Many par Many-to-Many
+Game.belongsToMany(Genre, {
+  through: "game_genre",
+  foreignKey: "game_id",
+  otherKey: "genre_id",
+  as: "genres"
+});
+Genre.belongsToMany(Game, {
+  through: "game_genre",
+  foreignKey: "genre_id",
+  otherKey: "game_id",
+  as: "games"
 });
 
 export {
