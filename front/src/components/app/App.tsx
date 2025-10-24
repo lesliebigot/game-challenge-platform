@@ -12,24 +12,24 @@ import { Profil } from "../profil/profil.tsx";
 
 function App() {
   return (
-    <>
-      
+    <div className="min-h-screen flex flex-col">
       <Header />
-      
-      <Routes>
-        <Route path="*" element={<HomePage/>}/>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/games" element={<GameList/>}/>
-        <Route path="/challenges" element={<Challenges/>}/>
-        <Route path="/signin" element={<SignIn/>}/>
-        <Route path="/signup" element={<SignUp/>}/>
-        <Route path="/profil" element={<Profil/>}/>
-        
-      </Routes>
-      
+
+      {/* Le contenu principal s’étend pour remplir l’espace libre */}
+      <main className="flex-1 flex flex-col">
+        <Routes>
+          <Route path="*" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/games" element={<GameList />} />
+          <Route path="/challenges" element={<Challenges />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/profil" element={<Profil />} />
+        </Routes>
+      </main>
+
       <Footer />
-      
-    </>
+    </div>
   );
 }
 
