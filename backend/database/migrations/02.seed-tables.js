@@ -4,7 +4,7 @@ import { editors } from "../data/editors.js";
 import { platforms } from "../data/platforms.js";
 import { genres } from "../data/genders.js";
 
-// 1. Insérer les éditeurs, genres et plateformes (déjà fait)
+// 1. Insérer les éditeurs, genres et plateformes
 for (const editor of editors) {
   await Editor.create({
     id: editor.id,
@@ -33,23 +33,22 @@ for (const gameData of games) {
     editorId = editor ? editor.id : null;
   }
 
-  // Créer le jeu (sans Genre_id, car c'est maintenant Many-to-Many)
+  // Récupérer l'ID du premier genre (One-to-Many)
+  let genreId = null;
+  if (gameData.genderNames && gameData.genderNames.length > 0) {
+    const firstGenreName = gameData.genderNames[0]; // On prend le premier genre
+    const genre = await Genre.findOne({ where: { name: firstGenreName } });
+    genreId = genre ? genre.id : null;
+  }
+
+  // Créer le jeu avec l'ID du genre
   const game = await Game.create({
     title: gameData.title,
     description: gameData.description,
     image: gameData.image,
     editor_id: editorId, // Associe l'ID de l'éditeur
+    Genre_id: genreId,  // Associe l'ID du premier genre
   });
-
-  // Associer les genres (Many-to-Many)
-  if (gameData.genderNames && gameData.genderNames.length > 0) {
-    const genreInstances = await Genre.findAll({
-      where: { name: gameData.genderNames }
-    });
-    if (genreInstances.length > 0) {
-      await game.setGenres(genreInstances); // Utilise setGenres pour Many-to-Many
-    }
-  }
 
   // Associer les plateformes (Many-to-Many)
   if (gameData.platformNames && gameData.platformNames.length > 0) {
