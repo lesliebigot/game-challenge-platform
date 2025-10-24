@@ -26,6 +26,18 @@ export const gameController = {
       include: [{
         association: "challenges",
         attributes: ["id","title", "description"]       
+      },
+      {
+        association: "Genre",
+        attributes: ["id","name"]       
+      },
+      {
+        association: "platforms",
+        attributes: ["id","name"]       
+      },
+      {
+        association: "editor",
+        attributes: ["id","name"]       
       }]
     });
 
@@ -33,7 +45,7 @@ export const gameController = {
       return res.status(404).json({ error: "Jeu non trouvé" });
     }
     //console.log(game);
-    res.status(200).json(game);
+    return res.status(200).json(game);
     
   },
 

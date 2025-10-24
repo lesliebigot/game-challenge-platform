@@ -59,31 +59,33 @@ export const challengeController = {
   async createOne(req, res) {
   
     // Validation des données avec Zod
-    const parsed = createChallengeSchema.safeParse(req.body);
+    //const parsed = createChallengeSchema.safeParse(req.body);
 
     // Gestion d'une erreur Zod
-    if (!parsed.success) {
-      const fieldErrors = {};
+    //if (!parsed.success) {
+    //  const fieldErrors = {};
   
-      for (const err of parsed.error.errors) {
-        const field = err.path[0]; 
-        if (!fieldErrors[field]) {
-          fieldErrors[field] = [];
-        }
-        fieldErrors[field].push(err.message);
-      }
+      //for (const err of parsed.error.errors) {
+      //  const field = err.path[0]; 
+      //  if (!fieldErrors[field]) {
+      //    fieldErrors[field] = [];
+      //  }
+      //  fieldErrors[field].push(err.message);
+      //}
   
-      return res.status(400).json({ errors: fieldErrors });
-    }
+      //return res.status(400).json({ errors: fieldErrors });
+    //}
     
     // Récupère les données validées et netoyées par Zod
-    const data = parsed.data;
+    const { title, description } = req.body;
+    const game_id = 12; // TODO remplacer par l'ID du jeu approprié
+    const user_id = 1;  // TODO À remplacer par l'ID du de l'u ilisateur conn
 
     // Associe le nouvel objet créé à l'utilisateur connecté
-    data.creator_id = req.user.id;
+    //data.creator_id = req.user.id;
     
     // Création du challenge
-    const challenge = await Challenge.create(data);
+    const challenge = await Challenge.create({title, description, user_id, game_id });
 
     // Renvoi des données
     res.status(201).json({
@@ -92,6 +94,8 @@ export const challengeController = {
         id: challenge.id,
         title: challenge.title,
         description: challenge.description,
+        user_id, 
+        game_id
       },
     });
   },

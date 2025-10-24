@@ -8,6 +8,7 @@ export const app = express();
 
 // on a besoin d'un parser pour récuperer les données en json
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const PORT = process.env.PORT || 3000;
 

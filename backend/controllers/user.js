@@ -20,6 +20,10 @@ export const userController = {
       include: [{
         association: "createdChallenges",
         attributes: ["id","title", "description"]       
+      },
+      {
+        association: "participatedChallenges",
+        attributes: ["id","title", "description"]       
       }]
     });
     // Gestion d'une erreur

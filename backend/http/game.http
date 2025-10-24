@@ -2,7 +2,7 @@
 # GET all games
 GET http://localhost:3000/games
 ###
-# GET all games
+# GET one game
 GET http://localhost:3000/games/13
 ###
 # GET all challenges
@@ -15,5 +15,16 @@ GET http://localhost:3000/challenges/2
 GET http://localhost:3000/users
 ###
 # GET one user with challenges created
-GET http://localhost:3000/users/2
+GET http://localhost:3000/users/1
 ###
+
+###
+### CREATE one challenge
+POST http://localhost:3000/challenges
+Content-Type: application/json
+
+{
+  "title": "test",
+  "description": "Terminer"
+ 
+}
