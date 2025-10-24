@@ -34,6 +34,11 @@ router.patch("/challenges/:id", challengeController.updateOne);
 // supprimer son challenge
 router.delete("/challenges/:id", challengeController.deleteOne);
 
+// TODO modifier sa participation à un challenge
+router.patch("/challenge/:id/participate", challengeController.updateParticipation);
+// TODO supprimer sa participation à un challenge
+router.delete("/challenge/:id/participate", challengeController.deleteParticipation);
+
 //router.post("/signin", authentificationController.signin);
 //router.post("/challenge", authMiddleware, challengeController.createOne);
 
