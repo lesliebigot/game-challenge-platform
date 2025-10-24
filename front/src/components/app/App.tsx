@@ -9,6 +9,9 @@ import { Challenges } from "../challenges/challenges.tsx";
 import { SignIn } from "../signIn/signIn.tsx";
 import { SignUp } from "../signUp/signUp.tsx";
 import { Profil } from "../profil/profil.tsx";
+import { CreateChallenge } from "../createChallenge/createChallenge.tsx";
+import { ParticipateChallenge } from "../participateChallenge/participateChallenge.tsx";
+import { EditChallenge } from "../editChallenge/editChallenge.tsx";
 
 function App() {
   return (
@@ -25,6 +28,11 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profil" element={<Profil />} />
+          <Route path="/create-challenge" element={<CreateChallenge />} />
+          <Route path="/edit-challenge" element={<EditChallenge />} />
+          <Route path="/participate-challenge" element={<ParticipateChallenge />} />
+
+
         </Routes>
       </main>
 
