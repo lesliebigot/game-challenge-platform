@@ -1,9 +1,12 @@
 import "./homePage.css";
+
 import {CardGameLight} from "../cardGame/cardGameLight.tsx";
 import {CardChallenge} from "../cardChallenge/cardChallenge.tsx";
-
+import { CarouselWithCards } from "../util/carrousel.tsx";
 
 export function HomePage(){
+
+
   return (
     <>
       <main>
@@ -47,12 +50,23 @@ export function HomePage(){
           </div>
         </section>
 
+        <section className="section flex flex-col items-center max-w-[80%]">
+          {/* search tool */}
+          <div className="form-control mb-12 flex flex-row justify-center">
+            <input type="text" placeholder="Rechercher..." className="input input-bordered w-50 md:w-100 lg:w-200" />
+          </div>
+          
+          {/* Challenges Carousel Section */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold pixel-font mb-4">Les challenges du moment</h2>
+          </div>
+          <CarouselWithCards />
+        </section>
+
         {/* Popular Games Section */}
         <section className="section max-w-[80%]">
           <div className="mt-4">
-            <div className="form-control mb-12 flex flex-row justify-center">
-              <input type="text" placeholder="Rechercher..." className="input input-bordered w-50 md:w-100 lg:w-200" />
-            </div>
+            
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold pixel-font mb-4">Jeux populaires</h2>
               <p className="text-lg text-base-content/70">Les jeux les plus joués de la communauté</p>
@@ -64,8 +78,11 @@ export function HomePage(){
               ))}
               
             </div>
+            <div className="flex justify-center mb-5"><button className="btn btn-primary"><a href="/games">Voir plus</a></button></div>
+            
           </div>
         </section>
+
       </main>
     </>
   );

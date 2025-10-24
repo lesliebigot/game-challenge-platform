@@ -40,9 +40,12 @@ export function Header() {
               <i className="fa fa-user text-xl"></i>
             </div>
             <ul tabIndex="0" className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li><a href="#">Profil</a></li>
-              <li><a href="#">Paramètres</a></li>
-              <li><a href="#">Déconnexion</a></li>
+              {/* Elements du menu utilisateur si connexion 
+              <li><a href="/profil">Profil</a></li>
+              <li><a href="/settings">Paramètres</a></li>
+              <li><a href="/logout">Déconnexion</a></li>*/}
+              <li><a href="/login">Se connecter</a></li>
+              <li><a href="/register">S'inscrire</a></li>
             </ul>
           </div>
         </div>
