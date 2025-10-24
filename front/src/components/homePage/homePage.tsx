@@ -2,7 +2,7 @@ import "./homePage.css";
 
 import {CardGameLight} from "../cardGame/cardGameLight.tsx";
 import {CardChallenge} from "../cardChallenge/cardChallenge.tsx";
-import { CarouselWithCards } from "../util/carrousel.tsx";
+import {CarouselWithCards} from "../util/carrousel.tsx";
 
 export function HomePage(){
 
@@ -52,15 +52,28 @@ export function HomePage(){
 
         <section className="section flex flex-col items-center max-w-[80%]">
           {/* search tool */}
-          <div className="form-control mb-12 flex flex-row justify-center">
-            <input type="text" placeholder="Rechercher..." className="input input-bordered w-50 md:w-100 lg:w-200" />
+          <div className="form-control mb-12 flex flex-row justify-center gap-2">
+            <input type="text" placeholder="Rechercher..." className="input input-primary input-bordered w-50 md:w-100 lg:w-200" />
+            <button className="btn btn-primary"><svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth="2.5"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg></button>
           </div>
           
           {/* Challenges Carousel Section */}
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold pixel-font mb-4">Les challenges du moment</h2>
           </div>
-          <CarouselWithCards />
+          
+          <CarouselWithCards/>
         </section>
 
         {/* Popular Games Section */}
