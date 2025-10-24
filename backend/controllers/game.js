@@ -34,8 +34,7 @@ export const gameController = {
     }
     //console.log(game);
     res.status(200).json(game);
-    //req.game = game; // on stocke le résultat dans req pour la prochaine fonction
-    //next(); // passe à getGameChallenge
+    
   },
 
   async getGameChallenges(req, res) {
