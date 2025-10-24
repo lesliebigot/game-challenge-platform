@@ -6,7 +6,11 @@ export const challengeController = {
   
   async getAll(req, res) {
     // Recherche de tous les modèles Challenge
-    const challenges = await Challenge.findAll();
+    const challenges = await Challenge.findAll({
+      include: [{
+        association: "participantUsers",             
+      }]
+    });
     // Gestion d'une erreur
     if(!challenges) return res.status(404).json("Aucun challenge dans la base");
     // On stocke le resultat dans req
@@ -19,7 +23,11 @@ export const challengeController = {
     // Récupération de l'id du challenge
     const challengeId = parseInt(req.params.id, 10);
     // Recherche du challenge par son id
-    const challenge = await Challenge.findByPk(challengeId);
+    const challenge = await Challenge.findByPk(challengeId,{
+      include: [{
+        association: "participantUsers",             
+      }]
+    });
     // Gestion d'une erreur
     if (!challenge) {
       return res.status(404).json({ error: "Jeu non trouvé" });
@@ -102,7 +110,7 @@ export const challengeController = {
 
   async submitToChallenge(req, res) {
 
-    // Validation des données avec Zod
+    /* // Validation des données avec Zod
     const parsed = participateChallengeSchema.safeParse(req.body);
 
     // Gestion d'une erreur Zod
@@ -121,10 +129,10 @@ export const challengeController = {
     }
     
     // Récupère les données validées et netoyées par Zod
-    const data = parsed.data;
+    const data = parsed.data; */
 
     // Récupère l'id de l'utilisateur et du challenge
-    const userId = req.user.id;
+    // const userId = req.user.id;
     const challengeId = parseInt(req.params.id, 10);
 
     // Vérifie que le challenge existe
@@ -134,18 +142,18 @@ export const challengeController = {
     }
 
     // Vérifie si l'utilisateur a déjà participé
-    const existingParticipation = await Participate.findOne({
+    /* const existingParticipation = await Participate.findOne({
       where: { user_id: userId, challenge_id: challengeId }
     });
     if (existingParticipation) {
       return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
-    }
+    }*/
 
     // Crée la participation
     const participation = await Participate.create({
-      user_id: userId,
+      user_id: /*userId*/1,
       challenge_id: challengeId,
-      proof: data.URL,
+      proof: /*data*/req.body.proof,
       // proof_description: data.description
     });
 
@@ -154,9 +162,9 @@ export const challengeController = {
       message: "Participation enregistrée avec succès",
       participation: {
         id: participation.id,
-        user_id: userId,
+        user_id: /*userId*/1,
         challenge_id: challengeId,
-        url: data.URL,
+        url: /*data*/req.body.proof,
         // description: data.description
       }
     });

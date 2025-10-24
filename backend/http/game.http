@@ -9,7 +9,7 @@ GET http://localhost:3000/games/13
 GET http://localhost:3000/challenges
 ###
 # GET one challenge
-GET http://localhost:3000/challenges/2
+GET http://localhost:3000/challenges/1
 ###
 # GET one user with challenges created
 GET http://localhost:3000/users
@@ -41,5 +41,15 @@ Content-Type: application/json
     "password": "password123",
     "birthdate": "1990-01-01T00:00:00.000Z",
     "role_id": 9
+ 
+}
+
+### CREATE userparticipation to one challenge
+POST http://localhost:3000/challenge/2/participate
+Content-Type: application/json
+
+{  
+    "proof": "https://example.com/proof/john_zelda_difficult.mp4",  
+    "user_id": 1
  
 }

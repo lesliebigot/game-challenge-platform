@@ -1,6 +1,6 @@
 import {User} from "../database/models/index.js";
 import argon2 from "argon2";
-import { userSignupSchema } from "../schemas/userSchema.js";
+//import { userSignupSchema } from "../schemas/userSchema.js";
 
 export const userController = {
   
@@ -42,15 +42,14 @@ export const userController = {
     //if (!parsed.success) {
     //  const fieldErrors = {};
 
-      //for (const err of parsed.error.errors) {
-      //  const field = err.path[0]; 
-      //  if (!fieldErrors[field]) {
-      //    fieldErrors[field] = [];
-      //  }
-      //  fieldErrors[field].push(err.message);
-      //}
-
-      //return res.status(400).json({ errors: fieldErrors });
+    //for (const err of parsed.error.errors) {
+    //  const field = err.path[0]; 
+    //  if (!fieldErrors[field]) {
+    //    fieldErrors[field] = [];
+    //  }
+    //  fieldErrors[field].push(err.message);
+    //}
+    //return res.status(400).json({ errors: fieldErrors });
     //}
     // Récupère les données validées et netoyées par Zod
     //const data = parsed.data; 

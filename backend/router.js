@@ -26,10 +26,12 @@ router.get("/users/:id", /*authMiddleware,*/ userController.getOne);
 router.post("/challenges", challengeController.createOne);
 // Créer un user
 router.post("/register", userController.createOne);
+// participer à un challenge
+router.post("/challenge/:id/participate", /*authMiddleware,*/ challengeController.submitToChallenge);
 
 //router.post("/signin", authentificationController.signin);
 //router.post("/challenge", authMiddleware, challengeController.createOne);
-//router.post("/challenge/:id/participate", authMiddleware, challengeController.submitToChallenge);
+
 //
 //router.patch("challenge");
 //router.patch("particpate");
