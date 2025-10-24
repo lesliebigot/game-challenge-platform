@@ -1,6 +1,6 @@
 import { Challenge, User, Participate } from "../database/models/index.js";
 //import { createChallengeSchema } from "../schemas/challengeSchema.js";
-import { participateChallengeSchema } from "../schemas/challengeSchema.js";
+//import { participateChallengeSchema } from "../schemas/challengeSchema.js";
 
 export const challengeController = {
   
@@ -87,7 +87,7 @@ export const challengeController = {
     // Récupère les données validées et netoyées par Zod
     const { title, description } = req.body;
     const game_id = 12; // TODO remplacer par l'ID du jeu approprié
-    const user_id = 1;  // TODO À remplacer par l'ID du de l'u ilisateur conn
+    const user_id = 1;  // TODO À remplacer par l'ID du de l'utilisateur conn
 
     // Associe le nouvel objet créé à l'utilisateur connecté
     //data.creator_id = req.user.id;
@@ -168,5 +168,53 @@ export const challengeController = {
         // description: data.description
       }
     });
-  }
+  },
+
+  async updateOne(req, res) {
+    // TODO : user_id du challenge = id du user connecté en condition pour pouvoir modifier le challenge
+    // récuperer les informations de modifications (elles sont fournies en json sur le body)
+    let data = req.body;
+    // valider la data
+    //data = updateListSchema.parse(data);
+
+    // récuperer ET valider l'id du challenge à modifier (fourni dans l'url)
+    //const { id } = idSchema.parse(req.params);
+    const id = parseInt(req.params.id, 10);
+
+    // récuperer le challenge concerné
+    const challenge = await Challenge.findByPk(id);
+
+    // est ce que ce challenge existe ?
+    if (!challenge) {
+      return res.status(404).json({ error: "challenge non trouvé" });
+    }
+
+    // modifier la liste récuperée avec les données fournies
+    await challenge.update(data);
+
+    // retourner la liste modifiée en json avec le status 200
+    res.json(challenge);
+  },
+
+  // Supprimer un challenge par son id
+  async deleteOne(req, res) {
+    // TODO : user_id du challenge = id du user connecté en condition pour pouvoir supprimer le challenge
+    // récuperer ET valider l'id du challenge à modifier (fourni dans l'url)
+    //const { id } = idSchema.parse(req.params);
+    const id = parseInt(req.params.id, 10);
+    
+    // récuperer la liste concernée
+    const challenge = await Challenge.findByPk(id);
+
+    // est ce que cette liste existe ?
+    if (!challenge) {
+      return res.status(404).json({ error: "challenge non trouvé" });
+    }
+
+    // supprimer ce challenge
+    await challenge.destroy();
+
+    // retourner une reponse vide avec le code 204
+    res.status(204).json();
+  },
 };

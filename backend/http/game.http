@@ -53,3 +53,15 @@ Content-Type: application/json
     "user_id": 1
  
 }
+
+### Update one challenge
+PATCH http://localhost:3000/challenges/1
+Content-Type: application/json
+
+{
+  "description": "Finir le jeu"
+}
+
+###
+# DELETE one challenge
+DELETE  http://localhost:3000/challenges/4
