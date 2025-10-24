@@ -1,0 +1,23 @@
+export const genres = [
+  { name: "Shooter" },
+  { name: "Arcade" },
+  { name: "Platform" },
+  { name: "Racing" },
+  { name: "Adventure" },
+  { name: "Tactical" },
+  { name: "Puzzle" },
+  { name: "Indie" },
+  { name: "Role-playing (RPG)" },
+  { name: "Sport" },
+  { name: "Hack and slash/Beat em up" },
+  { name: "Simulator" },
+  { name: "Strategy" },
+  { name: "Turn-based strategy (TBS)" },
+  { name: "Visual Novel" },
+  { name: "Card & Board Game" },
+  { name: "Point-and-click" },
+  { name: "Real Time Strategy (RTS)" },
+  { name: "Quiz/Trivia" },
+  { name: "Music" },
+  { name: "Fighting" }
+];
