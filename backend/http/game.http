@@ -28,3 +28,18 @@ Content-Type: application/json
   "description": "Terminer"
  
 }
+### CREATE one user
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+  
+    "pseudo": "bibi_user",
+    "lastname": "c",
+    "firstname": "Jc",
+    "email": "jc@example.com",
+    "password": "password123",
+    "birthdate": "1990-01-01T00:00:00.000Z",
+    "role_id": 9
+ 
+}

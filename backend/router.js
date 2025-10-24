@@ -24,7 +24,9 @@ router.get("/users/:id", /*authMiddleware,*/ userController.getOne);
 
 // Créer un challenge
 router.post("/challenges", challengeController.createOne);
-//router.post("/register", userController.createOne);
+// Créer un user
+router.post("/register", userController.createOne);
+
 //router.post("/signin", authentificationController.signin);
 //router.post("/challenge", authMiddleware, challengeController.createOne);
 //router.post("/challenge/:id/participate", authMiddleware, challengeController.submitToChallenge);

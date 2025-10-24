@@ -1,5 +1,5 @@
 import { Challenge, User, Participate } from "../database/models/index.js";
-import { createChallengeSchema } from "../schemas/challengeSchema.js";
+//import { createChallengeSchema } from "../schemas/challengeSchema.js";
 import { participateChallengeSchema } from "../schemas/challengeSchema.js";
 
 export const challengeController = {
@@ -65,15 +65,15 @@ export const challengeController = {
     //if (!parsed.success) {
     //  const fieldErrors = {};
   
-      //for (const err of parsed.error.errors) {
-      //  const field = err.path[0]; 
-      //  if (!fieldErrors[field]) {
-      //    fieldErrors[field] = [];
-      //  }
-      //  fieldErrors[field].push(err.message);
-      //}
-  
-      //return res.status(400).json({ errors: fieldErrors });
+    //for (const err of parsed.error.errors) {
+    //  const field = err.path[0]; 
+    //  if (!fieldErrors[field]) {
+    //    fieldErrors[field] = [];
+    //  }
+    //  fieldErrors[field].push(err.message);
+    //}
+
+    //return res.status(400).json({ errors: fieldErrors });
     //}
     
     // Récupère les données validées et netoyées par Zod

@@ -37,23 +37,25 @@ export const userController = {
   async createOne(req, res) {
     
     // Validation des données avec Zod
-    const parsed = userSignupSchema.safeParse(req.body);
+    //const parsed = userSignupSchema.safeParse(req.body);
     // Gestion d'une erreur Zod
-    if (!parsed.success) {
-      const fieldErrors = {};
+    //if (!parsed.success) {
+    //  const fieldErrors = {};
 
-      for (const err of parsed.error.errors) {
-        const field = err.path[0]; 
-        if (!fieldErrors[field]) {
-          fieldErrors[field] = [];
-        }
-        fieldErrors[field].push(err.message);
-      }
+      //for (const err of parsed.error.errors) {
+      //  const field = err.path[0]; 
+      //  if (!fieldErrors[field]) {
+      //    fieldErrors[field] = [];
+      //  }
+      //  fieldErrors[field].push(err.message);
+      //}
 
-      return res.status(400).json({ errors: fieldErrors });
-    }
+      //return res.status(400).json({ errors: fieldErrors });
+    //}
     // Récupère les données validées et netoyées par Zod
-    const data = parsed.data; 
+    //const data = parsed.data; 
+    const data = req.body;
+    console.log(data);
     // Hachage du mot de passe avec Argon2
     if (data.password) {
       data.password = await argon2.hash(data.password);
