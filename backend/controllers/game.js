@@ -3,35 +3,49 @@ import { Game, Challenge } from "../data/models/index.js";
 export const gameController = {
 
   async getAll(req, res) {
+    //Récupère tous les jeux et leurs challenges associés
+    const games = await Game.findAll({
+      include: [{
+        association: "challenges",
+        attributes: ["id","title", "description"]       
+      }]
+    });
 
-    // Recherche de tous les modèles Game
-    const games = await Game.findAll();
-    // Gestion d'une erreur
     if(!games) return res.status(404).json("Aucun Jeu dans la base");
-    // Renvoi des données
     res.status(200).json(games);
   },
 
-  async getOneWithChallenges(req, res) {
-    // Récupération de l'id du jeu
+  async getOne(req, res, _next) {
+    
     const gameId = parseInt(req.params.id, 10);
-
-    // On récupère le jeu et ses challenges en une seule requête
-    const game = await Game.findByPk(gameId, {
-      include: [
-        {
-          model: Challenge,
-          as: "challenges", // S'assurer que l'association Game.hasMany(Challenge, { as: "challenges" }) existe
-        },
-      ],
+    // Vérifier que l'ID est valide
+    if (isNaN(gameId)) {
+      return res.status(400).json({ error: "ID invalide" });
+    }
+    const game = await Game.findByPk(gameId,{
+      include: [{
+        association: "challenges",
+        attributes: ["id","title", "description"]       
+      }]
     });
-    // Gestion d'une erreur
+
     if (!game) {
       return res.status(404).json({ error: "Jeu non trouvé" });
     }
-
-    // Retourne le jeu et ses challenges
-    res.json(game);
+    //console.log(game);
+    res.status(200).json(game);
+    
   },
+
+  async getGameChallenges(req, res) {
+
+    const game = req.game;
+
+    const challenges = await Challenge.findAll({
+      where: { game_id: game.id}
+    });
+
+    res.json(game, challenges);
+  }
   
 };

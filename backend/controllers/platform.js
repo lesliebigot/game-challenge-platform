@@ -1,4 +1,4 @@
-import { Platform } from "../models/platform.js";
+import { Platform } from "../data/models/index.js";
 
 export const platformController = {
   
