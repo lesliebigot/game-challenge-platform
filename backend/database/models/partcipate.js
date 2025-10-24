@@ -6,11 +6,11 @@ import sequelize from "./sequelizeClient.js";
 export class Participate extends Model {}
 
 Participate.init({
-    proof: {
-        type: DataTypes.STRING, // URL ou chemin vers la preuve de participation
-    },
+  proof: {
+    type: DataTypes.STRING, // URL ou chemin vers la preuve de participation
+  },
 }, {
-    sequelize,
-    modelName: "Participate",
-    tableName: "participate"
+  sequelize,
+  modelName: "Participate",
+  tableName: "participate"
 });
