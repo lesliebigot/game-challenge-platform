@@ -4,15 +4,15 @@ import { participateChallengeSchema } from "../schemas/challengeSchema.js";
 
 export const challengeController = {
   
-  async getAll(req, res, next) {
+  async getAll(req, res) {
     // Recherche de tous les modèles Challenge
     const challenges = await Challenge.findAll();
     // Gestion d'une erreur
     if(!challenges) return res.status(404).json("Aucun challenge dans la base");
     // On stocke le resultat dans req
     req.challenges = challenges; 
-    // On appelle la prochaine fonction pour la page d'accueil
-    next();
+    // On renvoi les données
+    res.status(200).json(challenges);
   },
 
   async getOne(req, res) {

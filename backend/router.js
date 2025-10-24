@@ -2,8 +2,8 @@ import { Router } from "express";
 import { gameController } from "./controllers/game.js";
 import { challengeController } from "./controllers/challenge.js";
 import { profilController } from "./controllers/profil.js";
-import { userController } from "./controllers/user.js";
-import { authentificationController } from "./controllers/authentification.js";
+//import { userController } from "./controllers/user.js";
+//import { authentificationController } from "./controllers/authentification.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
 
 export const router = Router();

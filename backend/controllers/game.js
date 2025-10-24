@@ -15,7 +15,7 @@ export const gameController = {
     res.status(200).json(games);
   },
 
-  async getOne(req, res, next) {
+  async getOne(req, res, _next) {
     
     const gameId = parseInt(req.params.id, 10);
     // Vérifier que l'ID est valide
