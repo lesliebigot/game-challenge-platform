@@ -2,18 +2,24 @@ import { Router } from "express";
 import { gameController } from "./controllers/game.js";
 import { challengeController } from "./controllers/challenge.js";
 import { profilController } from "./controllers/profil.js";
-//import { userController } from "./controllers/user.js";
+import { userController } from "./controllers/user.js";
 //import { authentificationController } from "./controllers/authentification.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
 
 export const router = Router();
 
-// Tous les challenges
-router.get("/", challengeController.getAll); 
+// Tous les challenges 
+router.get("/challenges", challengeController.getAll); 
+router.get("/challenges/:id", challengeController.getOne);
+// Tous les jeux avec challenges associés
 router.get("/games", gameController.getAll);
 router.get("/games/:id", gameController.getOne);
+// Profil - Récupérer les challenges liés à l'utilisateur connecté
+router.get("/users", userController.getAll);
+// Un seul user avec ses challenges créés
+router.get("/users/:id", /*authMiddleware,*/ userController.getOne);
 router.get("/profil/challenges", authMiddleware, profilController.getUserChallenges);
-router.get("/challenge/:id", challengeController.getOne);
+
 
 /*router.post("/register", userController.createOne);
 router.post("/signin", authentificationController.signin);

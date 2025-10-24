@@ -1,4 +1,19 @@
 ###
 # GET all games
-GET http://localhost:3000
+GET http://localhost:3000/games
+###
+# GET all games
+GET http://localhost:3000/games/13
+###
+# GET all challenges
+GET http://localhost:3000/challenges
+###
+# GET one challenge
+GET http://localhost:3000/challenges/2
+###
+# GET one user with challenges created
+GET http://localhost:3000/users
+###
+# GET one user with challenges created
+GET http://localhost:3000/users/2
 ###

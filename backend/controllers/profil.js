@@ -1,4 +1,4 @@
-import {Challenge, User} from "../data/models/index.js";
+import {Challenge, User} from "../database/models/index.js";
 
 export const profilController = {async getUserChallenges(req, res) {
     
@@ -9,13 +9,13 @@ export const profilController = {async getUserChallenges(req, res) {
     // Recherche tous les challenges créés par l'utilisateur identitfié
     Challenge.findAll({ where: { creator_id: userId } }),
     // Recherche tous les challenges likés par l'utilisateur identifié
-    Challenge.findAll({
+    /*Challenge.findAll({
       include: [{
         model: User,
         where: { id: userId },
         through: { attributes: [] }
       }]
-    }),
+    }),*/
     // Recherche tous les challenges auquel l'utilisateur identifié participe
     Challenge.findAll({ where: { participant_id: userId } }),
   ]);

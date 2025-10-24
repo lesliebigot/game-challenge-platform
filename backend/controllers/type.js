@@ -1,4 +1,4 @@
-import { Genre } from "../data/models/index.js";
+import { Genre } from "../database/models/index.js";
 
 export const typeController = {
   

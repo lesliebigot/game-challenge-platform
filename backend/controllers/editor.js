@@ -1,4 +1,4 @@
-import { Editor } from "../data/models/index.js";
+import { Editor } from "../database/models/index.js";
 
 export const editorController = {
   

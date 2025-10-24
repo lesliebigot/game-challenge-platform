@@ -1,4 +1,4 @@
-import { Game, Challenge } from "../data/models/index.js";
+import { Game, Challenge } from "../database/models/index.js";
 
 export const gameController = {
 

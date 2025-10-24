@@ -1,4 +1,4 @@
-import { Challenge, User, Participate } from "../data/models/index.js";
+import { Challenge, User, Participate } from "../database/models/index.js";
 import { createChallengeSchema } from "../schemas/challengeSchema.js";
 import { participateChallengeSchema } from "../schemas/challengeSchema.js";
 
