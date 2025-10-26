@@ -1,4 +1,4 @@
-import { sequelize, Game, User, Role, Challenge, Genre, Platform, Editor, Participate  } from "../models/index.js";
+import { sequelize, Game, User, Role, Challenge, Genre, Platform, Editor  } from "../models/index.js";
 import { games } from "../data/games.js";
 import { editors } from "../data/editors.js";
 import { platforms } from "../data/platforms.js";
@@ -140,7 +140,21 @@ for (const user of allUsers2) {
 
 console.log("\n✅ Favoris ajoutés pour tous les utilisateurs !");
 
-//TODO 7. Ajouter des likes de users sur les challenges
+//7. Ajouter des likes de users sur les challenges
+const allUsers3 = await User.findAll();
+const allChallenges2 = await Challenge.findAll();
+
+for (const user of allUsers3) {
+  // Mélanger les challenges et en choisir 3 aléatoires
+  const shuffledChallenges = [...allChallenges2].sort(() => 0.5 - Math.random());
+  const likedChallenges = shuffledChallenges.slice(0, 5); // 5 challenges likés par utilisateur
+
+  for (const challenge of likedChallenges) {
+    await user.addLikedChallenges(challenge); // Utilise l'alias "likedChallenges" défini dans le modèle
+    console.log(`✅ ${user.pseudo} a liké le challenge "${challenge.title}".`);
+  }
+}
+console.log("✅ Tous les utilisateurs ont liké 5 challenges aléatoires !");
 
 
 console.log("\n✅ Seeding done!\n");
