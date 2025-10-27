@@ -12,6 +12,10 @@ import { Profil } from "../profil/profil.tsx";
 import { CreateChallenge } from "../createChallenge/createChallenge.tsx";
 import { ParticipateChallenge } from "../participateChallenge/participateChallenge.tsx";
 import { EditChallenge } from "../editChallenge/editChallenge.tsx";
+import { Contact } from "../contact/contact.tsx";
+import { LegalNotice } from "../legalNotice/legalNotice.tsx"; 
+import { SpecificGame } from "../specificGame/specificGame.tsx";
+
 
 function App() {
   return (
@@ -31,6 +35,11 @@ function App() {
           <Route path="/create-challenge" element={<CreateChallenge />} />
           <Route path="/edit-challenge" element={<EditChallenge />} />
           <Route path="/participate-challenge" element={<ParticipateChallenge />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/legal-notice" element={<LegalNotice />} />
+          <Route path="/games/1" element={<SpecificGame />} />
+
+
 
 
         </Routes>

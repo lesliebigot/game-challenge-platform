@@ -8,11 +8,11 @@ export function Footer() {
         <nav className="flex flex-col">
           <header className="footer-title">À propos</header>
           <a className="link link-hover">Notre équipe</a>
-          <a className="link link-hover">Contact</a>
+          <a href="/contact" className="link link-hover">Contact</a>
         </nav>
         <nav className="flex flex-col">
           <header className="footer-title">Légal</header>
-          <a className="link link-hover">Conditions d'utilisation</a>
+          <a href="/legal-notice" className="link link-hover">Mentions légales</a>
           <a className="link link-hover">Politique de confidentialité</a>
           <a className="link link-hover">Politique des cookies</a>
         </nav>
