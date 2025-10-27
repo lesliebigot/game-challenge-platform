@@ -1,8 +1,12 @@
-import { sequelize, Game, User, Role, Challenge, Genre, Platform, Editor, Participate  } from "../models/index.js";
+import { sequelize, Game, User, Role, Challenge, Genre, Platform, Editor  } from "../models/index.js";
 import { games } from "../data/games.js";
 import { editors } from "../data/editors.js";
 import { platforms } from "../data/platforms.js";
 import { genres } from "../data/genders.js";
+import { users } from "../data/users.js";
+import { challenges } from "../data/challenges.js";
+import { gameProofs } from "../data/gameProofs.js";
+
 
 // 1. Insérer les éditeurs, genres et plateformes
 for (const editor of editors) {
@@ -62,6 +66,96 @@ for (const gameData of games) {
 
   console.log(`✅ Jeu "${gameData.title}" inséré avec succès !`);
 }
+
+// 3. Créer les rôles
+const roleUser = await Role.create({ name: "user" });
+const roleAdmin = await Role.create({ name: "admin" });
+console.log("✅ Rôles insérés avec succès !");
+
+// 4. Créer les utilisateurs
+for (const userData of users) {
+  await User.create({
+    pseudo: userData.pseudo,
+    lastname: userData.lastname,
+    firstname: userData.firstname,
+    email: userData.email,
+    password: userData.password,
+    birthdate: userData.birthdate,
+    role_id: userData.isAdmin ? roleAdmin.id : roleUser.id, // Assignation dynamique du rôle
+  });
+}
+console.log("✅ Users insérés avec succès !");
+
+
+
+// 5. Créer une vingtaine de défis et les associer aléatoirement aux utilisateurs
+const dbUsers = await User.findAll(); // Récupère TOUS les utilisateurs de la base
+for (const challengeData of challenges) {
+  const game = await Game.findOne({ where: { title: challengeData.gameTitle } });
+  if (game) {
+    const challenge = await Challenge.create({
+      title: challengeData.title,
+      description: challengeData.description,
+    });
+    await challenge.setGame(game);
+
+    // Sélectionne un utilisateur aléatoire parmi ceux de la base
+    const randomUser = dbUsers[Math.floor(Math.random() * dbUsers.length)];
+    await challenge.setCreatorUser(randomUser);
+  }
+}
+
+// 6. Ajouter les participations
+const allUsers = await User.findAll();
+const allChallenges = await Challenge.findAll({ include: { model: Game, as: "game" } });
+
+for (let i = 0; i < 20; i++) {
+  const randomUser = allUsers[Math.floor(Math.random() * allUsers.length)];
+  const randomChallenge = allChallenges[Math.floor(Math.random() * allChallenges.length)];
+  const gameTitle = randomChallenge.game.title;
+  const proofsForGame = gameProofs[gameTitle] || ["https://youtu.be/generic_proof"];
+  const randomProof = proofsForGame[Math.floor(Math.random() * proofsForGame.length)];
+
+  await randomUser.addParticipatedChallenges(randomChallenge, {
+    through: { proof: randomProof }
+  });
+
+  console.log(`✅ ${randomUser.pseudo} → "${randomChallenge.title}" (${gameTitle}) : ${randomProof}`);
+}
+
+// 7. Ajouter des jeux en favoris aux utilisateurs (5 favoris aléatoires par utilisateur)
+const allUsers2 = await User.findAll();
+const allGames = await Game.findAll();
+
+for (const user of allUsers2) {
+  // Mélanger les jeux et en choisir 5 aléatoires
+  const shuffledGames = [...allGames].sort(() => 0.5 - Math.random());
+  const favoriteGames = shuffledGames.slice(0, 5); // 5 jeux favoris par utilisateur
+
+  for (const game of favoriteGames) {
+    await user.addFavoriteGames(game); // Utilise l'alias "favoriteGames" défini dans le modèle
+    console.log(`✅ ${user.pseudo} a ajouté "${game.title}" en favoris.`);
+  }
+}
+
+console.log("\n✅ Favoris ajoutés pour tous les utilisateurs !");
+
+//7. Ajouter des likes de users sur les challenges
+const allUsers3 = await User.findAll();
+const allChallenges2 = await Challenge.findAll();
+
+for (const user of allUsers3) {
+  // Mélanger les challenges et en choisir 3 aléatoires
+  const shuffledChallenges = [...allChallenges2].sort(() => 0.5 - Math.random());
+  const likedChallenges = shuffledChallenges.slice(0, 5); // 5 challenges likés par utilisateur
+
+  for (const challenge of likedChallenges) {
+    await user.addLikedChallenges(challenge); // Utilise l'alias "likedChallenges" défini dans le modèle
+    console.log(`✅ ${user.pseudo} a liké le challenge "${challenge.title}".`);
+  }
+}
+console.log("✅ Tous les utilisateurs ont liké 5 challenges aléatoires !");
+
 
 console.log("\n✅ Seeding done!\n");
 console.log("---");

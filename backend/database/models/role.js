@@ -4,13 +4,13 @@ import sequelize from "./sequelizeClient.js";
 export class Role extends Model {}
 
 Role.init({
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: "visitor",
-    },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: "visitor",
+  },
 }, {
-    sequelize,
-    modelName: "Role",
-    tableName: "role"
+  sequelize,
+  modelName: "Role",
+  tableName: "role"
 });
