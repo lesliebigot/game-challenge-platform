@@ -49,9 +49,9 @@ export function SpecificChallenge(){
             >
               <i className={`${isLike ? "fa-solid text-blue-900" : "fa-regular"} fa-thumbs-up text-lg sm:text-xl`}></i>
             </button>
-            <button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">
-        Participer au challenge
-            </button>
+            
+            <a href="/participate-challenge"><button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">Participer au challenge</button></a>
+            
           </div>            
         </div>
       </section>
@@ -60,11 +60,10 @@ export function SpecificChallenge(){
       {/* Challenges dispo */}
       <section className="section-challenges max-w-full"> 
         <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 justify-between gap-6">
-          {Array.from({ length: 3 }, (_, index) => (
+          {Array.from({ length: 2 }, (_, index) => (
             <CardVideo key={index} />
-
           ))}
-          
+          <CardVideo platform="twitch" challengerPseudo="GamerPro456" publishedAt="il y a 6 jours"/>
         </div> 
         
       </section>
