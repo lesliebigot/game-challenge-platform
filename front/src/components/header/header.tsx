@@ -15,7 +15,7 @@ export function Header() {
             <li><a href="/">Accueil</a></li>
             <li><a href="/games">Jeux</a></li>
             <li><a href="/challenges">Challenges</a></li>
-            <li><a href="/leaderboard">Classements</a></li>
+            <li><a href="/ranking">Classements</a></li>
           </ul>
         </div>
         <div className="flex items-center">
@@ -29,7 +29,7 @@ export function Header() {
           <li><a href="/" className="btn btn-ghost">Accueil</a></li>
           <li><a href="/games" className="btn btn-ghost">Jeux</a></li>
           <li><a href="/challenges" className="btn btn-ghost">Challenges</a></li>
-          <li><a href="/leaderboard" className="btn btn-ghost">Classements</a></li>
+          <li><a href="/ranking" className="btn btn-ghost">Classements</a></li>
         </ul>
       </div>
         
