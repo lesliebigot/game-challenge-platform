@@ -14,7 +14,8 @@ export const userController = {
   },
   async getOne(req, res) {
     // Récupération de l'id du user
-    const userId = parseInt(req.params.id, 10);
+    // const userId = parseInt(req.params.id, 10);
+    const userId = req.user.id;
     // Recherche du user par son id
     const user = await User.findByPk(userId,{
       include: [{

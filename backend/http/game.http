@@ -24,6 +24,7 @@ GET http://localhost:3000/users/1
 ###
 ### CREATE one challenge
 POST http://localhost:3000/games/1/challenges
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {
@@ -49,6 +50,7 @@ Content-Type: application/json
 
 ### CREATE userparticipation to one challenge
 POST http://localhost:3000/challenge/6/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {  
@@ -56,8 +58,27 @@ Content-Type: application/json
     "user_id": 1
  
 }
+
+### CREATE Sign in for your account
+POST http://localhost:3000/signin
+Content-Type: application/json
+
+{
+  "email":"o.senant@gmail.com",
+  "password":"OSenant2025!"
+}
+
+### GET one user with challenges created
+GET http://localhost:3000/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+Content-Type: application/json
+
+
+###
+
 ### UPDATE userparticipation to one challenge
 PATCH http://localhost:3000/challenge/6/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {  
@@ -66,8 +87,14 @@ Content-Type: application/json
  
 }
 
+###
+# DELETE one participation to a challenge
+DELETE  http://localhost:3000/challenge/6/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+
 ### Update one challenge
 PATCH http://localhost:3000/challenges/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {
@@ -77,3 +104,4 @@ Content-Type: application/json
 ###
 # DELETE one challenge
 DELETE  http://localhost:3000/challenges/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
