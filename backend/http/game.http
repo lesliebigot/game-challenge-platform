@@ -8,8 +8,11 @@ GET http://localhost:3000/games/13
 # GET all challenges
 GET http://localhost:3000/challenges
 ###
+# GET all challenges top-liked
+GET http://localhost:3000/challenges/top-liked
+###
 # GET one challenge
-GET http://localhost:3000/challenges/21
+GET http://localhost:3000/challenges/3
 ###
 # GET one user with challenges created
 GET http://localhost:3000/users

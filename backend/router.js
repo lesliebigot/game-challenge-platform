@@ -10,6 +10,8 @@ export const router = Router();
 
 // Tous les challenges 
 router.get("/challenges", challengeController.getAll); 
+// Tous les challenges les plus likés
+router.get("/challenges/top-liked", challengeController.getTopLiked);
 // Un challenge 
 router.get("/challenges/:id", challengeController.getOne);
 // Tous les jeux avec challenges associés
@@ -40,12 +42,6 @@ router.patch("/challenge/:id/participate", challengeController.updateParticipati
 router.delete("/challenge/:id/participate", challengeController.deleteParticipation);
 
 //router.post("/signin", authentificationController.signin);
-//router.post("/challenge", authMiddleware, challengeController.createOne);
 
-//
-//router.patch("challenge");
-//router.patch("particpate");
 //router.patch("profil");
-//
-//router.delete("/challenge");
-//router.delete("/participate");
+
