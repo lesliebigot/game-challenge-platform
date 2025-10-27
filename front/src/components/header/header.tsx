@@ -18,9 +18,11 @@ export function Header() {
             <li><a href="/ranking">Classements</a></li>
           </ul>
         </div>
-        <div className="flex items-center">
-          <img src="/images/logo.png" alt="Gamer Challenges Logo" className="h-10 w-10 mr-3"/>
-          <span className="text-xl font-bold pixel-font">Gamer Challenges</span>
+        <div>
+          <a href="/" className="flex items-center">
+            <img src="/images/logo.png" alt="Gamer Challenges Logo" className="h-10 w-10 mr-3"/>
+            <span className="text-xl font-bold pixel-font">Gamer Challenges</span>
+          </a>
         </div>
       </div>
         

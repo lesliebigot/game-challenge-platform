@@ -49,9 +49,11 @@ export function SpecificGame(){
             >
               <i className={`${isLike ? "fa-solid text-yellow-300" : "fa-regular"} fa-star text-lg sm:text-xl`}></i>
             </button>
-            <button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">
-        Créer un challenge
-            </button>
+            <a href="/create-challenge">
+              <button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">
+                Créer un challenge
+              </button>
+            </a>
           </div>            
         </div>
       </section>

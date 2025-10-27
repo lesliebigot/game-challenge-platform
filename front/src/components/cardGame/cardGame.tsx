@@ -12,7 +12,9 @@ export function CardGame(){
         <p className="mb-5 mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
         <div className="card-actions justify-between">
-          <button className="btn btn-primary">Voir les challenges</button>
+          <a href="/games/1">
+            <button className="btn btn-primary">Voir les challenges</button>
+          </a>
           <button className="btn btn-sm btn-ghost ">
             <i className="fa-regular fa-star text-xl"></i>
           </button>

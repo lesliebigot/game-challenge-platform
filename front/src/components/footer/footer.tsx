@@ -7,14 +7,12 @@ export function Footer() {
       <footer className="p-10 bg-base-300 text-base-content flex flex-wrap gap-8 justify-between"> 
         <nav className="flex flex-col">
           <header className="footer-title">À propos</header>
-          <a className="link link-hover">Notre équipe</a>
+          <a href="/team" className="link link-hover">Notre équipe</a>
           <a href="/contact" className="link link-hover">Contact</a>
         </nav>
         <nav className="flex flex-col">
           <header className="footer-title">Légal</header>
           <a href="/legal-notice" className="link link-hover">Mentions légales</a>
-          <a className="link link-hover">Politique de confidentialité</a>
-          <a className="link link-hover">Politique des cookies</a>
         </nav>
         <form className="flex flex-col">
           <header className="footer-title">Newsletter</header>

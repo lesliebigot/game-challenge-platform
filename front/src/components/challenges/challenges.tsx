@@ -1,4 +1,4 @@
-import {CardChallenge} from "../cardChallenge/cardChallenge.tsx";
+import {CardChallengeEdit, ParticipatedChallenges} from "../cardChallenge/cardChallenge.tsx";
 
 export function Challenges() {
   return (
@@ -7,13 +7,13 @@ export function Challenges() {
       <h2 className="text-2xl font bold pixel-font">Mes créations</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {Array.from({ length: 3 }, (_, index) => (
-          <CardChallenge key={index} />
+          <CardChallengeEdit key={index} />
         ))}
       </div>   
       <h2 className="text-2xl font bold pixel-font">Mes participations</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {Array.from({ length: 3 }, (_, index) => (
-          <CardChallenge key={index} />
+          <ParticipatedChallenges key={index} />
         ))}
       </div>    
     </div>
