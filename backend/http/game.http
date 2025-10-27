@@ -8,8 +8,11 @@ GET http://localhost:3000/games/13
 # GET all challenges
 GET http://localhost:3000/challenges
 ###
+# GET all challenges top-liked
+GET http://localhost:3000/challenges/top-liked
+###
 # GET one challenge
-GET http://localhost:3000/challenges/1
+GET http://localhost:3000/challenges/3
 ###
 # GET one user with challenges created
 GET http://localhost:3000/users
@@ -20,12 +23,12 @@ GET http://localhost:3000/users/1
 
 ###
 ### CREATE one challenge
-POST http://localhost:3000/challenges
+POST http://localhost:3000/games/1/challenges
 Content-Type: application/json
 
 {
-  "title": "test",
-  "description": "Terminer"
+  "title": "test ddddd",
+  "description": "Terminer le jeu en difficile dddd"
  
 }
 ### CREATE one user
@@ -45,11 +48,20 @@ Content-Type: application/json
 }
 
 ### CREATE userparticipation to one challenge
-POST http://localhost:3000/challenge/2/participate
+POST http://localhost:3000/challenge/6/participate
 Content-Type: application/json
 
 {  
     "proof": "https://example.com/proof/john_zelda_difficult.mp4",  
+    "user_id": 1
+ 
+}
+### UPDATE userparticipation to one challenge
+PATCH http://localhost:3000/challenge/6/participate
+Content-Type: application/json
+
+{  
+    "proof": "https://example.com/proof/bibi_difficult.mp4",  
     "user_id": 1
  
 }

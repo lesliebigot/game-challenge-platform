@@ -11,9 +11,11 @@ export const createChallengeSchema = z.object({
 
 export const participateChallengeSchema = z.object({
   URL: z.url("L’URL doit être valide")
+  // TODO envoyer uniquement vers des liens youtube qui sont sécurisés en évolution possible
     .refine((val) => val.startsWith("https://"), {
       message: "L’URL doit commencer par https://",
     }),
+  // description de la participation en evolution possible
   /* description: z.string()
     .min(10, "La description du challenge est trop courte")
     .max(500, "La description du challenge est trop longue"),*/
