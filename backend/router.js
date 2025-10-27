@@ -29,7 +29,7 @@ router.post("/games/:id/challenges", authMiddleware, challengeController.createO
 // Créer un user
 router.post("/register", userController.createOne);
 // participer à un challenge
-router.post("/challenge/:id/participate", authMiddleware, challengeController.submitToChallenge);
+router.post("/challenges/:id/participate", authMiddleware, challengeController.submitToChallenge);
 
 // modifier son challenge
 router.patch("/challenges/:id", authMiddleware, challengeController.updateOne);
@@ -37,9 +37,9 @@ router.patch("/challenges/:id", authMiddleware, challengeController.updateOne);
 router.delete("/challenges/:id", authMiddleware, challengeController.deleteOne);
 
 // modifier sa participation à un challenge
-router.patch("/challenge/:id/participate", authMiddleware, challengeController.updateParticipation);
+router.patch("/challenges/:id/participate", authMiddleware, challengeController.updateParticipation);
 // supprimer sa participation à un challenge
-router.delete("/challenge/:id/participate", authMiddleware, challengeController.deleteParticipation);
+router.delete("/challenges/:id/participate", authMiddleware, challengeController.deleteParticipation);
 
 router.post("/signin", authentificationController.signin);
 
