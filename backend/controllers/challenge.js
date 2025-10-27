@@ -36,7 +36,7 @@ export const challengeController = {
     res.status(200).json(challenge);
   },
 
-  async getTopLiked(req, res) {
+  /*async getTopLiked(req, res) {
     
     const topChallenges = await Challenge.findAll({
       include: [
@@ -62,7 +62,7 @@ export const challengeController = {
     });
 
     res.json({challenges: req.challenges, topChallenges,});
-  },
+  },*/
 
   async createOne(req, res) {
   
@@ -132,7 +132,7 @@ export const challengeController = {
     const data = parsed.data; */
 
     // Récupère l'id de l'utilisateur et du challenge
-    // const userId = req.user.id;
+    //const userId = req.user.id;
     const challengeId = parseInt(req.params.id, 10);
 
     // Vérifie que le challenge existe
@@ -189,10 +189,10 @@ export const challengeController = {
       return res.status(404).json({ error: "challenge non trouvé" });
     }
 
-    // modifier la liste récuperée avec les données fournies
+    // modifier le challenge récuperée avec les données fournies
     await challenge.update(data);
 
-    // retourner la liste modifiée en json avec le status 200
+    // retourner le challenge en json avec le status 200
     res.json(challenge);
   },
 
@@ -213,6 +213,71 @@ export const challengeController = {
 
     // supprimer ce challenge
     await challenge.destroy();
+
+    // retourner une reponse vide avec le code 204
+    res.status(204).json();
+  },
+
+  async updateParticipation(req, res) {  
+    const challengeId = parseInt(req.params.id, 10);
+    // Récupère l'id de l'utilisateur qui fait la requête
+    // const userId = req.user.id;
+    // À remplacer par l'ID du de l'utilisateur connecté
+    // Vérifie que le challenge existe
+    const challenge = await Challenge.findByPk(challengeId);
+    if (!challenge) {
+      return res.status(404).json({ error: "Challenge non trouvé" });
+    }
+
+    // Vérifie si l'utilisateur a déjà participé
+    /* const existingParticipation = await Participate.findOne({
+      where: { user_id: userId, challenge_id: challengeId }
+    });
+    if (existingParticipation) {
+      return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
+    }*/
+
+    // Modifier sa participation
+    const participation = await Participate.findByPk(challengeId);
+    //vérifier que l'utilistateur qui souhaite modifier sa participation est bien celui qui a crée cette participation
+    /*if (userId !== participation.user_id) {
+      return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
+    }*/
+    
+    await participation.update({
+      proof: req.body.proof,    
+    });
+
+    // retourner la participation modifiée en json avec le status 200
+    res.json(participation);
+  },
+  async deleteParticipation(req, res) {  
+    const challengeId = parseInt(req.params.id, 10);
+    // Récupère l'id de l'utilisateur qui fait la requête
+    // const userId = req.user.id;
+    // À remplacer par l'ID du de l'utilisateur connecté
+    // Vérifie que le challenge existe
+    const challenge = await Challenge.findByPk(challengeId);
+    if (!challenge) {
+      return res.status(404).json({ error: "Challenge non trouvé" });
+    }
+
+    // Vérifie si l'utilisateur a déjà participé
+    /* const existingParticipation = await Participate.findOne({
+      where: { user_id: userId, challenge_id: challengeId }
+    });
+    if (existingParticipation) {
+      return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
+    }*/
+
+    // Modifier sa participation
+    const participation = await Participate.findByPk(challengeId);
+    //vérifier que l'utilistateur qui souhaite modifier sa participation est bien celui qui a crée cette participation
+    /*if (userId !== participation.user_id) {
+      return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
+    }*/
+    
+    await participation.destroy();
 
     // retourner une reponse vide avec le code 204
     res.status(204).json();

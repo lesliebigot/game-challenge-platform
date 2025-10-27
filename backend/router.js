@@ -4,7 +4,7 @@ import { challengeController } from "./controllers/challenge.js";
 //import { profilController } from "./controllers/profil.js";
 import { userController } from "./controllers/user.js";
 //import { authentificationController } from "./controllers/authentification.js";
-//import { authMiddleware } from "./middlewares/authMiddleware.js";
+// import { authMiddleware } from "./middlewares/authMiddleware.js";
 
 export const router = Router();
 
@@ -18,7 +18,7 @@ router.get("/games", gameController.getAll);
 router.get("/games/:id", gameController.getOne);
 // Profil - Récupérer les challenges liés à l'utilisateur connecté
 router.get("/users", userController.getAll);
-// Un seul user avec ses challenges créés et participés
+// Un seul user avec ses challenges créés et participés, et ses jeux favoris
 router.get("/users/:id", /*authMiddleware,*/ userController.getOne);
 //router.get("/profil/challenges", authMiddleware, profilController.getUserChallenges);
 
@@ -34,9 +34,9 @@ router.patch("/challenges/:id", challengeController.updateOne);
 // supprimer son challenge
 router.delete("/challenges/:id", challengeController.deleteOne);
 
-// TODO modifier sa participation à un challenge
+// modifier sa participation à un challenge
 router.patch("/challenge/:id/participate", challengeController.updateParticipation);
-// TODO supprimer sa participation à un challenge
+// supprimer sa participation à un challenge
 router.delete("/challenge/:id/participate", challengeController.deleteParticipation);
 
 //router.post("/signin", authentificationController.signin);

@@ -45,11 +45,20 @@ Content-Type: application/json
 }
 
 ### CREATE userparticipation to one challenge
-POST http://localhost:3000/challenge/2/participate
+POST http://localhost:3000/challenge/6/participate
 Content-Type: application/json
 
 {  
     "proof": "https://example.com/proof/john_zelda_difficult.mp4",  
+    "user_id": 1
+ 
+}
+### UPDATE userparticipation to one challenge
+PATCH http://localhost:3000/challenge/6/participate
+Content-Type: application/json
+
+{  
+    "proof": "https://example.com/proof/bibi_difficult.mp4",  
     "user_id": 1
  
 }

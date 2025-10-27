@@ -24,7 +24,11 @@ export const userController = {
       {
         association: "participatedChallenges",
         attributes: ["id","title", "description"]       
-      }]
+      },
+      {
+        association: "favoriteGames",            
+      }
+      ]
     });
     // Gestion d'une erreur
     if (!user) {
