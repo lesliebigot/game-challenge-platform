@@ -8,11 +8,11 @@ import { userController } from "./controllers/user.js";
 
 export const router = Router();
 
-// Tous les challenges 
+// Tous les challenges avec créateur + jeu associé + participations + likes
 router.get("/challenges", challengeController.getAll); 
-// Tous les challenges les plus likés
+// Les 3 challenges les plus likés
 router.get("/challenges/top-liked", challengeController.getTopLiked);
-// Un challenge 
+// Un challenge avec créateur + jeu associé + participations + likes
 router.get("/challenges/:id", challengeController.getOne);
 // Tous les jeux avec challenges associés
 router.get("/games", gameController.getAll);
@@ -29,7 +29,7 @@ router.post("/games/:id/challenges", challengeController.createOne);
 // Créer un user
 router.post("/register", userController.createOne);
 // participer à un challenge
-router.post("/challenge/:id/participate", /*authMiddleware,*/ challengeController.submitToChallenge);
+router.post("/challenges/:id/participate", /*authMiddleware,*/ challengeController.submitToChallenge);
 
 // modifier son challenge
 router.patch("/challenges/:id", challengeController.updateOne);
@@ -37,17 +37,14 @@ router.patch("/challenges/:id", challengeController.updateOne);
 router.delete("/challenges/:id", challengeController.deleteOne);
 
 // modifier sa participation à un challenge
-router.patch("/challenge/:id/participate", challengeController.updateParticipation);
+router.patch("/challenges/:id/participate", challengeController.updateParticipation);
 // supprimer sa participation à un challenge
-router.delete("/challenge/:id/participate", challengeController.deleteParticipation);
+router.delete("/challenges/:id/participate", challengeController.deleteParticipation);
 
 // TODO liker/disliker un challenge (évolution possible)
 // router.post("/challenges/:id/like", authMiddleware, challengeController.likeChallenge);
 // router.post("/challenges/:id/dislike", authMiddleware, challengeController.dislikeChallenge);
 
-// Authentification
-//router.post("/signup", authentificationController.signup);
-//router.post("/signin", authentificationController.signin);
 
 
 

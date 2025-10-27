@@ -199,17 +199,15 @@ export const challengeController = {
   },
 
   async updateParticipation(req, res) {  
-    // récuperer et valider l'id du challenge à supprimer
+    // récuperer et valider l'id du challenge 
     const challengeId = idSchema.parse(req.params.id);   
     // Récupère l'id de l'utilisateur qui fait la requête
     // const userId = req.user.id;
-    // À remplacer par l'ID du de l'utilisateur connecté
     // Vérifie que le challenge existe
     const challenge = await Challenge.findByPk(challengeId);
     if (!challenge) {
       return res.status(404).json({ error: "Challenge non trouvé" });
     }
-
     // Vérifie si l'utilisateur a déjà participé
     /* const existingParticipation = await Participate.findOne({
       where: { user_id: userId, challenge_id: challengeId }
@@ -217,49 +215,47 @@ export const challengeController = {
     if (existingParticipation) {
       return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
     }*/
-
     // Modifier sa participation
     const participation = await Participate.findByPk(challengeId);
     //vérifier que l'utilistateur qui souhaite modifier sa participation est bien celui qui a crée cette participation
     /*if (userId !== participation.user_id) {
       return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
-    }*/
-    
+    }*/  
+    // Validation des nouvelles données avec Zod
+    const parsed = participateChallengeSchema.safeParse(req.body);
+    // Gestion d'une erreur Zod
+    if (!parsed.success) {
+      const fieldErrors = {}; 
+      for (const err of parsed.error.issues) {
+        const field = err.path[0]; 
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = [];
+        }
+        fieldErrors[field].push(err.message);
+      }  
+      return res.status(400).json({ errors: fieldErrors });
+    }    
     await participation.update({
-      proof: req.body.proof,    
+      proof: parsed.data.proof,    
     });
-
     // retourner la participation modifiée en json avec le status 200
     res.json(participation);
   },
   async deleteParticipation(req, res) {  
-    const challengeId = parseInt(req.params.id, 10);
+    // récuperer et valider l'id du challenge 
+    const challengeId = idSchema.parse(req.params.id);  
     // Récupère l'id de l'utilisateur qui fait la requête
     // const userId = req.user.id;
-    // À remplacer par l'ID du de l'utilisateur connecté
-    // Vérifie que le challenge existe
-    const challenge = await Challenge.findByPk(challengeId);
-    if (!challenge) {
-      return res.status(404).json({ error: "Challenge non trouvé" });
-    }
-
-    // Vérifie si l'utilisateur a déjà participé
-    /* const existingParticipation = await Participate.findOne({
-      where: { user_id: userId, challenge_id: challengeId }
-    });
-    if (existingParticipation) {
-      return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
-    }*/
-
-    // Modifier sa participation
+    // Vérifie que la participation existe
     const participation = await Participate.findByPk(challengeId);
-    //vérifier que l'utilistateur qui souhaite modifier sa participation est bien celui qui a crée cette participation
+    if (!participation) {
+      return res.status(404).json({ error: "Participation non trouvée" });
+    }   
+    //vérifier que l'utilistateur qui souhaite supprimer sa participation est bien celui qui a crée cette participation
     /*if (userId !== participation.user_id) {
       return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
-    }*/
-    
+    }*/    
     await participation.destroy();
-
     // retourner une reponse vide avec le code 204
     res.status(204).json();
   },

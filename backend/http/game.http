@@ -12,7 +12,7 @@ GET http://localhost:3000/challenges
 GET http://localhost:3000/challenges/top-liked
 ###
 # GET one challenge
-GET http://localhost:3000/challenges/2
+GET http://localhost:3000/challenges/1
 ###
 # GET one user with challenges created
 GET http://localhost:3000/users
@@ -48,7 +48,7 @@ Content-Type: application/json
 }
 
 ### CREATE userparticipation to one challenge
-POST http://localhost:3000/challenge/3/participate
+POST http://localhost:3000/challenges/3/participate
 Content-Type: application/json
 
 {  
@@ -57,11 +57,11 @@ Content-Type: application/json
  
 }
 ### UPDATE userparticipation to one challenge
-PATCH http://localhost:3000/challenge/6/participate
+PATCH http://localhost:3000/challenges/6/participate
 Content-Type: application/json
 
 {  
-    "proof": "https://example.com/proof/bibi_difficult.mp4",  
+    "proof": "https://bbbbbbb.com/proof/bibi_difficult.mp4",  
     "user_id": 1
  
 }
