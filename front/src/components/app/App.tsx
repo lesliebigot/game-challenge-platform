@@ -15,6 +15,7 @@ import { EditChallenge } from "../editChallenge/editChallenge.tsx";
 import { Contact } from "../contact/contact.tsx";
 import { LegalNotice } from "../legalNotice/legalNotice.tsx"; 
 import { SpecificGame } from "../specificGame/specificGame.tsx";
+import { SpecificChallenge } from "../specificChallenge/specificChallenge.tsx";
 
 
 function App() {
@@ -38,9 +39,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/legal-notice" element={<LegalNotice />} />
           <Route path="/games/1" element={<SpecificGame />} />
-
-
-
+          <Route path="/challenges/1" element={<SpecificChallenge />} />
 
         </Routes>
       </main>

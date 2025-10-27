@@ -41,17 +41,13 @@ export function SpecificGame(){
           </div>
     
           {/* Btn selection */}
-          <div className="flex flex-row justify-center lg:justify-end items-start gap-3 lg:gap-4 flex-shrink-0">
+          <div className="flex flex-row justify-center lg:justify-end items-start gap-3 lg:gap-4 shrink-0">
             <button 
-              className={`btn_star btn btn-sm sm:btn-md btn-circle transition-colors ${
-                isLike ? "btn-warning" : "btn-primary"
-              }`}
+              className="btn_star btn btn-sm sm:btn-md btn-circle btn-primary"
               onClick={() => setIsLike(!isLike)}
               title={isLike ? "Retirer des favoris" : "Ajouter aux favoris"}
             >
-              <i className={`${isLike ? "fa-solid" : "fa-regular"} fa-star text-lg sm:text-xl ${
-                isLike ? "text-yellow-300" : ""
-              }`}></i>
+              <i className={`${isLike ? "fa-solid text-yellow-300" : "fa-regular"} fa-star text-lg sm:text-xl`}></i>
             </button>
             <button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">
         Créer un challenge
