@@ -23,7 +23,7 @@ router.get("/users/:id", /*authMiddleware,*/ userController.getOne);
 //router.get("/profil/challenges", authMiddleware, profilController.getUserChallenges);
 
 // Créer un challenge
-router.post("/challenges", challengeController.createOne);
+router.post("/games/:id/challenges", challengeController.createOne);
 // Créer un user
 router.post("/register", userController.createOne);
 // participer à un challenge

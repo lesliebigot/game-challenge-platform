@@ -1,5 +1,6 @@
-import { Challenge, User, Participate } from "../database/models/index.js";
-//import { createChallengeSchema } from "../schemas/challengeSchema.js";
+import { Challenge, Participate } from "../database/models/index.js";
+import { createChallengeSchema } from "../schemas/challengeSchema.js";
+import { idSchema } from "../schemas/utils.js";
 //import { participateChallengeSchema } from "../schemas/challengeSchema.js";
 
 export const challengeController = {
@@ -13,15 +14,13 @@ export const challengeController = {
     });
     // Gestion d'une erreur
     if(!challenges) return res.status(404).json("Aucun challenge dans la base");
-    // On stocke le resultat dans req
-    req.challenges = challenges; 
     // On renvoi les données
     res.status(200).json(challenges);
   },
 
   async getOne(req, res) {
-    // Récupération de l'id du challenge
-    const challengeId = parseInt(req.params.id, 10);
+    // Récupération et valider l'id du challenge
+    const challengeId = idSchema.parse(req.params.id);
     // Recherche du challenge par son id
     const challenge = await Challenge.findByPk(challengeId,{
       include: [{
@@ -64,37 +63,34 @@ export const challengeController = {
     res.json({challenges: req.challenges, topChallenges,});
   },*/
 
-  async createOne(req, res) {
-  
-    // Validation des données avec Zod
-    //const parsed = createChallengeSchema.safeParse(req.body);
-
+  async createOne(req, res) { 
+    // Récupération et valider l'id du jeu
+    const gameId = idSchema.parse(req.params.id);
+    // Validation des données entrantes avec Zod
+    // safeParse pour ne pas générer d'erreur automatiquement
+    const parsed = createChallengeSchema.safeParse(req.body);
     // Gestion d'une erreur Zod
-    //if (!parsed.success) {
-    //  const fieldErrors = {};
-  
-    //for (const err of parsed.error.errors) {
-    //  const field = err.path[0]; 
-    //  if (!fieldErrors[field]) {
-    //    fieldErrors[field] = [];
-    //  }
-    //  fieldErrors[field].push(err.message);
-    //}
+    if (!parsed.success) {
+      const fieldErrors = {};
 
-    //return res.status(400).json({ errors: fieldErrors });
-    //}
-    
+      for (const err of parsed.error.issues) {
+        const field = err.path[0]; 
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = [];
+        }
+        fieldErrors[field].push(err.message);
+      }
+      return res.status(400).json({ errors: fieldErrors });
+    }
     // Récupère les données validées et netoyées par Zod
-    const { title, description } = req.body;
-    const game_id = 12; // TODO remplacer par l'ID du jeu approprié
-    const user_id = 1;  // TODO À remplacer par l'ID du de l'utilisateur conn
-
+    const { title, description } = parsed.data;
+    
+    const user_id = 1;  // TODO À remplacer par l'ID du de l'utilisateur connecté
     // Associe le nouvel objet créé à l'utilisateur connecté
     //data.creator_id = req.user.id;
     
     // Création du challenge
-    const challenge = await Challenge.create({title, description, user_id, game_id });
-
+    const challenge = await Challenge.create({title, description, user_id, game_id : gameId });
     // Renvoi des données
     res.status(201).json({
       message: "Challenge créé avec succès",
@@ -102,8 +98,8 @@ export const challengeController = {
         id: challenge.id,
         title: challenge.title,
         description: challenge.description,
-        user_id, 
-        game_id
+        user_id: challenge.user_id,
+        game_id: challenge.game_id
       },
     });
   },
