@@ -12,7 +12,7 @@ GET http://localhost:3000/challenges
 GET http://localhost:3000/challenges/top-liked
 ###
 # GET one challenge
-GET http://localhost:3000/challenges/3
+GET http://localhost:3000/challenges/2
 ###
 # GET one user with challenges created
 GET http://localhost:3000/users
@@ -48,12 +48,12 @@ Content-Type: application/json
 }
 
 ### CREATE userparticipation to one challenge
-POST http://localhost:3000/challenge/6/participate
+POST http://localhost:3000/challenge/3/participate
 Content-Type: application/json
 
 {  
-    "proof": "https://example.com/proof/john_zelda_difficult.mp4",  
-    "user_id": 1
+    "proof": "https://e.ghffdddhgg/nts_win"
+    
  
 }
 ### UPDATE userparticipation to one challenge
@@ -67,7 +67,7 @@ Content-Type: application/json
 }
 
 ### Update one challenge
-PATCH http://localhost:3000/challenges/1
+PATCH http://localhost:3000/challenges/2
 Content-Type: application/json
 
 {
@@ -76,4 +76,4 @@ Content-Type: application/json
 
 ###
 # DELETE one challenge
-DELETE  http://localhost:3000/challenges/4
+DELETE  http://localhost:3000/challenges/2
