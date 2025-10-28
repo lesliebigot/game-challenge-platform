@@ -24,6 +24,7 @@ export function GameList(){
     fetchGames();
   }, []);
 
+  // Si tableau vide alors on affiche loading
   if (games.length === 0) {
     return <div>Loading ...</div>;
   }
@@ -42,6 +43,7 @@ export function GameList(){
     ? games.filter(game => game.Genre?.id === selectedGenre)
     : games;
 
+   // Filtre jeux par barre recherche 
   const searchedGames = filteredGames.filter((game) => {
     return game.title.toLowerCase().includes(searchValue.toLowerCase());
   });
@@ -79,7 +81,7 @@ export function GameList(){
 
       </div>
       <section className="flex justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mt-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-12 mb-12">
           {searchedGames.map((game)=>(
             <CardGame key={game.id} game={game}/>
           ))}

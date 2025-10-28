@@ -13,7 +13,7 @@ export function CardGame({ game }: CardGameProps) {
   return (
     <div>
      
-      <div key={game.id} className="card bg-base-100 max-w-96 min-h-full shadow-sm mb-4">
+      <div key={game.id} className="card bg-base-100 max-w-96 min-h-full shadow-sm mb-4 ">
         <a href={`/games/${game.id}`}>
           <figure className="w-auto">
             <img src={game.image} alt={game.title}/>
