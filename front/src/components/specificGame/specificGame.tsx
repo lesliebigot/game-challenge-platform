@@ -1,29 +1,47 @@
 import "./specificGame.css";
 import {CardChallenge} from "../cardChallenge/cardChallenge.tsx";
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import { useParams } from "react-router";
+import axios from "axios";
+import type { IGameDetails } from "../../../@types/game.d.ts";
 
 export function SpecificGame(){
-
+  const [games, setGames] = useState<IGameDetails | null >(null);
   const [isLike, setIsLike] = useState(false);
+  const params = useParams();
+  const {id} = params;
+  
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/games/${id}`);
+        console.log("Données API reçues:", response.data);
+        setGames(response.data);
+      } catch (e: unknown) {
+        console.error("Erreur API axios:", e instanceof Error ? e.message : e);
+      }
+    };
+    fetchGames();
+  }, [id]);
 
   return (
     <>
       {/* Section image du jeu */}
       <section className="section-game w-[80%]">
-        <img src="../images/bf6.webp" alt="image du jeu" className="img_game"/>
+        <img src={games?.image} alt={games?.title} className="img_game"/>
       </section>
       {/* Section information et détails jeux */}          
       <section className="section-game max-w-[80%]">
         {/* Info spé jeux */}
         <div className="flex flex-col lg:flex-row lg:justify-between gap-4 lg:gap-0">
           <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold pixel-font text-white mb-2">Battlefield 6
+            <h1 className="text-2xl sm:text-3xl font-bold pixel-font text-white mb-2">{games?.title}
             </h1>
-            <p className="text-base lg:text-lg text-white">Année : 2025</p>  
+            <p className="text-base lg:text-lg text-white">Genre : {games?.Genre.name}</p>  
           </div>
           <div className="flex-1 lg:text-right">
-            <p className="text-base lg:text-lg text-white">Plateforme : PC, Xbox et Playstation</p> 
-            <p className="text-base lg:text-lg text-white">Editeur : EA</p>   
+            <p className="text-base lg:text-lg text-white">Plateforme : {games?.platforms.map((platform)=>(platform.name))} </p> 
+            <p className="text-base lg:text-lg text-white">Editeur : {games?.editor.name}</p>   
           </div>            
         </div>
         {/* Description jeu */}
@@ -31,12 +49,7 @@ export function SpecificGame(){
           <div className="flex-1 lg:pr-8">
             <p className="text-base lg:text-lg text-white mb-3">Description :</p>
             <p className="text-sm lg:text-base text-white leading-relaxed">
-        Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, 
-        or even a very very short story. Body text for whatever you'd like to say. Add main 
-        takeaway points, quotes, anecdotes, or even a very very short story. Body text for 
-        whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a 
-        very very short story. Body text for whatever you'd like to say. Add main takeaway 
-        points, quotes, anecdotes, or even a very very short story.
+              {games?.description}
             </p>
           </div>
     

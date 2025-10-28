@@ -43,7 +43,7 @@ export function GameList(){
     ? games.filter(game => game.Genre?.id === selectedGenre)
     : games;
 
-   // Filtre jeux par barre recherche 
+  // Filtre jeux par barre recherche 
   const searchedGames = filteredGames.filter((game) => {
     return game.title.toLowerCase().includes(searchValue.toLowerCase());
   });

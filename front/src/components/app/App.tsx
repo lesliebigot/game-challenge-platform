@@ -40,7 +40,7 @@ function App() {
           <Route path="/edit-challenge" element={<EditChallenge />} />
           <Route path="/participate-challenge" element={<ParticipateChallenge />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/legal-notice" element={<LegalNotice />} />
+          <Route path="/legal-:idotice" element={<LegalNotice />} />
           <Route path="/games/1" element={<SpecificGame />} />
           <Route path="/challenges/1" element={<SpecificChallenge />} />
           <Route path="/ranking" element={<Ranking />} />
