@@ -2,9 +2,16 @@
 import "dotenv/config";
 import express from "express";
 import { router } from "./router.js";
+import cors from "cors";
 
 
 export const app = express();
+
+// Autoriser les requêtes venant de http://localhost:5173 (votre frontend)
+app.use(cors({
+  origin: "http://localhost:5173",
+}));
+
 
 // on a besoin d'un parser pour récuperer les données en json
 app.use(express.json());

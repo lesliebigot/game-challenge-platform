@@ -1,8 +1,31 @@
 import "./gameList.css";
 import {CardGame} from "../cardGame/cardGame.tsx";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import type { IGameDetails } from "../../../@types/game.d.ts";
+
 
 
 export function GameList(){
+  const [games, setGames] = useState<IGameDetails[]>([]);
+  
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/games");
+        console.log("Données API reçues:", data);
+        setGames(data);
+      } catch (e: any) {
+        console.error("Erreur API axios:", e.response || e.message || e);
+      }
+    };
+    fetchGames();
+  }, []);
+
+  if (games.length === 0) {
+    return <div>Loading ...</div>;
+  }
+
   return(
     <>
       <div className="flex flex-row justify-center mt-5 gap-10">
@@ -34,11 +57,12 @@ export function GameList(){
             <option>RPG</option>
           </select>
         </fieldset>
+
       </div>
       <section className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-12 mb-12">
-          {Array.from({ length: 9}, (_, index) => (
-            <CardGame key={index} />
+          {games.map((game)=>(
+            <CardGame key={game.id} game={game}/>
           ))}
         </div>            
       </section>
