@@ -1,0 +1,7 @@
+/* Footer */
+
+.footer-title {
+  font-family: var(--font-main);
+  font-size: 1.25rem;
+  color: hsl(var(--p));
+}
