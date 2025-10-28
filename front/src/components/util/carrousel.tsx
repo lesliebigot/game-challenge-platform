@@ -1,30 +1,33 @@
 import { CardChallenge } from "../cardChallenge/cardChallenge.tsx";
+import type { IChallenge } from "../../../@types/challenge.d.ts";
 
+interface ChallengesProps {
+  topChallenge: IChallenge;
+}
 
-
-export function CarouselWithCards() {
+export function CarouselWithCards({topChallenge} : ChallengesProps) {
   return (
     <div className="relative w-full max-w-7xl mx-auto">
       {/* Carousel Container */}
       <div className="carousel carousel-center bg-neutral rounded-box w-full space-x-2 sm:space-x-4 p-2 sm:p-4 overflow-x-auto">
         {/* Slides */}
         <div id="slide1" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
+          <CardChallenge topChallenge={topChallenge} />
         </div>
         <div id="slide2" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
+          <CardChallenge topChallenge={topChallenge}/>
         </div>
         <div id="slide3" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
+          <CardChallenge topChallenge={topChallenge} />
         </div>
         <div id="slide4" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
+          <CardChallenge topChallenge={topChallenge} />
         </div>
         <div id="slide5" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
+          <CardChallenge topChallenge={topChallenge} />
         </div>
         <div id="slide6" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
+          <CardChallenge topChallenge={topChallenge} />
         </div>
       </div>
 

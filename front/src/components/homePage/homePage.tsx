@@ -94,7 +94,7 @@ export function HomePage(){
             <h2 className="text-4xl font-bold pixel-font mb-4">Les challenges du moment</h2>
           </div>
           
-          <CarouselWithCards/>
+          <CarouselWithCards key={topChallenge.id} topChallenge={topChallenge}/>
         </section>
 
         {/* Popular Games Section */}
