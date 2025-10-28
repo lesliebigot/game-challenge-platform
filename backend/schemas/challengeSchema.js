@@ -9,14 +9,10 @@ export const createChallengeSchema = z.object({
     .max(500, "La description du challenge est trop longue"),
 });
 
+// .partial() permet de réutiliser un schema en rendant toutes les propriétés optionnelles
+export const updateChallengeSchema = createChallengeSchema.partial(); 
+
+// avec Z.url l'url doit forcement commencé par https://
 export const participateChallengeSchema = z.object({
-  URL: z.url("L’URL doit être valide")
-  // TODO envoyer uniquement vers des liens youtube qui sont sécurisés en évolution possible
-    .refine((val) => val.startsWith("https://"), {
-      message: "L’URL doit commencer par https://",
-    }),
-  // description de la participation en evolution possible
-  /* description: z.string()
-    .min(10, "La description du challenge est trop courte")
-    .max(500, "La description du challenge est trop longue"),*/
+  proof: z.url("L'URL de la preuve doit être valide, l’URL doit commencer par https://")
 });

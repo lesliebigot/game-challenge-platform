@@ -12,7 +12,7 @@ GET http://localhost:3000/challenges
 GET http://localhost:3000/challenges/top-liked
 ###
 # GET one challenge
-GET http://localhost:3000/challenges/3
+GET http://localhost:3000/challenges/1
 ###
 # GET one user with challenges created
 GET http://localhost:3000/users
@@ -49,13 +49,14 @@ Content-Type: application/json
 }
 
 ### CREATE userparticipation to one challenge
+POST http://localhost:3000/challenges/1/participate
 POST http://localhost:3000/challenges/6/participate
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {  
-    "proof": "https://example.com/proof/john_zelda_difficult.mp4",  
-    "user_id": 1
+    "proof": "http://e.xxx/nts_win"
+    
  
 }
 
@@ -81,10 +82,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxN
 Content-Type: application/json
 
 {  
-    "proof": "https://example.com/proof/bibi_difficult.mp4",  
-    "user_id": 1
+    "proof": "https://xxxxx.com/proof/bibi_difficult.mp4" 
+    
  
 }
+### DELETE userparticipation to one challenge
+DELETE http://localhost:3000/challenges/6/participate
+Content-Type: application/json
+
 
 ###
 # DELETE one participation to a challenge
@@ -92,6 +97,7 @@ DELETE  http://localhost:3000/challenges/6/participate
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 
 ### Update one challenge
+PATCH http://localhost:3000/challenges/2
 PATCH http://localhost:3000/challenges/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
@@ -102,5 +108,6 @@ Content-Type: application/json
 
 ###
 # DELETE one challenge
+DELETE  http://localhost:3000/challenges/2
 DELETE  http://localhost:3000/challenges/4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac

@@ -1,7 +1,6 @@
 import { Challenge, Participate, User } from "../database/models/index.js";
-import { createChallengeSchema } from "../schemas/challengeSchema.js";
+import { createChallengeSchema, participateChallengeSchema, updateChallengeSchema } from "../schemas/challengeSchema.js";
 import { idSchema } from "../schemas/utils.js";
-//import { participateChallengeSchema } from "../schemas/challengeSchema.js";
 
 export const challengeController = {
   
@@ -9,7 +8,7 @@ export const challengeController = {
     // Recherche de tous les modèles Challenge
     const challenges = await Challenge.findAll({
       include: [{
-        association: "participantUsers",             
+        association: "participantUsers",            
       },
       {
         association: "likedByUsers",             
@@ -60,7 +59,7 @@ export const challengeController = {
         },
       ],
       group: ["Challenge.id"], // "], PostgreSQL exige que toutes les colonnes non-agrégées dans le SELECT soient dans le GROUP BY.
-      subQuery: false, // Évite que Sequelize génère une sous-requête pour le LIMIT, ce qui peut casser le COUNT et les JOINs dans PostgreSQL.
+      subQuery: false, // 
       order: [[likeCount, "DESC"]],
       limit: 3,
     });
@@ -112,177 +111,171 @@ export const challengeController = {
   },
 
   async submitToChallenge(req, res) {
-
-    /* // Validation des données avec Zod
+    // Validation des données avec Zod
     const parsed = participateChallengeSchema.safeParse(req.body);
-
     // Gestion d'une erreur Zod
     if (!parsed.success) {
-      const fieldErrors = {};
-  
-      for (const err of parsed.error.errors) {
+      const fieldErrors = {}; 
+      for (const err of parsed.error.issues) {
         const field = err.path[0]; 
         if (!fieldErrors[field]) {
           fieldErrors[field] = [];
         }
         fieldErrors[field].push(err.message);
-      }
-  
+      }  
       return res.status(400).json({ errors: fieldErrors });
-    }
-    
+    }    
     // Récupère les données validées et netoyées par Zod
-    const data = parsed.data; */
-
-    // Récupère l'id de l'utilisateur et du challenge
+    const { proof } = parsed.data;
+    // Récupèrer et valider l'id de l'utilisateur et du challenge
     //const userId = req.user.id;
-    const challengeId = parseInt(req.params.id, 10);
-
+    const challengeId = idSchema.parse(req.params.id);
     // Vérifie que le challenge existe
     const challenge = await Challenge.findByPk(challengeId);
     if (!challenge) {
       return res.status(404).json({ error: "Challenge non trouvé" });
     }
-
-    // Vérifie si l'utilisateur a déjà participé
+    // TODO Vérifier si l'utilisateur connecté a déjà participé à ce challenge
     /* const existingParticipation = await Participate.findOne({
       where: { user_id: userId, challenge_id: challengeId }
     });
     if (existingParticipation) {
       return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
     }*/
-
     // Crée la participation
     const participation = await Participate.create({
-      user_id: /*userId*/1,
+      user_id: /*userId*/2,
       challenge_id: challengeId,
-      proof: /*data*/req.body.proof,
-      // proof_description: data.description
+      proof: proof,
     });
-
     // Renvoi des données
     res.status(201).json({
       message: "Participation enregistrée avec succès",
       participation: {
         id: participation.id,
-        user_id: /*userId*/1,
+        user_id: participation.user_id,
         challenge_id: challengeId,
-        url: /*data*/req.body.proof,
-        // description: data.description
+        proof: participation.proof
       }
     });
   },
 
+  // modifier son challenge
   async updateOne(req, res) {
-    // TODO : user_id du challenge = id du user connecté en condition pour pouvoir modifier le challenge
-    // récuperer les informations de modifications (elles sont fournies en json sur le body)
+    // TODO : user_id du créateur du challenge = id du user connecté en condition pour pouvoir modifier le challenge
+    // récuperer les informations de modifications   
     let data = req.body;
-    // valider la data
-    //data = updateListSchema.parse(data);
-
-    // récuperer ET valider l'id du challenge à modifier (fourni dans l'url)
-    //const { id } = idSchema.parse(req.params);
-    const id = parseInt(req.params.id, 10);
-
+    // valider ces infos
+    data = updateChallengeSchema.parse(data);
+    // récuperer et valider l'id du challenge à modifier
+    const challengeId = idSchema.parse(req.params.id);   
     // récuperer le challenge concerné
-    const challenge = await Challenge.findByPk(id);
-
+    const challenge = await Challenge.findByPk(challengeId);
     // est ce que ce challenge existe ?
     if (!challenge) {
       return res.status(404).json({ error: "challenge non trouvé" });
     }
-
-    // modifier le challenge récuperée avec les données fournies
+    // modifier le challenge récuperé avec les données fournies
     await challenge.update(data);
-
     // retourner le challenge en json avec le status 200
     res.json(challenge);
   },
 
-  // Supprimer un challenge par son id
+  // Supprimer le challenge qu'on a créé
   async deleteOne(req, res) {
-    // TODO : user_id du challenge = id du user connecté en condition pour pouvoir supprimer le challenge
-    // récuperer ET valider l'id du challenge à modifier (fourni dans l'url)
-    //const { id } = idSchema.parse(req.params);
-    const id = parseInt(req.params.id, 10);
-    
-    // récuperer la liste concernée
-    const challenge = await Challenge.findByPk(id);
-
-    // est ce que cette liste existe ?
+    // TODO : user_id créateur du challenge = id du user connecté en condition pour pouvoir supprimer le challenge
+    // récuperer et valider l'id du challenge à supprimer
+    const challengeId = idSchema.parse(req.params.id);   
+    // récuperer le challenge concerné
+    const challenge = await Challenge.findByPk(challengeId);
+    // est ce que ce challenge existe ?
     if (!challenge) {
       return res.status(404).json({ error: "challenge non trouvé" });
     }
-
     // supprimer ce challenge
     await challenge.destroy();
-
     // retourner une reponse vide avec le code 204
     res.status(204).json();
   },
 
+  //todo à tester
   async updateParticipation(req, res) {  
-    const challengeId = parseInt(req.params.id, 10);
+    // Récupérer et valider l'id du challenge
+    const challengeId = idSchema.parse(req.params.id); 
+    
     // Récupère l'id de l'utilisateur qui fait la requête
-    // const userId = req.user.id;
-    // À remplacer par l'ID du de l'utilisateur connecté
-    // Vérifie que le challenge existe
+    const userId = req.user.id;
+    
+    // Vérifier que le challenge existe
     const challenge = await Challenge.findByPk(challengeId);
     if (!challenge) {
       return res.status(404).json({ error: "Challenge non trouvé" });
     }
-
-    // Vérifie si l'utilisateur a déjà participé
-    /* const existingParticipation = await Participate.findOne({
-      where: { user_id: userId, challenge_id: challengeId }
-    });
-    if (existingParticipation) {
-      return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
-    }*/
-
-    // Modifier sa participation
-    const participation = await Participate.findByPk(challengeId);
-    //vérifier que l'utilistateur qui souhaite modifier sa participation est bien celui qui a crée cette participation
-    /*if (userId !== participation.user_id) {
-      return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
-    }*/
     
+    // Récupérer la participation existante
+    const participation = await Participate.findOne({
+      where: { 
+        user_id: userId, 
+        challenge_id: challengeId 
+      }
+    });
+    
+    if (!participation) {
+      return res.status(404).json({ 
+        error: "Vous n'avez pas encore participé à ce challenge" 
+      });
+    }
+    
+    // Validation des nouvelles données avec Zod
+    const parsed = participateChallengeSchema.safeParse(req.body);
+    
+    // Gestion d'une erreur Zod
+    if (!parsed.success) {
+      const fieldErrors = {}; 
+      for (const err of parsed.error.issues) {
+        const field = err.path[0]; 
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = [];
+        }
+        fieldErrors[field].push(err.message);
+      }  
+      return res.status(400).json({ errors: fieldErrors });
+    }    
+    
+    // Mettre à jour la participation (la preuve)
     await participation.update({
-      proof: req.body.proof,    
+      proof: parsed.data.proof
     });
-
-    // retourner la participation modifiée en json avec le status 200
-    res.json(participation);
+    
+    return res.status(200).json({ 
+      message: "Participation mise à jour avec succès",
+      participation 
+    });
   },
+  //todo à refaire ne fonctionne pas
   async deleteParticipation(req, res) {  
-    const challengeId = parseInt(req.params.id, 10);
+    // récuperer et valider l'id du challenge 
+    const challengeId = idSchema.parse(req.params.id);  
     // Récupère l'id de l'utilisateur qui fait la requête
     // const userId = req.user.id;
-    // À remplacer par l'ID du de l'utilisateur connecté
-    // Vérifie que le challenge existe
-    const challenge = await Challenge.findByPk(challengeId);
-    if (!challenge) {
-      return res.status(404).json({ error: "Challenge non trouvé" });
-    }
 
-    // Vérifie si l'utilisateur a déjà participé
-    /* const existingParticipation = await Participate.findOne({
-      where: { user_id: userId, challenge_id: challengeId }
-    });
-    if (existingParticipation) {
-      return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
-    }*/
-
-    // Modifier sa participation
+    // Vérifie que la participation existe
     const participation = await Participate.findByPk(challengeId);
-    //vérifier que l'utilistateur qui souhaite modifier sa participation est bien celui qui a crée cette participation
+    if (!participation) {
+      return res.status(404).json({ error: "Participation non trouvée" });
+    }   
+    //vérifier que l'utilistateur qui souhaite supprimer sa participation est bien celui qui a crée cette participation
     /*if (userId !== participation.user_id) {
       return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
-    }*/
-    
-    await participation.destroy();
-
+    }*/    
+    await participation.destroy(
+      {
+        where: { user_id: 1 /*userId*/}
+      }
+    );
     // retourner une reponse vide avec le code 204
-    res.status(204).json();
+    res.status(204).json({
+      message: "participation supprimé avec succès",
+    });
   },
 };
