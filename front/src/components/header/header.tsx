@@ -13,7 +13,7 @@ export function Header() {
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52">
             <li><a href="/">Accueil</a></li>
-            <li><a href="/games">Jeux</a></li>
+            <li><a href="/games">Liste des jeux</a></li>
             <li><a href="/challenges">Challenges</a></li>
             <li><a href="/ranking">Classements</a></li>
           </ul>

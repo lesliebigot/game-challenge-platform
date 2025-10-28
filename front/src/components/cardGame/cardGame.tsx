@@ -1,6 +1,9 @@
 import "./cardGame.css";
+import { useState } from "react";
 
 export function CardGame(){
+  const [isLike, setIsLike] = useState(false);
+
   return (
     <div className="card bg-base-100 w-96 shadow-sm">
       <figure>
@@ -15,8 +18,13 @@ export function CardGame(){
           <a href="/games/1">
             <button className="btn btn-primary">Voir les challenges</button>
           </a>
-          <button className="btn btn-sm btn-ghost ">
-            <i className="fa-regular fa-star text-xl"></i>
+          {/*-- Bouton favoris --*/}
+          <button 
+            className="btn_star btn btn-sm sm:btn-md btn-circle btn-primary"
+            onClick={() => setIsLike(!isLike)}
+            title={isLike ? "Retirer des favoris" : "Ajouter aux favoris"}
+          >
+            <i className={`${isLike ? "fa-solid text-yellow-300" : "fa-regular"} fa-star text-lg sm:text-xl`}></i>
           </button>
         </div>
       </div>

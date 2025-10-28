@@ -1,3 +1,5 @@
+import "./team.css";
+
 export function Team(){
   return (
     <>
@@ -54,7 +56,7 @@ export function Team(){
           <div className="hero-content flex-col lg:flex-row">
             <img
               src="../images/surprise/Alexis.png"
-              className="max-w-xs rounded-lg shadow-2xl"
+              className="surprise rounded-lg shadow-2xl"
             />
             <div>
               <p className="text-5xl font-bold">Alexis</p>

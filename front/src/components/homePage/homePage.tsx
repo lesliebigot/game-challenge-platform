@@ -91,7 +91,11 @@ export function HomePage(){
               ))}
               
             </div>
-            <div className="flex justify-center mb-5"><button className="btn btn-primary"><a href="/games">Voir plus</a></button></div>
+            <div className="flex justify-center mb-5">
+              <a href="/games">
+                <button className="btn btn-primary">Voir plus</button>
+              </a>
+            </div>
             
           </div>
         </section>
