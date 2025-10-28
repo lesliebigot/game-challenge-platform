@@ -4,9 +4,8 @@ import {CardGameLight} from "../cardGame/cardGameLight.tsx";
 import {CardChallenge} from "../cardChallenge/cardChallenge.tsx";
 import {CarouselWithCards} from "../util/carrousel.tsx";
 
+
 export function HomePage(){
-
-
   return (
     <>
       <main>
@@ -89,7 +88,6 @@ export function HomePage(){
               {Array.from({ length: 6 }, (_, index) => (
                 <CardGameLight key={index} />
               ))}
-              
             </div>
             <div className="flex justify-center mb-5">
               <a href="/games">

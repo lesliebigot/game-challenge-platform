@@ -13,17 +13,14 @@ export function CardGame({ game }: CardGameProps) {
   return (
     <div>
      
-      <div key={game.id} className="card bg-base-100 w-96 min-h-full shadow-sm mb-4">
-        <figure>
-          <img src={game.image} alt={game.title} className="w-sm"/>
+      <div key={game.id} className="card bg-base-100 max-w-96 min-h-full shadow-sm mb-4">
+        <figure className="w-auto">
+          <img src={game.image} alt={game.title}/>
         </figure>
         <div className="card-body">
           <h2 className="card-title text-md">{game.title}</h2>
           <p>{game.description}</p>
-          <div className="flex gap-5">
-            <a href={`/games/${game.id}`}>
-              <button className="btn btn-primary">Voir les challenges</button>
-            </a>
+          <div className="flex gap-2 justify-end">
             <button
               className="btn_star btn btn-sm sm:btn-md btn-circle btn-primary"
               onClick={() => setIsLike(!isLike)}
@@ -35,6 +32,9 @@ export function CardGame({ game }: CardGameProps) {
                 } fa-star text-lg sm:text-xl`}
               ></i>
             </button>
+            <a href={`/games/${game.id}`}>
+              <button className="btn btn-primary">Voir les challenges</button>
+            </a>
           </div>
           
         </div>

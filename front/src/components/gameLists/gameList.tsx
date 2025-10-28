@@ -15,8 +15,8 @@ export function GameList(){
         const { data } = await axios.get("http://localhost:3000/games");
         console.log("Données API reçues:", data);
         setGames(data);
-      } catch (e: any) {
-        console.error("Erreur API axios:", e.response || e.message || e);
+      } catch (e: unknown) {
+        console.error("Erreur API axios:", e instanceof Error ? e.message : e);
       }
     };
     fetchGames();
