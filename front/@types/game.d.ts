@@ -5,7 +5,7 @@ export interface IGameDetails {
   image: string;
   created_at: string;
   updated_at: string;
-  genre: {
+  Genre: {
     id: number;
     name: string;
   };
