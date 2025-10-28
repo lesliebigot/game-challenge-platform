@@ -144,7 +144,7 @@ export const challengeController = {
     }*/
     // Crée la participation
     const participation = await Participate.create({
-      user_id: /*userId*/1,
+      user_id: /*userId*/2,
       challenge_id: challengeId,
       proof: proof,
     });
@@ -153,7 +153,7 @@ export const challengeController = {
       message: "Participation enregistrée avec succès",
       participation: {
         id: participation.id,
-        user_id: /*userId*/1,
+        user_id: participation.user_id,
         challenge_id: challengeId,
         proof: participation.proof
       }
@@ -198,31 +198,37 @@ export const challengeController = {
     res.status(204).json();
   },
 
+  //todo à tester
   async updateParticipation(req, res) {  
-    // récuperer et valider l'id du challenge 
-    const challengeId = idSchema.parse(req.params.id);   
+    // Récupérer et valider l'id du challenge
+    const challengeId = idSchema.parse(req.params.id); 
+    
     // Récupère l'id de l'utilisateur qui fait la requête
-    // const userId = req.user.id;
-    // Vérifie que le challenge existe
+    const userId = req.user.id;
+    
+    // Vérifier que le challenge existe
     const challenge = await Challenge.findByPk(challengeId);
     if (!challenge) {
       return res.status(404).json({ error: "Challenge non trouvé" });
     }
-    // Vérifie si l'utilisateur a déjà participé
-    /* const existingParticipation = await Participate.findOne({
-      where: { user_id: userId, challenge_id: challengeId }
+    
+    // Récupérer la participation existante
+    const participation = await Participate.findOne({
+      where: { 
+        user_id: userId, 
+        challenge_id: challengeId 
+      }
     });
-    if (existingParticipation) {
-      return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
-    }*/
-    // Modifier sa participation
-    const participation = await Participate.findByPk(challengeId);
-    //vérifier que l'utilistateur qui souhaite modifier sa participation est bien celui qui a crée cette participation
-    /*if (userId !== participation.user_id) {
-      return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
-    }*/  
+    
+    if (!participation) {
+      return res.status(404).json({ 
+        error: "Vous n'avez pas encore participé à ce challenge" 
+      });
+    }
+    
     // Validation des nouvelles données avec Zod
     const parsed = participateChallengeSchema.safeParse(req.body);
+    
     // Gestion d'une erreur Zod
     if (!parsed.success) {
       const fieldErrors = {}; 
@@ -235,17 +241,24 @@ export const challengeController = {
       }  
       return res.status(400).json({ errors: fieldErrors });
     }    
+    
+    // Mettre à jour la participation (la preuve)
     await participation.update({
-      proof: parsed.data.proof,    
+      proof: parsed.data.proof
     });
-    // retourner la participation modifiée en json avec le status 200
-    res.json(participation);
+    
+    return res.status(200).json({ 
+      message: "Participation mise à jour avec succès",
+      participation 
+    });
   },
+  //todo à refaire ne fonctionne pas
   async deleteParticipation(req, res) {  
     // récuperer et valider l'id du challenge 
     const challengeId = idSchema.parse(req.params.id);  
     // Récupère l'id de l'utilisateur qui fait la requête
     // const userId = req.user.id;
+
     // Vérifie que la participation existe
     const participation = await Participate.findByPk(challengeId);
     if (!participation) {
@@ -255,8 +268,14 @@ export const challengeController = {
     /*if (userId !== participation.user_id) {
       return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
     }*/    
-    await participation.destroy();
+    await participation.destroy(
+      {
+        where: { user_id: 1 /*userId*/}
+      }
+    );
     // retourner une reponse vide avec le code 204
-    res.status(204).json();
+    res.status(204).json({
+      message: "participation supprimé avec succès",
+    });
   },
 };
