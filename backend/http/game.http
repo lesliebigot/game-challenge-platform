@@ -24,6 +24,7 @@ GET http://localhost:3000/users/1
 ###
 ### CREATE one challenge
 POST http://localhost:3000/games/1/challenges
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {
@@ -37,18 +38,20 @@ Content-Type: application/json
 
 {
   
-    "pseudo": "bibi_user",
-    "lastname": "c",
-    "firstname": "Jc",
-    "email": "jc@example.com",
-    "password": "password123",
+    "pseudo": "alex",
+    "lastname": "Villey",
+    "firstname": "Alexis",
+    "email": "alexisvilley@hotmailcom",
+    "password": "azerty123",
     "birthdate": "1990-01-01T00:00:00.000Z",
-    "role_id": 9
+    "role_id": 1
  
 }
 
 ### CREATE userparticipation to one challenge
 POST http://localhost:3000/challenges/1/participate
+POST http://localhost:3000/challenges/6/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {  
@@ -56,8 +59,26 @@ Content-Type: application/json
     
  
 }
+
+### CREATE Sign in for your account
+POST http://localhost:3000/signin
+Content-Type: application/json
+
+{
+  "email":"alexisvilley@hotmailcom",
+  "password":"azerty123"
+}
+### GET one user with challenges created
+GET http://localhost:3000/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+Content-Type: application/json
+
+
+###
+
 ### UPDATE userparticipation to one challenge
 PATCH http://localhost:3000/challenges/6/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {  
@@ -70,8 +91,15 @@ DELETE http://localhost:3000/challenges/6/participate
 Content-Type: application/json
 
 
+###
+# DELETE one participation to a challenge
+DELETE  http://localhost:3000/challenges/6/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+
 ### Update one challenge
 PATCH http://localhost:3000/challenges/2
+PATCH http://localhost:3000/challenges/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {
@@ -81,3 +109,5 @@ Content-Type: application/json
 ###
 # DELETE one challenge
 DELETE  http://localhost:3000/challenges/2
+DELETE  http://localhost:3000/challenges/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac

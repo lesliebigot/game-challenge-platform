@@ -3,8 +3,8 @@ import { gameController } from "./controllers/game.js";
 import { challengeController } from "./controllers/challenge.js";
 //import { profilController } from "./controllers/profil.js";
 import { userController } from "./controllers/user.js";
-//import { authentificationController } from "./controllers/authentification.js";
-// import { authMiddleware } from "./middlewares/authMiddleware.js";
+import { authentificationController } from "./controllers/authentification.js";
+import { authMiddleware } from "./middlewares/authMiddleware.js";
 
 export const router = Router();
 
@@ -21,20 +21,21 @@ router.get("/games/:id", gameController.getOne);
 // Profil - Récupérer les challenges liés à l'utilisateur connecté
 router.get("/users", userController.getAll);
 // Un seul user avec ses challenges créés et participés, et ses jeux favoris
-router.get("/users/:id", /*authMiddleware,*/ userController.getOne);
-//router.get("/profil/challenges", authMiddleware, profilController.getUserChallenges);
+router.get("/users/:id", authMiddleware, userController.getOne);
+
 
 // Créer un challenge
-router.post("/games/:id/challenges", challengeController.createOne);
+router.post("/games/:id/challenges", authMiddleware, challengeController.createOne);
 // Créer un user
 router.post("/register", userController.createOne);
 // participer à un challenge
 router.post("/challenges/:id/participate", /*authMiddleware,*/ challengeController.submitToChallenge);
+router.post("/challenges/:id/participate", authMiddleware, challengeController.submitToChallenge);
 
 // modifier son challenge
-router.patch("/challenges/:id", challengeController.updateOne);
+router.patch("/challenges/:id", authMiddleware, challengeController.updateOne);
 // supprimer son challenge
-router.delete("/challenges/:id", challengeController.deleteOne);
+router.delete("/challenges/:id", authMiddleware, challengeController.deleteOne);
 
 // modifier sa participation à un challenge
 router.patch("/challenges/:id/participate", challengeController.updateParticipation);
@@ -46,5 +47,10 @@ router.delete("/challenges/:id/participate", challengeController.deleteParticipa
 // router.post("/challenges/:id/dislike", authMiddleware, challengeController.dislikeChallenge);
 
 
+router.patch("/challenges/:id/participate", authMiddleware, challengeController.updateParticipation);
+// supprimer sa participation à un challenge
+router.delete("/challenges/:id/participate", authMiddleware, challengeController.deleteParticipation);
+
+router.post("/signin", authentificationController.signin);
 
 
