@@ -1,0 +1,279 @@
+:root {
+  --font-pixel: 'Press Start 2P', cursive;
+  --font-main: 'Roboto', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  line-height: 1.6;
+}
+
+.pixel-font {
+  font-family: var(--font-pixel);
+  text-shadow: 2px 2px 0px rgba(0,0,0,1);
+}
+
+/* Header Styles */
+.navbar {
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar .btn {
+  transition: all 0.3s ease;
+}
+
+.navbar .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Hero Section */
+.hero {
+  background: 
+    linear-gradient(135deg, rgba(18, 65, 93, 0.3), rgba(91, 173, 216, 0.3)),
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("fondAccueil.jpg");
+  background-size: auto 100%;
+  background-position: center;
+  padding: 2rem;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  padding-top: 2rem;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.gameList{
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+/* Stats Section */
+.stat {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.stat-figure i {
+  animation: pulse 2s infinite;
+}
+
+/* Challenge Cards */
+.card {
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.card figure img {
+  transition: all 0.3s ease;
+}
+
+.card:hover figure img {
+  transform: scale(1.05);
+}
+
+.card-actions .btn {
+  transition: all 0.2s ease;
+}
+
+.card-actions .btn:hover {
+  transform: scale(1.1);
+}
+
+/* Game Cards */
+.game-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+}
+
+.game-card img {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.game-card:hover img {
+  border-color: hsl(var(--p));
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* Badges */
+.badge {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Buttons */
+.btn {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, hsl(var(--p)) 0%, hsl(var(--pf)) 100%);
+  border: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+}
+
+/* Footer */
+
+
+.footer-title {
+  font-family: var(--font-main);
+  font-size: 1.25rem;
+  color: hsl(var(--p));
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pixel-font {
+    font-size: 1rem;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--b3));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--p));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--pf));
+}
+
+/* Utility Classes */
+.container {
+  max-width: 1200px;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.glass-effect {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Interactive Elements */
+.btn, .card, .game-card {
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Focus States for Accessibility */
+.btn:focus,
+.input:focus,
+.card:focus {
+  outline: 2px solid hsl(var(--p));
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.loading::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
