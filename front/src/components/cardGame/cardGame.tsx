@@ -14,18 +14,17 @@ export function CardGame({ game }: CardGameProps) {
     <div>
      
       <div key={game.id} className="card bg-base-100 max-w-96 min-h-full shadow-sm mb-4">
-        
-        <figure className="w-auto">
-          <a href={`/games/${game.id}`}>
+        <a href={`/games/${game.id}`}>
+          <figure className="w-auto">
             <img src={game.image} alt={game.title}/>
-          </a>
-        </figure>
+          </figure>
+        </a>
         <div className="card-body">
           <h2 className="card-title text-md">{game.title}</h2>
           <p>{game.description}</p>
           <div className="flex gap-2 justify-center">
             <a href={`/games/${game.id}`}>
-              <button className="btn btn-primary">Voir les challenges</button>
+              <button className="btn btn-primary">Voir le détail</button>
             </a>
             <button
               className="btn_star btn btn-sm sm:btn-md btn-circle btn-primary"
@@ -38,7 +37,6 @@ export function CardGame({ game }: CardGameProps) {
                 } fa-star text-lg sm:text-xl`}
               ></i>
             </button>
-            
           </div>
           
         </div>
