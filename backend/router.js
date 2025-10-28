@@ -29,7 +29,6 @@ router.post("/games/:id/challenges", authMiddleware, challengeController.createO
 // Créer un user
 router.post("/register", userController.createOne);
 // participer à un challenge
-router.post("/challenges/:id/participate", /*authMiddleware,*/ challengeController.submitToChallenge);
 router.post("/challenges/:id/participate", authMiddleware, challengeController.submitToChallenge);
 
 // modifier son challenge

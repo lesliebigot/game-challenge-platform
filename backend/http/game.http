@@ -50,14 +50,11 @@ Content-Type: application/json
 
 ### CREATE userparticipation to one challenge
 POST http://localhost:3000/challenges/1/participate
-POST http://localhost:3000/challenges/6/participate
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
 {  
     "proof": "http://e.xxx/nts_win"
-    
- 
 }
 
 ### CREATE Sign in for your account
@@ -98,7 +95,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxN
 
 ### Update one challenge
 PATCH http://localhost:3000/challenges/2
-PATCH http://localhost:3000/challenges/1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
 Content-Type: application/json
 
@@ -109,5 +105,4 @@ Content-Type: application/json
 ###
 # DELETE one challenge
 DELETE  http://localhost:3000/challenges/2
-DELETE  http://localhost:3000/challenges/4
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
