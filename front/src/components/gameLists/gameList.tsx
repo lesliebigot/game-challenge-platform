@@ -8,6 +8,8 @@ import type { IGameDetails } from "../../../@types/game.d.ts";
 
 export function GameList(){
   const [games, setGames] = useState<IGameDetails[]>([]);
+  const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
+  const [searchValue, setSearchValue] = useState("");
   
   useEffect(() => {
     const fetchGames = async () => {
@@ -15,8 +17,8 @@ export function GameList(){
         const { data } = await axios.get("http://localhost:3000/games");
         console.log("Données API reçues:", data);
         setGames(data);
-      } catch (e: unknown) {
-        console.error("Erreur API axios:", e instanceof Error ? e.message : e);
+      } catch (e: any) {
+        console.error("Erreur API axios:", e.response || e.message || e);
       }
     };
     fetchGames();
@@ -26,42 +28,59 @@ export function GameList(){
     return <div>Loading ...</div>;
   }
 
+  // Extrait seulement les genres non nuls
+  const uniqueGenres = Array.from(
+    new Map(
+      games
+        .filter(game => game.Genre !== null)  // filtre les jeux dont Genre est null
+        .map(game => [game.Genre.id, game.Genre])
+    ).values()
+  );
+
+  // Filtre les jeux en fonction du genre sélectionné
+  const filteredGames = selectedGenre
+    ? games.filter(game => game.Genre?.id === selectedGenre)
+    : games;
+
+  const searchedGames = filteredGames.filter((game) => {
+    return game.title.toLowerCase().includes(searchValue.toLowerCase());
+  });
+
   return(
     <>
-      <div className="flex flex-row justify-center mt-5 gap-10">
+      <div className="flex flex-row justify-center mt-5 gap-5">
         <div className="flex gap-2">
           <label className="input input-primary ">
-            
-            <input type="search" required placeholder="Rechercher" />
+            <input type="search" 
+              value={searchValue}
+              onChange={(changeEvent) => {
+                const userSaisie = changeEvent.currentTarget.value;
+                setSearchValue(userSaisie);
+              } }required placeholder="Rechercher" 
+            />
           </label>
-          <button className="btn btn-primary">
-            <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2.5"
-                fill="none"
-                stroke="currentColor"
-              >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </g>
-            </svg>
-          </button>
         </div>
-        <fieldset className="fieldset  fieldset-secondary">
-          <select defaultValue="Pick a browser" className="select select-primary">
-            <option disabled={false}>Genre</option>
-            <option>Action</option>
-            <option>Aventure</option>
-            <option>RPG</option>
+        <fieldset className="fieldset fieldset-secondary">
+          <select 
+            value={selectedGenre ?? ""}
+            defaultValue="Genre" 
+            className="select select-primary" 
+            onChange={(e) => {
+              const value = e.target.value;
+              setSelectedGenre(value ? Number(e.target.value): null);}}>
+            <option value="">Tous</option>
+            {uniqueGenres.map((genre) => (
+              <option key={genre.id} value={genre.id}>
+                {genre.name}
+              </option>
+            ))}
           </select>
-        </fieldset>
+        </fieldset> 
 
       </div>
       <section className="flex justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-12 mb-12">
-          {games.map((game)=>(
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mt-12 mb-12">
+          {searchedGames.map((game)=>(
             <CardGame key={game.id} game={game}/>
           ))}
         </div>            

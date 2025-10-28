@@ -8,6 +8,10 @@ export const gameController = {
       include: [{
         association: "challenges",
         attributes: ["id","title", "description"]       
+      },
+      {
+        association: "Genre",
+        attributes: ["id","name"]       
       }]
     });
 
