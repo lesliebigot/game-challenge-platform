@@ -4,8 +4,30 @@ import {CardGameLight} from "../cardGame/cardGameLight.tsx";
 import {CardChallenge} from "../cardChallenge/cardChallenge.tsx";
 import {CarouselWithCards} from "../util/carrousel.tsx";
 
+import { useState, useEffect } from "react";
+import axios from "axios";
+import type { IChallenge } from "../../../@types/challenge.d.ts";
 
 export function HomePage(){
+
+  const [topChallenges, setTopChallenges] = useState<IChallenge[]>([]);
+    
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/challenges/top-liked");
+        console.log("Données API reçues:", data.topChallenges);
+        setTopChallenges(data.topChallenges);
+      } catch (e: unknown) {
+        console.error("Erreur API axios:", e instanceof Error ? e.message : e);
+      }
+    };
+    fetchChallenges();
+  }, []);
+  
+  if (topChallenges.length === 0) {
+    return <div>Loading ...</div>;
+  }
   return (
     <>
       <main>
@@ -16,8 +38,8 @@ export function HomePage(){
               <h1 className="mb-5 text-5xl font-bold pixel-font text-white">Relevez les défis</h1>
               <p className="mb-5 text-lg text-white">Rejoignez la communauté passionnée de gamers !</p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {Array.from({ length: 3 }, (_, index) => (
-                  <CardChallenge key={index} />
+                {topChallenges.map((topChallenge)=>(
+                  <CardChallenge key={topChallenge.id} topChallenge={topChallenge}/>
                 ))}
               </div>                
             </div>        

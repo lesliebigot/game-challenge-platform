@@ -12,6 +12,9 @@ export const challengeController = {
       },
       {
         association: "likedByUsers",             
+      },
+      {
+        association: "game",             
       }]
     });
     // Gestion d'une erreur
@@ -30,6 +33,9 @@ export const challengeController = {
       },
       {
         association: "likedByUsers",             
+      },
+      {
+        association: "game",             
       }]
     });
     // Gestion d'une erreur
@@ -57,8 +63,12 @@ export const challengeController = {
           attributes: [],
           through: { attributes: [] },
         },
+        {
+          association: "game",
+          attributes: ["id", "title", "image"], // Inclure les infos du jeu
+        }
       ],
-      group: ["Challenge.id"], // "], PostgreSQL exige que toutes les colonnes non-agrégées dans le SELECT soient dans le GROUP BY.
+      group: ["Challenge.id", "likedByUsers.id", "game.id"], // "], PostgreSQL exige que toutes les colonnes non-agrégées dans le SELECT soient dans le GROUP BY.
       subQuery: false, // 
       order: [[likeCount, "DESC"]],
       limit: 3,
