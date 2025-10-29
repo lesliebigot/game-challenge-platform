@@ -12,7 +12,12 @@ export const createChallengeSchema = z.object({
 // .partial() permet de réutiliser un schema en rendant toutes les propriétés optionnelles
 export const updateChallengeSchema = createChallengeSchema.partial(); 
 
-// avec Z.url l'url doit forcement commencé par https://
+// avec Z.url l'url doit forcement commencé par http:
+//Pour forcer l'URL à commencer par https:// (et non http://).
+//il faut ajouter une validation personnalisée avec .refine()
 export const participateChallengeSchema = z.object({
-  proof: z.url("L'URL de la preuve doit être valide, l’URL doit commencer par https://")
+  proof: z.url().refine(
+    (url) => url.startsWith("https://"),
+    { message: "L'URL de la preuve doit être valide, l’URL doit commencer par https://" }
+  )
 });
