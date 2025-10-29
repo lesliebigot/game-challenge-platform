@@ -50,7 +50,6 @@ export default function UserContextProvider({ children }) {
               const storedUserId = localStorage.getItem("userId");
               if (storedPseudo && storedUserId) {
                 login(storedToken, storedPseudo, Number(storedUserId));
-                axios.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
               }
             } else {
               logout(); // Token invalide
