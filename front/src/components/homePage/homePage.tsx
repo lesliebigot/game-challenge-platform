@@ -38,7 +38,7 @@ export function HomePage(){
               <h1 className="mb-5 text-5xl font-bold pixel-font text-white">Relevez les défis</h1>
               <p className="mb-5 text-lg text-white">Rejoignez la communauté passionnée de gamers !</p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {topChallenges.map((topChallenge)=>(
+                {topChallenges.slice(0, 3).map((topChallenge)=>(
                   <CardChallenge key={topChallenge.id} topChallenge={topChallenge}/>
                 ))}
               </div>                

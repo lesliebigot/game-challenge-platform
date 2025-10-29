@@ -1,4 +1,5 @@
 import { Game, Challenge } from "../database/models/index.js";
+import { Sequelize } from "sequelize";
 
 export const gameController = {
 
@@ -62,6 +63,29 @@ export const gameController = {
     });
 
     res.json(game, challenges);
+  },
+
+  async getGamesWithMostChallenges(req, res) {
+    // eslint-disable-next-line quotes
+    const challengeCount = Sequelize.literal('COUNT("challenges"."id")');
+  
+    const gamesWithChallengeCount = await Game.findAll({
+      attributes: {
+        include: [[challengeCount, "challengeCount"]]
+      },
+      include: [
+        {
+          model: Challenge,
+          as: "challenges",
+          attributes: [], // on ne veut pas les détails des challenges, juste le nombre
+        },
+      ],
+      group: ["Game.id"], // regrouper par jeu
+      subQuery: false,
+      order: [[challengeCount, "DESC"]],
+    });
+  
+    res.json({ games: gamesWithChallengeCount });
   }
   
 };

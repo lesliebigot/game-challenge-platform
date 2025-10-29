@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { gameController } from "./controllers/game.js";
 import { challengeController } from "./controllers/challenge.js";
-//import { profilController } from "./controllers/profil.js";
 import { userController } from "./controllers/user.js";
 import { authentificationController } from "./controllers/authentification.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
@@ -10,14 +9,18 @@ export const router = Router();
 
 // Tous les challenges avec créateur + jeu associé + participations + likes
 router.get("/challenges", challengeController.getAll); 
-// Les 3 challenges les plus likés
+// Les challenges les plus likés
 router.get("/challenges/top-liked", challengeController.getTopLiked);
+// Les challenges les plus récent
+router.get("/challenges/recent", challengeController.getRecentChallenges);
 // Un challenge avec créateur + jeu associé + participations + likes
 router.get("/challenges/:id", challengeController.getOne);
 // Tous les jeux avec challenges associés
 router.get("/games", gameController.getAll);
 // Un jeu avec challenges associés + éditeur + plateformes + genre associés
 router.get("/games/:id", gameController.getOne);
+// Les jeux trié par ordre décroissant du nombre de challenges
+router.get("/games/most-challenged", gameController.getGamesWithMostChallenges);
 // Profil - Récupérer les challenges liés à l'utilisateur connecté
 router.get("/users", userController.getAll);
 // Un seul user avec ses challenges créés et participés, et ses jeux favoris

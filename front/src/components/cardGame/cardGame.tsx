@@ -1,5 +1,6 @@
-import { useState } from "react";
 import "./cardGame.css";
+
+import { useState } from "react";
 import type { IGameDetails } from "../../../@types/game";
 
 interface CardGameProps {
