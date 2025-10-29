@@ -1,7 +1,11 @@
 import "./header.css";
+import useUserContext from "../../context/useUserContext";
 
 
 export function Header() {
+
+  const { pseudo, logout } = useUserContext();
+
   return (
     <header className="navbar bg-base-100 shadow-lg z-50 relative top-0 mb-1">
       <div className="navbar-start">
@@ -37,17 +41,16 @@ export function Header() {
         
       <div className="navbar-end">
         <div className="flex items-center gap-4">
+          {pseudo ? (<p>Bonjour {pseudo}</p>) : ("")}
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <i className="fa fa-user text-xl"></i>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52">
-              {/* Elements du menu utilisateur si connexion 
-              <li><a href="/profil">Profil</a></li>
-              <li><a href="/settings">Paramètres</a></li>
-              <li><a href="/logout">Déconnexion</a></li>*/}
-              <li><a href="/signin">Se connecter</a></li>
-              <li><a href="/signup">S'inscrire</a></li>
+              {pseudo ? (<><li><a href="/profil">Profil</a></li><li><a href="/" 
+                onClick={() => {logout();}}>Déconnexion</a></li></>) : (
+                <><li><a href="/signin">Se connecter</a></li><li><a href="/signup">S'inscrire</a></li></>)              
+              }
             </ul>
           </div>
         </div>
