@@ -40,7 +40,7 @@ export function SpecificGame(){
             <p className="text-base lg:text-lg text-white">Genre : {games?.Genre.name}</p>  
           </div>
           <div className="flex-1 lg:text-right">
-            <p className="text-base lg:text-lg text-white">Plateforme : {games?.platforms.map((platform)=>(platform.name))} </p> 
+            <p className="text-base lg:text-lg text-white">Plateforme : {games?.platforms.map((platform)=>platform.name).join(", ")} </p> 
             <p className="text-base lg:text-lg text-white">Editeur : {games?.editor.name}</p>   
           </div>            
         </div>

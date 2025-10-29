@@ -69,7 +69,7 @@ export const challengeController = {
         }
       ],
       group: ["Challenge.id", "game.id"], // "], PostgreSQL exige que toutes les colonnes non-agrégées dans le SELECT soient dans le GROUP BY.
-      subQuery: false, // 
+      subQuery: false, // Sequelize fait une sous-requete par défaut avant les includes, ce qui peut fausser le aggregate COUNT. on empeche les sous-requetes.
       order: [[likeCount, "DESC"]],
       limit: 3,
     });
