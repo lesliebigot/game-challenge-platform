@@ -38,11 +38,11 @@ Content-Type: application/json
 
 {
   
-    "pseudo": "alex",
-    "lastname": "Villey",
-    "firstname": "Alexis",
-    "email": "alexisvilley@hotmailcom",
-    "password": "azerty123",
+    "pseudo": "TEstUser",
+    "lastname": "TEstprnom",
+    "firstname": "Testnom",
+    "email": "test@hotmailcom",
+    "password": "azerty321",
     "birthdate": "1990-01-01T00:00:00.000Z",
     "role_id": 1
  
@@ -62,8 +62,8 @@ POST http://localhost:3000/signin
 Content-Type: application/json
 
 {
-  "email":"alexisvilley@hotmailcom",
-  "password":"azerty123"
+  "email":"test@hotmailcom",
+  "password":"azerty321"
 }
 ### GET one user with challenges created
 GET http://localhost:3000/users/1
