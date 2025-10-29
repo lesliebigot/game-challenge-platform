@@ -12,7 +12,7 @@ export const authentificationController = {
     // Recherche de l’utilisateur
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(401).json({ error: "Identifiants incorrects" });
+      return res.status(401).json({ error: "Identifiants incorrects 1" });
     }
 
     console.log(user);
@@ -20,7 +20,7 @@ export const authentificationController = {
     // Vérification du mot de passe
     const isPasswordValid = await argon2.verify(user.password, password);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: "Identifiants incorrects" });
+      return res.status(401).json({ error: "Identifiants incorrects 2" });
     }
 
     // Renvoi des données
@@ -30,6 +30,7 @@ export const authentificationController = {
         id: user.id,
         username: user.username,
         email: user.email,
+        pseudo: user.pseudo
       },
       token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" }),
     });

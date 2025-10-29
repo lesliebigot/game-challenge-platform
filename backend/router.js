@@ -49,7 +49,7 @@ router.delete("/challenges/:id/participate", challengeController.deleteParticipa
 router.patch("/challenges/:id/participate", authMiddleware, challengeController.updateParticipation);
 // supprimer sa participation à un challenge
 router.delete("/challenges/:id/participate", authMiddleware, challengeController.deleteParticipation);
-
+// se connecter 
 router.post("/signin", authentificationController.signin);
 
 
