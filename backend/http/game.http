@@ -26,7 +26,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6I
 ###
 ### CREATE one challenge
 POST http://localhost:3000/games/2/challenges
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzA2ODcsImV4cCI6MTc2MTgzNDI4N30.gpb_Ae9hjXZ-6mjpPV_ODaBQrxM0lYxiPoUIGIr_DM0
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzA2ODcsImV4cCI6MTc2MTgzNDI4N30.gpb_Ae9hjXZ-6mjpPV_ODaBQrxM0lYxiPoUIGIr_DM0
 Content-Type: application/json
 
 {

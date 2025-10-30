@@ -39,12 +39,12 @@ router.post("/games/:id/challenges", authMiddleware, checkEntityRbac("challenge"
 // Créer un user
 router.post("/register", userController.createOne);
 // participer à un challenge
-router.post("/challenges/:id/participate", authMiddleware, challengeController.submitToChallenge);
+router.post("/challenges/:id/participate", authMiddleware, checkEntityRbac("challenge"), challengeController.submitToChallenge);
 
 // modifier son challenge
-router.patch("/challenges/:id", authMiddleware, challengeController.updateOne);
+router.patch("/challenges/:id", authMiddleware, checkEntityRbac("challenge"), challengeController.updateOne);
 // supprimer son challenge
-router.delete("/challenges/:id", authMiddleware, challengeController.deleteOne);
+router.delete("/challenges/:id", authMiddleware, checkEntityRbac("challenge"), challengeController.deleteOne);
 
 // modifier sa participation à un challenge
 router.patch("/challenges/:id/participate", challengeController.updateParticipation);

@@ -40,7 +40,7 @@ export const challengeController = {
     });
     // Gestion d'une erreur
     if (!challenge) {
-      return res.status(404).json({ error: "Jeu non trouvé" });
+      return res.status(404).json({ error: "Challenge non trouvé" });
     }
     // Renvoi des données
     res.status(200).json(challenge);
@@ -144,6 +144,10 @@ export const challengeController = {
   },
 
   async submitToChallenge(req, res) {
+    // Vérifier que l'utilisateur est connecté
+    if (!req.userId) {
+      return res.status(401).json({ error: "Non autorisé : connectez-vous." });
+    }
     // Validation des données avec Zod
     const parsed = participateChallengeSchema.safeParse(req.body);
     // Gestion d'une erreur Zod
@@ -168,16 +172,16 @@ export const challengeController = {
     if (!challenge) {
       return res.status(404).json({ error: "Challenge non trouvé" });
     }
-    // TODO Vérifier si l'utilisateur connecté a déjà participé à ce challenge
-    /* const existingParticipation = await Participate.findOne({
-      where: { user_id: userId, challenge_id: challengeId }
+    // Vérifier si l'utilisateur connecté a déjà participé à ce challenge
+    const existingParticipation = await Participate.findOne({
+      where: { user_id: req.userId, challenge_id: challengeId }
     });
     if (existingParticipation) {
       return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
-    }*/
+    }
     // Crée la participation
     const participation = await Participate.create({
-      user_id: /*userId*/2,
+      user_id: req.userId,
       challenge_id: challengeId,
       proof: proof,
     });
@@ -195,40 +199,82 @@ export const challengeController = {
 
   // modifier son challenge
   async updateOne(req, res) {
-    // TODO : user_id du créateur du challenge = id du user connecté en condition pour pouvoir modifier le challenge
+
+    // Vérifier que l'utilisateur est connecté
+    if (!req.userId) {
+      return res.status(401).json({ error: "Non autorisé : connectez-vous." });
+    }
+   
     // récuperer les informations de modifications   
     let data = req.body;
     // valider ces infos
     data = updateChallengeSchema.parse(data);
     // récuperer et valider l'id du challenge à modifier
-    const challengeId = idSchema.parse(req.params.id);   
+    const challengeId = idSchema.parse(req.params.id); 
+    
+    // modifier uniquement si l'utilisateur connecté est celui qui a créé ce challenge
+    // Si la permission est "self", vérifier que l'utilisateur est le propriétaire
+    const { userId, permission } = req;
+    console.log("userId dans updateOne :", userId);
+    console.log("permission dans updateOne :", permission);
+    if (permission === "self") {
     // récuperer le challenge concerné
-    const challenge = await Challenge.findByPk(challengeId);
-    // est ce que ce challenge existe ?
-    if (!challenge) {
-      return res.status(404).json({ error: "challenge non trouvé" });
+      const challenge = await Challenge.findByPk(challengeId);
+      // est ce que ce challenge existe ?
+      if (!challenge) {
+        return res.status(404).json({ error: "challenge non trouvé" });
+      }
+      if (challenge.user_id !== userId) {
+        return res.status(403).json({ message: "Vous ne pouvez modifier que vos propres challenges." });
+      }
     }
+    
     // modifier le challenge récuperé avec les données fournies
-    await challenge.update(data);
+    const challenge = await Challenge.update(data,
+      { where: { id: challengeId },}
+    );
+    if (!challenge) {
+      return res.status(404).json({ message: "Challenge non trouvé." });
+    }
+    // Récupérer le challenge mis à jour
+    const updatedChallenge = await Challenge.findByPk(challengeId);
     // retourner le challenge en json avec le status 200
-    res.json(challenge);
+    res.json({
+      message: "Challenge mis à jour avec succès",
+      updatedChallenge: {
+        id: updatedChallenge.id,
+        title: updatedChallenge.title,
+        description: updatedChallenge.description,
+        user_id: updatedChallenge.user_id,
+        game_id: updatedChallenge.game_id
+      },
+    });
   },
 
   // Supprimer le challenge qu'on a créé
   async deleteOne(req, res) {
-    // TODO : user_id créateur du challenge = id du user connecté en condition pour pouvoir supprimer le challenge
-    // récuperer et valider l'id du challenge à supprimer
-    const challengeId = idSchema.parse(req.params.id);   
-    // récuperer le challenge concerné
+    // Vérifier que l'utilisateur est connecté
+    if (!req.userId) {
+      return res.status(401).json({ error: "Non autorisé : connectez-vous." });
+    }  
+    // Récupérer et valider l'ID du challenge
+    const challengeId = idSchema.parse(req.params.id);  
+    // Récupérer le challenge
     const challenge = await Challenge.findByPk(challengeId);
-    // est ce que ce challenge existe ?
     if (!challenge) {
-      return res.status(404).json({ error: "challenge non trouvé" });
-    }
-    // supprimer ce challenge
-    await challenge.destroy();
-    // retourner une reponse vide avec le code 204
-    res.status(204).json();
+      return res.status(404).json({ error: "Challenge non trouvé." });
+    } 
+    // Vérifier si la permission est "self" et que l'utilisateur est le créateur du challenge
+    const { userId, permission } = req;
+    if (permission === "self" && challenge.user_id !== userId) {
+      return res.status(403).json({
+        message: "Vous ne pouvez supprimer que vos propres challenges.",
+      });
+    }  
+    // Supprimer le challenge
+    await challenge.destroy();  
+    // Envoyer une réponse 204 (No Content)
+    res.status(204).end();
   },
 
   //todo à tester
