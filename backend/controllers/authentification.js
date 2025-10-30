@@ -30,7 +30,8 @@ export const authentificationController = {
         id: user.id,
         username: user.username,
         email: user.email,
-        pseudo: user.pseudo
+        pseudo: user.pseudo,
+        roleId : user.role_id
       },
       token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" }),
     });

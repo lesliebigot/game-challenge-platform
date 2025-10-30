@@ -62,7 +62,7 @@ POST http://localhost:3000/signin
 Content-Type: application/json
 
 {
-  "email":"test@hotmailcom",
+  "email":"test@hotmail.com",
   "password":"azerty321"
 }
 ### GET one user with challenges created
