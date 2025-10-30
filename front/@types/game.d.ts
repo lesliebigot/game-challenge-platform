@@ -29,3 +29,14 @@ export interface IGameDetails {
     description: string;
   }[];
 }
+
+export interface IGame {
+  id: number;
+  title?: string;
+  image?: string;
+  challengeCount?: number;
+}
+
+export interface CardGameLightProps {
+  game?: IGame;
+}

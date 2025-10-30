@@ -7,22 +7,39 @@ import {CarouselWithCards} from "../util/carrousel.tsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import type { IChallenge } from "../../../@types/challenge.d.ts";
+import type { IGame } from "../../../@types/game.d.ts";
+
+
 
 export function HomePage(){
 
   const [topChallenges, setTopChallenges] = useState<IChallenge[]>([]);
+  const [mostChallengedGames, setMostChallengedGames] = useState<IGame[]>([]);
     
   useEffect(() => {
     const fetchChallenges = async () => {
       try {
         const { data } = await axios.get("http://localhost:3000/challenges/top-liked");
-        console.log("Données API reçues:", data.topChallenges);
+        //console.log("Données API reçues:", data.topChallenges);
         setTopChallenges(data.topChallenges);
       } catch (e: unknown) {
         console.error("Erreur API axios:", e instanceof Error ? e.message : e);
       }
     };
     fetchChallenges();
+  }, []);
+
+  useEffect(() => {
+    const fetchMostChallengedGames = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/games/most-challenged");
+        //console.log("Jeux les plus challengés:", data);
+        setMostChallengedGames(data.games || data);
+      } catch (e: unknown) {
+        console.error("Erreur API pour les jeux les plus challengés:", e instanceof Error ? e.message : e);
+      }
+    };
+    fetchMostChallengedGames();
   }, []);
   
   if (topChallenges.length === 0) {
@@ -38,7 +55,7 @@ export function HomePage(){
               <h1 className="mb-5 text-5xl font-bold pixel-font text-white">Relevez les défis</h1>
               <p className="mb-5 text-lg text-white">Rejoignez la communauté passionnée de gamers !</p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {topChallenges.map((topChallenge)=>(
+                {topChallenges.slice(0, 3).map((topChallenge)=>(
                   <CardChallenge key={topChallenge.id} topChallenge={topChallenge}/>
                 ))}
               </div>                
@@ -107,9 +124,14 @@ export function HomePage(){
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {Array.from({ length: 6 }, (_, index) => (
-                <CardGameLight key={index} />
-              ))}
+              {mostChallengedGames.length > 0 
+                ? mostChallengedGames.slice(0, 6).map((game, index) => (
+                  <CardGameLight key={game.id || index} game={game} />
+                ))
+                : Array.from({ length: 6 }, (_, index) => (
+                  <CardGameLight key={index} />
+                ))
+              }
             </div>
             <div className="flex justify-center mb-5">
               <a href="/games">
