@@ -33,7 +33,6 @@ router.get("/users/:id", authMiddleware, userController.getOne);
 //res.json({ valid: true, userId: req.user.id });
 //});
 
-
 // Créer un challenge
 router.post("/games/:id/challenges", authMiddleware, checkEntityRbac("challenge"), challengeController.createOne);
 // Créer un user
@@ -47,18 +46,14 @@ router.patch("/challenges/:id", authMiddleware, checkEntityRbac("challenge"), ch
 router.delete("/challenges/:id", authMiddleware, checkEntityRbac("challenge"), challengeController.deleteOne);
 
 // modifier sa participation à un challenge
-router.patch("/challenges/:id/participate", challengeController.updateParticipation);
+router.patch("/challenges/:id/participate", authMiddleware, checkEntityRbac("challenge"), challengeController.updateParticipation);
 // supprimer sa participation à un challenge
-router.delete("/challenges/:id/participate", challengeController.deleteParticipation);
+router.delete("/challenges/:id/participate", authMiddleware, checkEntityRbac("challenge"), challengeController.deleteParticipation);
 
 // TODO liker/disliker un challenge (évolution possible)
 // router.post("/challenges/:id/like", authMiddleware, challengeController.likeChallenge);
 // router.post("/challenges/:id/dislike", authMiddleware, challengeController.dislikeChallenge);
 
-
-router.patch("/challenges/:id/participate", authMiddleware, challengeController.updateParticipation);
-// supprimer sa participation à un challenge
-router.delete("/challenges/:id/participate", authMiddleware, challengeController.deleteParticipation);
 // se connecter 
 router.post("/signin", authentificationController.signin);
 

@@ -26,11 +26,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6I
 ###
 ### CREATE one challenge
 POST http://localhost:3000/games/2/challenges
-//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzA2ODcsImV4cCI6MTc2MTgzNDI4N30.gpb_Ae9hjXZ-6mjpPV_ODaBQrxM0lYxiPoUIGIr_DM0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzQ3MjAsImV4cCI6MTc2MTgzODMyMH0.MyZvxtDjfMmEeQMkHvm6Uem2VdxHIr546yds1WRBiJU
 Content-Type: application/json
 
 {
-  "title": "test perm",
+  "title": "test perm 3",
   "description": "Terminer le jeu en difficile x"
  
 }
@@ -40,10 +40,10 @@ Content-Type: application/json
 
 {
   
-    "pseudo": "TEstUser2",
-    "lastname": "TEstprnom",
-    "firstname": "Testnom",
-    "email": "test@hotmail.com",
+    "pseudo": "bibi",
+    "lastname": "bibi",
+    "firstname": "bibi",
+    "email": "bibi@hotmail.com",
     "password": "azerty321",
     "birthdate": "1990-01-01T00:00:00.000Z",
     "role_id": 1
@@ -51,12 +51,12 @@ Content-Type: application/json
 }
 
 ### CREATE userparticipation to one challenge
-POST http://localhost:3000/challenges/1/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+POST http://localhost:3000/challenges/22/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4NDEyNjYsImV4cCI6MTc2MTg0NDg2Nn0.g0MKWsbC8lMky73FPreCV6gT1ar3xIjCo30-wHyjtiw
 Content-Type: application/json
 
 {  
-    "proof": "http://e.xxx/nts_win"
+    "proof": "https://e.xx/nts_win"
 }
 
 ### CREATE Sign in for your account
@@ -73,11 +73,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxN
 Content-Type: application/json
 
 
-###
 
 ### UPDATE userparticipation to one challenge
-PATCH http://localhost:3000/challenges/6/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+PATCH http://localhost:3000/challenges/23/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4NDA5NTYsImV4cCI6MTc2MTg0NDU1Nn0.hUwNMqPbBVMOhFne_YkqDXzWZKYnubanaDlcbjj3RRk
 Content-Type: application/json
 
 {  
@@ -86,25 +85,20 @@ Content-Type: application/json
  
 }
 ### DELETE userparticipation to one challenge
-DELETE http://localhost:3000/challenges/6/participate
+DELETE http://localhost:3000/challenges/22/participate
 Content-Type: application/json
-
-
-###
-# DELETE one participation to a challenge
-DELETE  http://localhost:3000/challenges/6/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzQ4ODIsImV4cCI6MTc2MTgzODQ4Mn0.BWhuBmw7_pkr928vH9E2Ff1qn12XUlIrfOKBl6yn8qc
 
 ### Update one challenge
-PATCH http://localhost:3000/challenges/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+PATCH http://localhost:3000/challenges/24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzQ4ODIsImV4cCI6MTc2MTgzODQ4Mn0.BWhuBmw7_pkr928vH9E2Ff1qn12XUlIrfOKBl6yn8qc
 Content-Type: application/json
 
 {
-  "description": "Finir le jeu"
+  "description": "rFinir le jeu"
 }
 
 ###
 # DELETE one challenge
-DELETE  http://localhost:3000/challenges/3
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+DELETE  http://localhost:3000/challenges/24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzQ4ODIsImV4cCI6MTc2MTgzODQ4Mn0.BWhuBmw7_pkr928vH9E2Ff1qn12XUlIrfOKBl6yn8qc

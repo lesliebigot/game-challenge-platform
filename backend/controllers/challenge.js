@@ -2,6 +2,8 @@ import { Challenge, Participate, User } from "../database/models/index.js";
 import { createChallengeSchema, participateChallengeSchema, updateChallengeSchema } from "../schemas/challengeSchema.js";
 import { idSchema } from "../schemas/utils.js";
 
+// TODO factoriser la gestion des permissions (don't repeat yourself)
+
 export const challengeController = {
   
   async getAll(req, res) {
@@ -215,8 +217,6 @@ export const challengeController = {
     // modifier uniquement si l'utilisateur connecté est celui qui a créé ce challenge
     // Si la permission est "self", vérifier que l'utilisateur est le propriétaire
     const { userId, permission } = req;
-    console.log("userId dans updateOne :", userId);
-    console.log("permission dans updateOne :", permission);
     if (permission === "self") {
     // récuperer le challenge concerné
       const challenge = await Challenge.findByPk(challengeId);
@@ -277,37 +277,32 @@ export const challengeController = {
     res.status(204).end();
   },
 
-  //todo à tester
   async updateParticipation(req, res) {  
+    // Vérifier que l'utilisateur est connecté
+    if (!req.userId) {
+      return res.status(401).json({ error: "Non autorisé : connectez-vous." });
+    }
     // Récupérer et valider l'id du challenge
-    const challengeId = idSchema.parse(req.params.id); 
-    
-    // Récupère l'id de l'utilisateur qui fait la requête
-    const userId = req.user.id;
-    
+    const challengeId = idSchema.parse(req.params.id);
     // Vérifier que le challenge existe
     const challenge = await Challenge.findByPk(challengeId);
     if (!challenge) {
       return res.status(404).json({ error: "Challenge non trouvé" });
-    }
-    
+    }  
     // Récupérer la participation existante
     const participation = await Participate.findOne({
       where: { 
-        user_id: userId, 
+        user_id: req.userId,
         challenge_id: challengeId 
       }
     });
-    
     if (!participation) {
       return res.status(404).json({ 
         error: "Vous n'avez pas encore participé à ce challenge" 
       });
     }
-    
     // Validation des nouvelles données avec Zod
-    const parsed = participateChallengeSchema.safeParse(req.body);
-    
+    const parsed = participateChallengeSchema.safeParse(req.body);    
     // Gestion d'une erreur Zod
     if (!parsed.success) {
       const fieldErrors = {}; 
@@ -319,42 +314,46 @@ export const challengeController = {
         fieldErrors[field].push(err.message);
       }  
       return res.status(400).json({ errors: fieldErrors });
-    }    
-    
+    }  
     // Mettre à jour la participation (la preuve)
     await participation.update({
       proof: parsed.data.proof
-    });
-    
-    return res.status(200).json({ 
+    });  
+    // Renvoyer la participation mise à jour
+    return res.status(200).json({
       message: "Participation mise à jour avec succès",
-      participation 
+      participation: {
+        id: participation.id,
+        user_id: participation.user_id,
+        challenge_id: participation.challenge_id,
+        proof: participation.proof,
+        updatedAt: participation.updated_at
+      }
     });
   },
-  //todo à refaire ne fonctionne pas
+
   async deleteParticipation(req, res) {  
+    // Vérifier que l'utilisateur est connecté
+    if (!req.userId) {
+      return res.status(401).json({ error: "Non autorisé : connectez-vous." });
+    }
     // récuperer et valider l'id du challenge 
     const challengeId = idSchema.parse(req.params.id);  
-    // Récupère l'id de l'utilisateur qui fait la requête
-    // const userId = req.user.id;
-
-    // Vérifie que la participation existe
-    const participation = await Participate.findByPk(challengeId);
-    if (!participation) {
-      return res.status(404).json({ error: "Participation non trouvée" });
-    }   
-    //vérifier que l'utilistateur qui souhaite supprimer sa participation est bien celui qui a crée cette participation
-    /*if (userId !== participation.user_id) {
-      return res.status(403).json({ error: "Vous n'êtes pas autorisé à modifier cette participation." });
-    }*/    
-    await participation.destroy(
-      {
-        where: { user_id: 1 /*userId*/}
+    // Récupérer la participation existante
+    const participation = await Participate.findOne({
+      where: { 
+        user_id: req.userId,
+        challenge_id: challengeId 
       }
-    );
-    // retourner une reponse vide avec le code 204
-    res.status(204).json({
-      message: "participation supprimé avec succès",
     });
+    if (!participation) {
+      return res.status(404).json({
+        error: "Vous n'avez pas encore participé à ce challenge."
+      });
+    }
+    // supprimer la participation   
+    await participation.destroy();
+    // retourner une reponse vide avec le code 204
+    res.status(204).end();
   },
 };
