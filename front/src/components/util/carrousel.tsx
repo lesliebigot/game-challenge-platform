@@ -11,7 +11,7 @@ export function CarouselWithCards(){
     const fetchChallenges = async () => {
       try {
         const { data } = await axios.get("http://localhost:3000/challenges/recent");
-        console.log("Données API reçues:", data.recentChallenges);
+        // console.log("Données API reçues:", data.recentChallenges);
         setRecentChallenges(data.recentChallenges);
       } catch (e: unknown) {
         console.error("Erreur API axios:", e instanceof Error ? e.message : e);

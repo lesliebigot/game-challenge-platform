@@ -17,10 +17,10 @@ router.get("/challenges/recent", challengeController.getRecentChallenges);
 router.get("/challenges/:id", challengeController.getOne);
 // Tous les jeux avec challenges associés
 router.get("/games", gameController.getAll);
-// Un jeu avec challenges associés + éditeur + plateformes + genre associés
-router.get("/games/:id", gameController.getOne);
 // Les jeux trié par ordre décroissant du nombre de challenges
 router.get("/games/most-challenged", gameController.getGamesWithMostChallenges);
+// Un jeu avec challenges associés + éditeur + plateformes + genre associés
+router.get("/games/:id", gameController.getOne);
 // Profil - Récupérer les challenges liés à l'utilisateur connecté
 router.get("/users", userController.getAll);
 // Un seul user avec ses challenges créés et participés, et ses jeux favoris

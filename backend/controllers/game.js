@@ -66,26 +66,33 @@ export const gameController = {
   },
 
   async getGamesWithMostChallenges(req, res) {
-    // eslint-disable-next-line quotes
-    const challengeCount = Sequelize.literal('COUNT("challenges"."id")');
-  
-    const gamesWithChallengeCount = await Game.findAll({
-      attributes: {
-        include: [[challengeCount, "challengeCount"]]
-      },
-      include: [
-        {
-          model: Challenge,
-          as: "challenges",
-          attributes: [], // on ne veut pas les détails des challenges, juste le nombre
-        },
-      ],
-      group: ["Game.id"], // regrouper par jeu
-      subQuery: false,
-      order: [[challengeCount, "DESC"]],
-    });
-  
-    res.json({ games: gamesWithChallengeCount });
+    try {
+      const challengeCount = Sequelize.literal("COUNT(\"challenges\".\"id\")");
+    
+      const gamesWithChallengeCount = await Game.findAll({
+        attributes: [
+          "id", 
+          "title", 
+          "image", // Ajouter l'image
+          [challengeCount, "challengeCount"]
+        ],
+        include: [
+          {
+            model: Challenge,
+            as: "challenges",
+            attributes: [], // on ne veut pas les détails des challenges, juste le nombre
+          },
+        ],
+        group: ["Game.id"], // regrouper par jeu
+        subQuery: false,
+        order: [[challengeCount, "DESC"]],
+      });
+    
+      res.json({ games: gamesWithChallengeCount });
+    } catch (error) {
+      console.error("Erreur lors de la récupération des jeux les plus challengés:", error);
+      res.status(500).json({ error: "Erreur serveur" });
+    }
   }
   
 };
