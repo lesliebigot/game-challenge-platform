@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
+
 import "./createChallenge.css";
+import type { IGameDetails } from "../../../@types/game";
 
 export function CreateChallenge(){
   const { id: gameId } = useParams<{ id: string }>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [game, setGame] = useState<any>(null);
+   
+  const [game, setGame] = useState<IGameDetails | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,12 +17,11 @@ export function CreateChallenge(){
 
   useEffect(() => {
     const fetchGame = async () => {
-      if (!gameId) return;
-      
       try {
         setLoading(true);
         setError(null);
-        const { data } = await axios.get(`http://localhost:3000/games/${gameId}`);
+        const { data } = await axios.get("http://localhost:3000/games/3");// ${gameId}
+        console.log("données reçues :", data);
         setGame(data);
       } catch (e: unknown) {
         console.error("Erreur API axios:", e instanceof Error ? e.message : e);
@@ -31,7 +32,9 @@ export function CreateChallenge(){
     };
     
     fetchGame();
-  }, [gameId]);
+  }, []); // [gameId]
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,20 +50,24 @@ export function CreateChallenge(){
       
       const token = localStorage.getItem("token"); // Assurez-vous d'avoir le token d'authentification
       
-      const { data } = await axios.post(
-        `http://localhost:3000/games/${gameId}/challenges`,
-        { title, description },
-        {
-          headers: {
-            "Authorization": `Bearer ${token}`
+      if(token){
+        const { data } = await axios.post(
+          "http://localhost:3000/games/3/challenges",// ${gameId}
+          { title, description },
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
           }
-        }
-      );
+        );
+        console.log("Challenge créé:", data);
+        // Rediriger ou afficher un message de succès
+        navigate("/games/3"); // ${gameId}
+        setTitle("");
+        setDescription("");
+      }
       
-      console.log("Challenge créé:", data);
-      // Rediriger ou afficher un message de succès
-      setTitle("");
-      setDescription("");
+      
     } catch (e: unknown) {
       console.error("Erreur lors de la création:", e instanceof Error ? e.message : e);
       setError("Erreur lors de la création du challenge");
