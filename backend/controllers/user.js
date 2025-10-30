@@ -42,7 +42,7 @@ export const userController = {
   async createOne(req, res) {
     
     const data = req.body;
-    console.log(data);
+    
     // Hachage du mot de passe avec Argon2
     if (data.password) {
       data.password = await argon2.hash(data.password);

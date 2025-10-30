@@ -38,10 +38,10 @@ Content-Type: application/json
 
 {
   
-    "pseudo": "TEstUser",
+    "pseudo": "TEstUser2",
     "lastname": "TEstprnom",
     "firstname": "Testnom",
-    "email": "test@hotmailcom",
+    "email": "test@hotmail.com",
     "password": "azerty321",
     "birthdate": "1990-01-01T00:00:00.000Z",
     "role_id": 1
