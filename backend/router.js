@@ -23,6 +23,12 @@ router.get("/users", userController.getAll);
 // Un seul user avec ses challenges créés et participés, et ses jeux favoris
 router.get("/users/:id", authMiddleware, userController.getOne);
 
+// Route pour valider le token
+router.get("/api/auth/validate-token", authMiddleware, (req, res) => {
+  // Si on arrive ici, c'est que le token est valide (grâce au middleware)
+  res.json({ valid: true, userId: req.user.id });
+});
+
 
 // Créer un challenge
 router.post("/games/:id/challenges", authMiddleware, challengeController.createOne);

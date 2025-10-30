@@ -1,8 +1,11 @@
 import "./header.css";
 import useUserContext from "../../context/useUserContext";
+import { useNavigate } from "react-router";
 
 
 export function Header() {
+
+  const navigate = useNavigate();
 
   const { pseudo, logout } = useUserContext();
 
@@ -47,8 +50,19 @@ export function Header() {
               <i className="fa fa-user text-xl"></i>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow bg-base-100 rounded-box w-52">
-              {pseudo ? (<><li><a href="/profil">Profil</a></li><li><a href="/" 
-                onClick={() => {logout();}}>Déconnexion</a></li></>) : (
+              {pseudo ? (<><li><a href="/profil">Profil</a></li>
+                <li>
+                  <a
+                    href="/"
+                    onClick={(e) => {
+                      e.preventDefault(); // Empêche la navigation immédiate
+                      logout(); // Déconnecte l'utilisateur
+                      navigate("/"); // Redirige vers l'accueil après la déconnexion
+                    }}
+                  >
+                    Déconnexion
+                  </a>
+                </li></>) : (
                 <><li><a href="/signin">Se connecter</a></li><li><a href="/signup">S'inscrire</a></li></>)              
               }
             </ul>
