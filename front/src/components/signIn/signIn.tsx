@@ -67,13 +67,13 @@ export function SignIn(){
             }}>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6">
   
-              <label className="label">Email
-                <input name="email" type="email" className="input w-full" placeholder="Email" required />
-              </label>
+              <label htmlFor="email" className="label">Email</label>
+              <input id="email" name="email" type="email" className="input w-full" placeholder="Email" required />
+              
   
-              <label className="label">Mot de passe
-                <input name="password" type="password" className="input w-full" placeholder="Mot de passe" required/>
-              </label>
+              <label htmlFor="password" className="label">Mot de passe</label>
+              <input id="password" name="password" type="password" className="input w-full" placeholder="Mot de passe" required/>
+              
   
               <button type="submit" className="btn btn-primary mt-4 w-full">Se connecter</button>
             </fieldset>

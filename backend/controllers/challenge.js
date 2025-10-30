@@ -1,4 +1,4 @@
-import { Challenge, Participate, User } from "../database/models/index.js";
+import { Challenge, Participate, User, Game } from "../database/models/index.js";
 import { createChallengeSchema, participateChallengeSchema, updateChallengeSchema } from "../schemas/challengeSchema.js";
 import { idSchema } from "../schemas/utils.js";
 
@@ -94,6 +94,13 @@ export const challengeController = {
   async createOne(req, res) { 
     // Récupération et valider l'id du jeu
     const gameId = idSchema.parse(req.params.id);
+    
+    // Vérifier que le jeu existe et récupérer ses informations
+    const game = await Game.findByPk(gameId);
+    if (!game) {
+      return res.status(404).json({ error: "Jeu non trouvé" });
+    }
+    
     // Validation des données entrantes avec Zod
     // safeParse est une méthode de Zod (v4) qui valide les données d'entrée 
     // par rapport à un schéma et renvoie un objet indiquant la réussite ou l'échec, 
@@ -102,7 +109,6 @@ export const challengeController = {
     // Gestion d'une erreur Zod
     if (!parsed.success) {
       const fieldErrors = {};
-
       for (const err of parsed.error.issues) {
         const field = err.path[0]; 
         if (!fieldErrors[field]) {
@@ -116,20 +122,28 @@ export const challengeController = {
     const { title, description } = parsed.data;
     
     const user_id = 1;  // TODO À remplacer par l'ID du de l'utilisateur connecté
-    // Associe le nouvel objet créé à l'utilisateur connecté
-    //data.creator_id = req.user.id;
     
     // Création du challenge
     const challenge = await Challenge.create({title, description, user_id, game_id : gameId });
+    
+    // Récupérer le challenge créé avec les informations du jeu associé
+    const challengeWithGame = await Challenge.findByPk(challenge.id, {
+      include: [{
+        association: "game",
+        attributes: ["id", "title", "image"]
+      }]
+    });
+    
     // Renvoi des données
     res.status(201).json({
       message: "Challenge créé avec succès",
       challenge: {
-        id: challenge.id,
-        title: challenge.title,
-        description: challenge.description,
-        user_id: challenge.user_id,
-        game_id: challenge.game_id
+        id: challengeWithGame.id,
+        title: challengeWithGame.title,
+        description: challengeWithGame.description,
+        user_id: challengeWithGame.user_id,
+        game_id: challengeWithGame.game_id,
+        game: challengeWithGame.game
       },
     });
   },
