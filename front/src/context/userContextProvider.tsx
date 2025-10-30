@@ -16,14 +16,11 @@ export default function UserContextProvider({ children }) {
     setJwt(jwt);
     setPseudo(pseudo);
     setUserId(userId);
-    // Ajouter le header Authorization d'Axios
-    axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
   };
 
-  // On prépare une fonction logout qui vide le token, le pseudo et le userId du localStorage et du state et supprime le header Authorization d'Axios
+  // On prépare une fonction logout qui vide le pseudo et le userId du localStorage et du state et supprime le header Authorization d'Axios
   const logout = () => {
     // Supprimer les données du localStorage
-    localStorage.removeItem("authToken");
     localStorage.removeItem("pseudo");
     localStorage.removeItem("userId");
 
@@ -31,35 +28,70 @@ export default function UserContextProvider({ children }) {
     setJwt(null);
     setPseudo(null);
     setUserId(null);
-
-    // Supprimer le header Authorization d'Axios
-    delete axios.defaults.headers.common["Authorization"];
   };
 
+  // Rafraîchir le token
+  const refreshToken = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/refresh-token",
+        {},
+        { withCredentials: true } // ✅ Envoie les cookies
+      );
+      if (response.data.token) {
+        setJwt(response.data.token); // Met à jour le contexte (optionnel)
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Erreur lors du rafraîchissement du token :", error);
+      logout();
+      return false;
+    }
+  };
+
+  // Intercepteur pour rafraîchir le token en cas de 401
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+        if (error.response.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true;
+          const success = await refreshToken();
+          if (success) {
+            return axios(originalRequest); // Réessaye la requête originale
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => axios.interceptors.response.eject(interceptor);
+  }, []);
+  
+  // Vérifie la connexion au montage
   useEffect(() => {
     try {
-      const storedToken = localStorage.getItem("authToken");
-      if (storedToken) {
-        // Valider le token auprès du backend
-        axios.get("/api/auth/validate-token", {
-          headers: { Authorization: `Bearer ${storedToken}` },
+      const storedPseudo = localStorage.getItem("pseudo");
+      const storedUserId = localStorage.getItem("userId");
+
+      if (storedPseudo && storedUserId) {
+        axios.get("http://localhost:3000/api/auth/validate-token", {
+          withCredentials: true, // ✅ Envoie les cookies
         })
           .then((response) => {
             if (response.data.valid) {
-              const storedPseudo = localStorage.getItem("pseudo");
-              const storedUserId = localStorage.getItem("userId");
-              if (storedPseudo && storedUserId) {
-                login(storedToken, storedPseudo, Number(storedUserId));
-              }
+              login("dummy-token", storedPseudo, Number(storedUserId)); // Le vrai token est dans le cookie
             } else {
-              logout(); // Token invalide
+              logout();
             }
           })
-          .catch(() => logout()); // Erreur réseau
+          .catch(() => logout());
       }
     } catch (error) {
-      console.error("Erreur localStorage :", error);
-      logout(); // En cas d'erreur, considérer l'utilisateur comme déconnecté
+      console.error("Erreur :", error);
+      logout();
     }
   }, []);
   

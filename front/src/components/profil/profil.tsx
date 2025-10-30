@@ -9,11 +9,13 @@ export function Profil(){
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4 text-center max-w-96">
             <legend className="fieldset-legend">Email</legend>
 
-            <label className="label">Ancien email</label>
-            <input type="email" className="input" placeholder="Ancien email" />
+            <label id="oldEmail" className="label">Ancien email</label>
+            <input id="oldEmail" type="email" className="input" placeholder="Ancien email" />
+            
 
-            <label className="label">Nouveau email</label>
-            <input type="email" className="input" placeholder="Nouveau email" />
+            <label id="newEmail" className="label">Nouveau email</label>
+            <input id="newEmail" type="email" className="input" placeholder="Nouveau email" />
+            
 
             <button className="btn btn-neutral mt-4">Modifier</button>
           </fieldset> 
@@ -22,11 +24,11 @@ export function Profil(){
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4 text-center max-w-96">
             <legend className="fieldset-legend">Mot de passe</legend>
 
-            <label className="label">Ancien mot de passe</label>
-            <input type="password" className="input" placeholder="Ancien mot de passe" />
+            <label id="oldPassword" className="label">Ancien mot de passe</label>
+            <input id="oldPassword" type="password" className="input" placeholder="Ancien mot de passe" />
 
-            <label className="label">Nouveau mot de passe</label>
-            <input type="password" className="input" placeholder="Nouveau mot de passe" />
+            <label id="newPassword" className="label">Nouveau mot de passe</label>
+            <input id="newPassword" type="password" className="input" placeholder="Nouveau mot de passe" />
 
             <button className="btn btn-neutral mt-4">Modifier</button>
           </fieldset>
@@ -35,11 +37,11 @@ export function Profil(){
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4 text-center max-w-96">
             <legend className="fieldset-legend">Pseudo</legend>
 
-            <label className="label">Ancien pseudo</label>
-            <input type="text" className="input" placeholder="Ancien pseudo" />
+            <label id="oldPseudo" className="label">Ancien pseudo</label>
+            <input id="oldPseudo" type="text" className="input" placeholder="Ancien pseudo" />
 
-            <label className="label">Nouveau pseudo</label>
-            <input type="text" className="input" placeholder="Nouveau pseudo" />
+            <label id="newPseudo" className="label">Nouveau pseudo</label>
+            <input id="newPseudo" type="text" className="input" placeholder="Nouveau pseudo" />
 
             <button className="btn btn-neutral mt-4">Modifier</button>
           </fieldset>
@@ -48,8 +50,8 @@ export function Profil(){
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box  border p-4 text-center max-w-96">
             <legend className="fieldset-legend">Supprimer le compte</legend>
 
-            <label className="label">Mot de passe</label>
-            <input type="password" className="input" placeholder="Mot de passe" />
+            <label id="password" className="label">Mot de passe</label>
+            <input id="password" type="password" className="input" placeholder="Mot de passe" />
 
             <button className="btn btn-error mt-4">Supprimer mon compte</button>
           </fieldset>
