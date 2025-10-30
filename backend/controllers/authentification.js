@@ -14,14 +14,16 @@ export const authentificationController = {
     if (!user) {
       return res.status(401).json({ error: "Identifiants incorrects 1" });
     }
-
-    console.log(user);
   
     // Vérification du mot de passe
     const isPasswordValid = await argon2.verify(user.password, password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Identifiants incorrects 2" });
     }
+
+    // Déterminer le rôle à partir de role_id
+    // si roleID = 1 => user , si roleId = 2 => admin
+    const role = user.role_id === 2 ? "admin" : "user";
 
     // Renvoi des données
     res.status(200).json({
@@ -31,9 +33,9 @@ export const authentificationController = {
         username: user.username,
         email: user.email,
         pseudo: user.pseudo,
-        roleId : user.role_id
+        roleId : user.role_id 
       },
-      token: jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1h" }),
+      token: jwt.sign({ id: user.id, role: role }, process.env.JWT_SECRET, { expiresIn: "1h" }),
     });
   },
 };

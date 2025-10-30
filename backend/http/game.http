@@ -3,7 +3,7 @@
 GET http://localhost:3000/games
 ###
 # GET one game
-GET http://localhost:3000/games/13
+GET http://localhost:3000/games/2
 ###
 # GET all challenges
 GET http://localhost:3000/challenges
@@ -16,20 +16,22 @@ GET http://localhost:3000/challenges/1
 ###
 # GET one user with challenges created
 GET http://localhost:3000/users
+
 ###
 # GET one user with challenges created
-GET http://localhost:3000/users/1
+GET http://localhost:3000/users/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzA5MzQsImV4cCI6MTc2MTgzNDUzNH0.yLTMRm3peWiBg7e1mMRAaYiDNIjLI-FNBokVUPZgnys
 ###
 
 ###
 ### CREATE one challenge
-POST http://localhost:3000/games/1/challenges
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+POST http://localhost:3000/games/2/challenges
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzA2ODcsImV4cCI6MTc2MTgzNDI4N30.gpb_Ae9hjXZ-6mjpPV_ODaBQrxM0lYxiPoUIGIr_DM0
 Content-Type: application/json
 
 {
-  "title": "test ddddd",
-  "description": "Terminer le jeu en difficile dddd"
+  "title": "test perm",
+  "description": "Terminer le jeu en difficile x"
  
 }
 ### CREATE one user

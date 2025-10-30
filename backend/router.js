@@ -4,6 +4,7 @@ import { challengeController } from "./controllers/challenge.js";
 import { userController } from "./controllers/user.js";
 import { authentificationController } from "./controllers/authentification.js";
 import { authMiddleware } from "./middlewares/authMiddleware.js";
+import { checkEntityRbac} from "./middlewares/checkUserRbac.js";
 
 export const router = Router();
 
@@ -27,14 +28,14 @@ router.get("/users", userController.getAll);
 router.get("/users/:id", authMiddleware, userController.getOne);
 
 // Route pour valider le token
-router.get("/api/auth/validate-token", authMiddleware, (req, res) => {
-  // Si on arrive ici, c'est que le token est valide (grâce au middleware)
-  res.json({ valid: true, userId: req.user.id });
-});
+//router.get("/api/auth/validate-token", authMiddleware, (req, res) => {
+// Si on arrive ici, c'est que le token est valide (grâce au middleware)
+//res.json({ valid: true, userId: req.user.id });
+//});
 
 
 // Créer un challenge
-router.post("/games/:id/challenges", authMiddleware, challengeController.createOne);
+router.post("/games/:id/challenges", authMiddleware, checkEntityRbac("challenge"), challengeController.createOne);
 // Créer un user
 router.post("/register", userController.createOne);
 // participer à un challenge

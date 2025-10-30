@@ -92,12 +92,18 @@ export const challengeController = {
   },
 
   async createOne(req, res) { 
+
+    // Vérifier que l'utilisateur est connecté (req.userId existe)
+    if (!req.userId) {
+      return res.status(401).json({ error: "Non autorisé : connectez-vous." });
+    }
     // Récupération et valider l'id du jeu
     const gameId = idSchema.parse(req.params.id);
     // Validation des données entrantes avec Zod
     // safeParse est une méthode de Zod (v4) qui valide les données d'entrée 
     // par rapport à un schéma et renvoie un objet indiquant la réussite ou l'échec, 
     // au lieu de générer une erreur.
+
     const parsed = createChallengeSchema.safeParse(req.body);
     // Gestion d'une erreur Zod
     if (!parsed.success) {
@@ -114,13 +120,16 @@ export const challengeController = {
     }
     // Récupère les données validées et netoyées par Zod
     const { title, description } = parsed.data;
+    console.log(title, description, req.userId, gameId);
     
-    const user_id = 1;  // TODO À remplacer par l'ID du de l'utilisateur connecté
-    // Associe le nouvel objet créé à l'utilisateur connecté
-    //data.creator_id = req.user.id;
-    
-    // Création du challenge
-    const challenge = await Challenge.create({title, description, user_id, game_id : gameId });
+    // Créer le challenge avec l'ID de l'utilisateur connecté
+    const challenge = await Challenge.create({
+      title,
+      description,
+      user_id: req.userId,
+      game_id: gameId,
+    });
+
     // Renvoi des données
     res.status(201).json({
       message: "Challenge créé avec succès",

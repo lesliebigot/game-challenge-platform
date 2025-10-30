@@ -3,6 +3,7 @@ import "dotenv/config";
 import express from "express";
 import { router } from "./router.js";
 import cors from "cors";
+//import { authMiddleware } from "./middlewares/authMiddleware.js";
 
 
 export const app = express();
@@ -12,11 +13,11 @@ app.use(cors({
   origin: "http://localhost:5173",
 }));
 
-// TODO faut-il ajouter middleware de gestion des permissions RBAC + imports 
+// middleware de gestion des permissions RBAC : Vérifie le JWT et définit req.user
 //app.use(authMiddleware);
 //app.use((req, res, next) => {
-//  // Juste pour tester que l'on dispose bien des headers avec le user-id et le role
-//  console.log(req.headers['x-user-id'], req.headers['x-user-role']);
+//  // Juste pour tester
+//  console.log(req.user);
 //  next();
 //});
 
