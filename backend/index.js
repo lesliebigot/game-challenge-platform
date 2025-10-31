@@ -3,26 +3,19 @@ import "dotenv/config";
 import express from "express";
 import { router } from "./router.js";
 import cors from "cors";
-//import { authMiddleware } from "./middlewares/authMiddleware.js";
 import cookieParser from "cookie-parser";
 import csurf from "csurf";
-
 
 export const app = express();
 
 // Autoriser les requêtes venant de http://localhost:5173 (frontend)
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true, // ✅ Autorise l'envoi de cookies
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true, // ✅ Autorise l'envoi de cookies
+  })
+);
 
-// middleware de gestion des permissions RBAC : Vérifie le JWT et définit req.user
-//app.use(authMiddleware);
-//app.use((req, res, next) => {
-//  // Juste pour tester
-//  console.log(req.user);
-//  next();
-//});
 // Middleware pour parser les cookies
 app.use(cookieParser());
 
@@ -43,7 +36,7 @@ const PORT = process.env.PORT || 3000;
 app.use(router);
 
 // Try/Catch global
- 
+
 app.use((error, req, res, next) => {
   console.error("Erreur globale :", error);
 
