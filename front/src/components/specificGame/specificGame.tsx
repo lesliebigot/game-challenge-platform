@@ -1,5 +1,5 @@
 import "./specificGame.css";
-import { CardChallenge } from "../cardChallenge/cardChallenge.tsx";
+import { CardChallengeSpecific } from "../cardChallenge/cardChallenge.tsx";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
@@ -39,7 +39,7 @@ export function SpecificGame() {
               {games?.title}
             </h1>
             <p className="text-base lg:text-lg text-white">
-              Genre : {games?.Genre.name}
+              Genre : {games?.Genre?.name}
             </p>
           </div>
           <div className="flex-1 lg:text-right">
@@ -87,10 +87,14 @@ export function SpecificGame() {
 
       {/* Challenges dispo */}
       <section className="section-challenges max-w-full">
-        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 justify-between gap-6">
-          {Array.from({ length: 3 }, (_, index) => (
-            <CardChallenge key={index} />
-          ))}
+        <div className="justify-center gap-6">
+          {games?.challenges?.length ? (
+            games.challenges.map((challenge, index) => (
+              <CardChallengeSpecific key={index} challenge={challenge} />
+            ))
+          ) : (
+            <p>Aucun challenge disponible pour ce jeu.</p>
+          )}
         </div>
       </section>
     </>

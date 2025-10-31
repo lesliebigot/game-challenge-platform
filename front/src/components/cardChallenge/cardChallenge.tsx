@@ -5,6 +5,10 @@ interface ChallengesProps {
   topChallenge: IChallenge;
 }
 
+interface ChallengesspecProps {
+  challenge: IChallenge;
+}
+
 export function CardChallenge({topChallenge} : ChallengesProps) {
   // Vérification si topChallenge existe et a les propriétés nécessaires
   if (!topChallenge || !topChallenge.game) {
@@ -23,6 +27,24 @@ export function CardChallenge({topChallenge} : ChallengesProps) {
           <div className="flex items-center gap-2">
             <i className="fa fa-star text-warning"></i>
             <span>{topChallenge.likeCount} votes</span>
+          </div>
+          <a href="/participate-challenge"><button className="btn btn-primary">Participer</button></a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function CardChallengeSpecific({challenge}: ChallengesspecProps) {
+  return (
+    <div className="card bg-base-100 max-w-96 shadow-sm">
+      <div className="card-body">
+        <h2 className="card-title">{challenge.title}</h2>
+        <p>{challenge.description}</p>
+        <div className="card-actions justify-between">
+          <div className="flex items-center gap-2">
+            <i className="fa fa-star text-warning"></i>
+            <span>500 votes votes</span>
           </div>
           <a href="/participate-challenge"><button className="btn btn-primary">Participer</button></a>
         </div>
