@@ -79,6 +79,7 @@ export function SignUp() {
                 placeholder="Nom"
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -93,6 +94,7 @@ export function SignUp() {
                 placeholder="Prénom"
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -107,6 +109,7 @@ export function SignUp() {
                 placeholder="Date de naissance"
                 value={birthdate}
                 onChange={(e) => setBirthdate(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -121,6 +124,7 @@ export function SignUp() {
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -135,6 +139,7 @@ export function SignUp() {
                 placeholder="Mot de passe"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -149,6 +154,7 @@ export function SignUp() {
                 placeholder="Mot de passe"
                 value={confirmedPassword}
                 onChange={(e) => setConfirmedPassword(e.target.value)}
+                required
               />
             </div>
             <div>
@@ -163,6 +169,7 @@ export function SignUp() {
                 placeholder="Pseudo"
                 value={pseudo}
                 onChange={(e) => setPseudo(e.target.value)}
+                required
               />
             </div>
           </div>

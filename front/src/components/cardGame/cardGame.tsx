@@ -8,26 +8,30 @@ interface CardGameProps {
 }
 
 export function CardGame({ game }: CardGameProps) {
-  
   const [isLike, setIsLike] = useState(false);
 
   return (
     <div>
-     
-      <div key={game.id} className="card bg-base-100 max-w-96 min-h-full shadow-sm mb-4 ">
-        <a href={`/games/${game.id}`}>
+      <div
+        key={game.id}
+        className="card bg-base-100 max-w-96 min-h-full shadow-sm mb-4 "
+      >
+        <a href={`/games/0${game.id}`}>
           <figure className="w-auto">
-            <img src={game.image} alt={game.title}/>
+            <img src={game.image} alt={game.title} />
           </figure>
         </a>
         <div className="card-body">
           <h2 className="card-title text-md">{game.title}</h2>
           <p>{game.description}</p>
           <div className="flex gap-2 justify-center">
-            <a href={`/games/${game.id}`}>
-              <button className="btn btn-primary">Voir le détail</button>
+            <a href={`/games/0${game.id}`}>
+              <button type="button" className="btn btn-primary">
+                Voir le détail
+              </button>
             </a>
             <button
+              type="button"
               className="btn_star btn btn-sm sm:btn-md btn-circle btn-primary"
               onClick={() => setIsLike(!isLike)}
               title={isLike ? "Retirer des favoris" : "Ajouter aux favoris"}
@@ -39,10 +43,8 @@ export function CardGame({ game }: CardGameProps) {
               ></i>
             </button>
           </div>
-          
         </div>
       </div>
-      
     </div>
   );
 }
