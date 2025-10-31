@@ -1,33 +1,47 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-
 import "./createChallenge.css";
 import type { IGameDetails } from "../../../@types/game";
+
+// ✅ Configuration globale d'Axios pour envoyer les cookies
+axios.defaults.withCredentials = true;
 
 export function CreateChallenge() {
   const { id: gameId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-
   const [game, setGame] = useState<IGameDetails | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
+  // ✅ Vérification de l'authentification au chargement
   useEffect(() => {
-    // ✅ Vérification ajoutée ici
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/auth/validate-token");
+        setIsAuthenticated(response.data.valid);
+      } catch (e) {
+        setIsAuthenticated(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  // ✅ Chargement des données du jeu
+  useEffect(() => {
     if (!gameId) {
       setError("ID du jeu manquant dans l'URL");
       return;
     }
-
     const fetchGame = async () => {
       try {
         setLoading(true);
         setError(null);
-        const { data } = await axios.get(`http://localhost:3000/games/${gameId}`);
-        console.log("données reçues :", data);
+        const { data } = await axios.get(`http://localhost:3000/games/${gameId}`,
+          {withCredentials: true}); // ✅ Envoie les cookies;
         setGame(data);
       } catch (e: unknown) {
         console.error("Erreur API axios:", e instanceof Error ? e.message : e);
@@ -36,67 +50,75 @@ export function CreateChallenge() {
         setLoading(false);
       }
     };
-
     fetchGame();
   }, [gameId]);
 
+  // Récupère le token CSRF
+  const fetchCSRFToken = async () => {
+    const response = await axios.get("http://localhost:3000/api/csrf-token", {
+      withCredentials: true, // ✅ Envoie les cookies
+    });
+    return response.data.csrfToken;
+  }; 
+   
+  console.log(fetchCSRFToken());
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // ✅ Vérification supplémentaire
     if (!gameId) {
       setError("ID du jeu manquant");
       return;
     }
-
     if (!title.trim() || !description.trim()) {
       setError("Veuillez remplir tous les champs");
       return;
     }
-
+    if (!isAuthenticated) {
+      setError("Vous devez être connecté pour créer un challenge");
+      return;
+    }
     try {
+      console.log(gameId);
+      const csrfToken = await fetchCSRFToken();
+      console.log(csrfToken);
       setLoading(true);
       setError(null);
-
-      const token = localStorage.getItem("token");
-
-      // ✅ Amélioration de la gestion du token
-      if (!token) {
-        setError("Vous devez être connecté pour créer un challenge");
-        return;
-      }
-
       const { data } = await axios.post(
         `http://localhost:3000/games/${gameId}/challenges`,
         { title, description },
         {
+          withCredentials: true, // ✅ Les cookies HTTP-only seront envoyés automatiquement
           headers: {
-            Authorization: `Bearer ${token}`,
+            "X-CSRF-Token": csrfToken, // ✅ Ajoute le token CSRF
           },
         }
       );
-      
       console.log("Challenge créé:", data);
       navigate(`/games/${gameId}`);
-      setTitle("");
-      setDescription("");
     } catch (e: unknown) {
-      console.error(
-        "Erreur lors de la création:",
-        e instanceof Error ? e.message : e
-      );
+      console.error("Erreur lors de la création:", e instanceof Error ? e.message : e);
       setError("Erreur lors de la création du challenge");
     } finally {
       setLoading(false);
     }
+    console.log(fetchCSRFToken());
   };
 
-  // ✅ Gestion d'erreur si pas d'ID
   if (!gameId) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="alert alert-error">
           <span>ID du jeu manquant. Veuillez accéder à cette page depuis un jeu spécifique.</span>
+        </div>
+      </div>
+    );
+  }
+
+  // ✅ Vérification de l'authentification
+  if (isAuthenticated === false) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="alert alert-error">
+          <span>Vous devez être connecté pour créer un challenge. <a href="/login" className="link">Se connecter</a>.</span>
         </div>
       </div>
     );
@@ -115,9 +137,7 @@ export function CreateChallenge() {
           <h1 className="text-3xl font-bold mb-6 pixel-font text-center">
             Créer un challenge {game?.title && `pour ${game.title}`}
           </h1>
-
           {error && <div className="alert alert-error mb-4">{error}</div>}
-
           <form onSubmit={handleSubmit}>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6">
               <label htmlFor="title" className="label">
@@ -134,7 +154,6 @@ export function CreateChallenge() {
                 disabled={loading}
                 required
               />
-
               <label htmlFor="description" className="label">
                 <span className="label-text">Description du challenge</span>
               </label>
@@ -148,7 +167,6 @@ export function CreateChallenge() {
                 disabled={loading}
                 required
               />
-
               <button
                 type="submit"
                 className="btn btn-primary mt-4 w-full"
