@@ -100,7 +100,6 @@ export function CreateChallenge() {
     } finally {
       setLoading(false);
     }
-    console.log(fetchCSRFToken());
   };
 
   if (!gameId) {
