@@ -76,7 +76,7 @@ export function SpecificGame() {
                 } fa-star text-lg sm:text-xl`}
               ></i>
             </button>
-            <a href="/create-challenge/">
+            <a href={`/create-challenge/${games?.id}`}>
               <button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">
                 Créer un challenge
               </button>
@@ -87,13 +87,13 @@ export function SpecificGame() {
 
       {/* Challenges dispo */}
       <section className="section-challenges max-w-full">
-        <div className="justify-center gap-6">
+        <div className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto">
           {games?.challenges?.length ? (
             games.challenges.map((challenge, index) => (
               <CardChallengeSpecific key={index} challenge={challenge} />
             ))
           ) : (
-            <p>Aucun challenge disponible pour ce jeu.</p>
+            <p className="text-center text-white">Aucun challenge disponible pour ce jeu.</p>
           )}
         </div>
       </section>

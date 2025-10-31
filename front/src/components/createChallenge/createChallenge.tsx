@@ -7,6 +7,7 @@ import type { IGameDetails } from "../../../@types/game";
 
 export function CreateChallenge() {
   const { id: gameId } = useParams<{ id: string }>();
+  const navigate = useNavigate();
 
   const [game, setGame] = useState<IGameDetails | null>(null);
   const [title, setTitle] = useState("");
@@ -15,11 +16,17 @@ export function CreateChallenge() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // ✅ Vérification ajoutée ici
+    if (!gameId) {
+      setError("ID du jeu manquant dans l'URL");
+      return;
+    }
+
     const fetchGame = async () => {
       try {
         setLoading(true);
         setError(null);
-        const { data } = await axios.get("http://localhost:3000/games/3"); // ${gameId}
+        const { data } = await axios.get(`http://localhost:3000/games/${gameId}`);
         console.log("données reçues :", data);
         setGame(data);
       } catch (e: unknown) {
@@ -31,12 +38,16 @@ export function CreateChallenge() {
     };
 
     fetchGame();
-  }, []); // [gameId]
-
-  const navigate = useNavigate();
+  }, [gameId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // ✅ Vérification supplémentaire
+    if (!gameId) {
+      setError("ID du jeu manquant");
+      return;
+    }
 
     if (!title.trim() || !description.trim()) {
       setError("Veuillez remplir tous les champs");
@@ -47,24 +58,28 @@ export function CreateChallenge() {
       setLoading(true);
       setError(null);
 
-      const token = localStorage.getItem("token"); // Assurez-vous d'avoir le token d'authentification
+      const token = localStorage.getItem("token");
 
-      if (token) {
-        const { data } = await axios.post(
-          "http://localhost:3000/games/3/challenges", // ${gameId}
-          { title, description },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("Challenge créé:", data);
-        // Rediriger ou afficher un message de succès
-        navigate("/games/3"); // ${gameId}
-        setTitle("");
-        setDescription("");
+      // ✅ Amélioration de la gestion du token
+      if (!token) {
+        setError("Vous devez être connecté pour créer un challenge");
+        return;
       }
+
+      const { data } = await axios.post(
+        `http://localhost:3000/games/${gameId}/challenges`,
+        { title, description },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
+      console.log("Challenge créé:", data);
+      navigate(`/games/${gameId}`);
+      setTitle("");
+      setDescription("");
     } catch (e: unknown) {
       console.error(
         "Erreur lors de la création:",
@@ -76,8 +91,19 @@ export function CreateChallenge() {
     }
   };
 
-  if (loading && !game) return <div>Chargement...</div>;
-  if (error && !game) return <div>Erreur: {error}</div>;
+  // ✅ Gestion d'erreur si pas d'ID
+  if (!gameId) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="alert alert-error">
+          <span>ID du jeu manquant. Veuillez accéder à cette page depuis un jeu spécifique.</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading && !game) return <div className="flex justify-center"><span className="loading loading-spinner loading-lg"></span></div>;
+  if (error && !game) return <div className="alert alert-error">{error}</div>;
 
   return (
     <div>
@@ -95,28 +121,32 @@ export function CreateChallenge() {
           <form onSubmit={handleSubmit}>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6">
               <label htmlFor="title" className="label">
-                Titre du challenge
+                <span className="label-text">Titre du challenge</span>
               </label>
               <input
+                id="title"
                 name="title"
                 type="text"
-                className="input w-full"
+                className="input input-bordered w-full"
                 placeholder="Titre du challenge"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 disabled={loading}
+                required
               />
 
               <label htmlFor="description" className="label">
-                Description du challenge
+                <span className="label-text">Description du challenge</span>
               </label>
               <textarea
+                id="description"
                 name="description"
-                className="textarea w-full"
+                className="textarea textarea-bordered w-full"
                 placeholder="Description du challenge"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 disabled={loading}
+                required
               />
 
               <button
@@ -124,7 +154,14 @@ export function CreateChallenge() {
                 className="btn btn-primary mt-4 w-full"
                 disabled={loading}
               >
-                {loading ? "Création..." : "Valider"}
+                {loading ? (
+                  <>
+                    <span className="loading loading-spinner loading-sm"></span>
+                    Création...
+                  </>
+                ) : (
+                  "Valider"
+                )}
               </button>
             </fieldset>
           </form>

@@ -44,7 +44,7 @@ export function CardChallengeSpecific({challenge}: ChallengesspecProps) {
         <div className="card-actions justify-between">
           <div className="flex items-center gap-2">
             <i className="fa fa-star text-warning"></i>
-            <span>500 votes votes</span>
+            <span>500 votes</span>
           </div>
           <a href="/participate-challenge"><button className="btn btn-primary">Participer</button></a>
         </div>

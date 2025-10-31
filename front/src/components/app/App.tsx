@@ -36,7 +36,7 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profil" element={<Profil />} />
-          <Route path="/create-challenge" element={<CreateChallenge />} />
+          <Route path="/create-challenge/:id" element={<CreateChallenge />} />
           <Route path="/edit-challenge" element={<EditChallenge />} />
           <Route path="/participate-challenge" element={<ParticipateChallenge />} />
           <Route path="/contact" element={<Contact />} />
