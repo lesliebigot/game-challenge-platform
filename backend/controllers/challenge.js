@@ -142,12 +142,12 @@ export const challengeController = {
     res.status(201).json({
       message: "Challenge créé avec succès",
       challenge: {
-        id: challengeWithGame.id,
-        title: challengeWithGame.title,
-        description: challengeWithGame.description,
-        user_id: challengeWithGame.user_id,
-        game_id: challengeWithGame.game_id,
-        game: challengeWithGame.game
+        id: challenge.id,
+        title: challenge.title,
+        description: challenge.description,
+        user_id: challenge.user_id,
+        game_id: challenge.game_id,
+        game: challenge.game
       },
     });
   },

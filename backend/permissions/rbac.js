@@ -56,7 +56,7 @@ export const entityRolePermissions = {
     },
     anonymous: {
       create: "no",
-      read: "no",
+      read: "yes",
       update: "no",
       delete: "no"
     }
