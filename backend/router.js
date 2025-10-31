@@ -8,6 +8,7 @@ import { checkEntityRbac} from "./middlewares/checkUserRbac.js";
 
 export const router = Router();
 
+// GET
 // Tous les challenges avec créateur + jeu associé + participations + likes
 router.get("/challenges", challengeController.getAll); 
 // Les challenges les plus likés
@@ -27,12 +28,22 @@ router.get("/users", userController.getAll);
 // Un seul user avec ses challenges créés et participés, et ses jeux favoris
 router.get("/users/:id", authMiddleware, userController.getOne);
 
+
+//TOKEN
 // Route pour valider le token
 //router.get("/api/auth/validate-token", authMiddleware, (req, res) => {
 // Si on arrive ici, c'est que le token est valide (grâce au middleware)
 //res.json({ valid: true, userId: req.user.id });
 //});
+router.get("/api/auth/validate-token", authMiddleware, (req, res) => {
+  // Si on arrive ici, c'est que le token est valide (grâce au middleware)
+  res.json({ valid: true, userId: req.user.id });
+});
+// Route pour rafraîchir le token
+router.post("/api/auth/refresh-token", authentificationController.refreshToken);
 
+
+//POST
 // Créer un challenge
 router.post("/games/:id/challenges", authMiddleware, checkEntityRbac("challenge"), challengeController.createOne);
 // Créer un user
@@ -40,6 +51,8 @@ router.post("/register", userController.createOne);
 // participer à un challenge
 router.post("/challenges/:id/participate", authMiddleware, checkEntityRbac("challenge"), challengeController.submitToChallenge);
 
+
+//PATCH / DELETE
 // modifier son challenge
 router.patch("/challenges/:id", authMiddleware, checkEntityRbac("challenge"), challengeController.updateOne);
 // supprimer son challenge
@@ -56,5 +69,10 @@ router.delete("/challenges/:id/participate", authMiddleware, checkEntityRbac("ch
 
 // se connecter 
 router.post("/signin", authentificationController.signin);
+// supprimer un user
+router.delete("/users/:id", authMiddleware, userController.deleteOne);
+
+// Modifier un user
+// router.patch("/users/:id");
 
 

@@ -4,6 +4,8 @@ import express from "express";
 import { router } from "./router.js";
 import cors from "cors";
 //import { authMiddleware } from "./middlewares/authMiddleware.js";
+import cookieParser from "cookie-parser";
+import csurf from "csurf";
 
 
 export const app = express();
@@ -11,6 +13,7 @@ export const app = express();
 // Autoriser les requêtes venant de http://localhost:5173 (frontend)
 app.use(cors({
   origin: "http://localhost:5173",
+  credentials: true, // ✅ Autorise l'envoi de cookies
 }));
 
 // middleware de gestion des permissions RBAC : Vérifie le JWT et définit req.user
@@ -20,12 +23,20 @@ app.use(cors({
 //  console.log(req.user);
 //  next();
 //});
+// Middleware pour parser les cookies
+app.use(cookieParser());
+
+// Middleware pour la protection CSRF
+app.use(csurf({ cookie: true }));
 
 // on a besoin d'un parser pour récuperer les données en json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
+// Route pour récupérer le token CSRF (nécessaire pour le frontend)
+app.get("/api/csrf-token", (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
 
 const PORT = process.env.PORT || 3000;
 
