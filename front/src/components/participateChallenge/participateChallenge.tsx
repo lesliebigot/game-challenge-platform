@@ -65,7 +65,7 @@ export function ParticipateChallenge(){
     try {
       setLoading(true);
       setError(null);
-
+      console.log("🚀 Envoi de la participation...");
       const { data } = await axios.post(
         "http://localhost:3000/challenges/1/participate",
         { proof },
@@ -76,20 +76,44 @@ export function ParticipateChallenge(){
           },             
         }
       );
-      alert(data.message);
+      console.log(data.message);
       navigate("/games/1");
       setProof("");
     } catch (e) {
       console.error("Erreur API :", e);
       // Gestion d'erreur plus précise
       if (axios.isAxiosError(e)) {
+
+        console.log("📋 Détails de l'erreur:", e.response?.data);
+
         if (e.response?.status === 403) {
           setError("Erreur de sécurité (CSRF). Veuillez recharger la page.");
         } else if (e.response?.status === 401) {
           setError("Vous devez être connecté pour participer.");
-          navigate("/signin");
+          setTimeout(() => navigate("/signin"), 2000);
+        } else if (e.response?.status === 400 && e.response?.data?.errors) {
+          // Gestion des erreurs de validation Zod
+          const errors = e.response.data.errors;
+          const errorMessages: string[] = [];
+          
+          // Parcourir tous les champs en erreur
+          for (const field in errors) {
+            const fieldErrors = errors[field];
+            if (Array.isArray(fieldErrors)) {
+              errorMessages.push(...fieldErrors);
+            }
+          }
+          
+          // Affiche toutes les erreurs de validation
+          setError(errorMessages.join(". "));
         } else {
-          setError(e.response?.data?.message || "Erreur lors de la participation au challenge");
+          // Pour les autres types d'erreur
+          const errorMessage = 
+            e.response?.data?.error || 
+            e.response?.data?.message || 
+            "Erreur lors de la participation au challenge";
+          
+          setError(errorMessage);
         }
       } else {
         setError("Une erreur inattendue est survenue");
@@ -138,15 +162,23 @@ export function ParticipateChallenge(){
               <label className="label" htmlFor="proof">
                 <span className="label-text">Preuve de participation</span>
               </label>
-              <textarea
+              {/* input type="url" */}
+              <input
                 id="proof"
-                className="textarea textarea-bordered h-24"
-                placeholder="Décrivez votre participation..."
+                type="url"
+                className="input input-bordered w-full"
+                placeholder="https://example.com/ma-preuve.png"
                 value={proof}
                 onChange={(e) => setProof(e.target.value)}
                 required
                 disabled={loading}
+                pattern="https://.*" // Force le https://
               />
+              <label className="label">
+                <span className="label-text-alt text-info">
+                  💡 Uploadez votre preuve sur imgur.com, imgbb.com ou un service similaire
+                </span>
+              </label>
             </div>
 
             <div className="card-actions justify-end mt-4">
