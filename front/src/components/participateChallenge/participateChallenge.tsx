@@ -25,10 +25,10 @@ export function ParticipateChallenge(){
         setError("Erreur de sécurité. Veuillez recharger la page.");
       }
     };
-  
+    
     fetchCSRFToken();
   }, []);
- 
+   
   // Récupère les données du challenge
   useEffect(() => {
     const fetchChallenge = async () => {
@@ -52,8 +52,6 @@ export function ParticipateChallenge(){
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validation du champ "proof"
     if (!proof.trim()) {
       setError("Veuillez remplir tous les champs");
       return;
@@ -78,7 +76,7 @@ export function ParticipateChallenge(){
           },             
         }
       );
-      alert(data.message);
+      console.log(data.message);
       navigate("/games/1");
       setProof("");
     } catch (e) {
@@ -100,7 +98,7 @@ export function ParticipateChallenge(){
       setLoading(false);
     }
   };
-
+ 
   // Affichage pendant le chargement
   if (loading && !challenge) {
     return (
@@ -111,43 +109,65 @@ export function ParticipateChallenge(){
   }
 
   return (
-    <> 
-      <div>
-        <div className="flex justify-center">
-          <img src="/images/bf6.webp" alt="battlefield 6" className="img mt-5"/>    
+    <div className="container mx-auto px-4 py-8">
+      {/* Affichage des erreurs */}
+      {error && (
+        <div className="alert alert-error mb-4">
+          <span>{error}</span>
         </div>
-        <div className="flex items-center justify-center px-4 pt-10 pb-10">
-          <div className="w-full max-w-md">
-            <h1 className="text-3xl font-bold mb-6 pixel-font text-center">Participer à un challenge</h1>
-            {/* Formulaire de participation */}
-            <form onSubmit={handleSubmit}>
-              <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6">
-                <div className="flex flex-row gap-3">
-                  <select defaultValue="Youtube" className="select">
-                    <option>Youtube</option>
-                    <option>Twitch</option>
-                    <option>DailyMotion</option>
-                    <option>Kick</option>
-                  </select>
-                  <input type="text" className="input w-full" placeholder="Lien vidéo" />                
-                </div>                          
-                <label htmlFor="proof" className="label">Description du challenge</label>
-                <input name="proof" id="proof" type="text" className="input w-full" placeholder="Description du challenge" required/>
-                <button type="submit" className="btn btn-primary mt-4 w-full">Participer</button>
-              </fieldset>
-            </form>
+      )}
 
-            <div className="container mx-auto px-4 py-8">
-              {/* Affichage des erreurs */}
-              {error && (
-                <div className="alert alert-error mb-4">
-                  <span>{error}</span>
-                </div>
-              )}
-            </div>
+      {/* Informations du challenge */}
+      {challenge && (
+        <div className="card bg-base-200 shadow-xl mb-6">
+          <div className="card-body">
+            <h2 className="card-title text-2xl">{challenge.title}</h2>
+            <p>{challenge.description}</p>
+            {/* Ajoute d'autres informations du challenge si nécessaire */}
           </div>
         </div>
+      )}
+
+      {/* Formulaire de participation */}
+      <div className="card bg-base-100 shadow-xl">
+        <div className="card-body">
+          <h3 className="card-title">Participer au challenge</h3>
+          
+          <form onSubmit={handleSubmit}>
+            <div className="form-control w-full">
+              <label className="label" htmlFor="proof">
+                <span className="label-text">Preuve de participation</span>
+              </label>
+              <textarea
+                id="proof"
+                className="textarea textarea-bordered h-24"
+                placeholder="Décrivez votre participation..."
+                value={proof}
+                onChange={(e) => setProof(e.target.value)}
+                required
+                disabled={loading}
+              />
+            </div>
+
+            <div className="card-actions justify-end mt-4">
+              <button 
+                type="submit" 
+                className="btn btn-primary"
+                disabled={loading || !csrfToken}
+              >
+                {loading ? (
+                  <>
+                    <span className="loading loading-spinner loading-sm"></span>
+                    Envoi en cours...
+                  </>
+                ) : (
+                  "Participer"
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </>
+    </div>
   );
 }
