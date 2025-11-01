@@ -11,8 +11,10 @@ export const app = express();
 // Autoriser les requêtes venant de http://localhost:5173 (frontend)
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5173", // Origine exacte du frontend
     credentials: true, // Autorise l'envoi de cookies
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Méthodes autorisées
+    allowedHeaders: ["Content-Type", "Authorization", "X-CSRF-Token"], // Headers autorisés
   })
 );
 

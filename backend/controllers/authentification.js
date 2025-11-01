@@ -42,19 +42,19 @@ export const authentificationController = {
       // Envoie le token principal dans un cookie HTTP-only
       res.cookie("authToken", token, {
         httpOnly: true,
-        secure: false, // false en développement
-        sameSite: "lax", // CHANGÉ de "strict" à "lax" pour les redirections
+        secure: false, // false en développement, true en production (HTTPS)
+        sameSite: "strict", 
         maxAge: 3600000, // 1 heure
-        path: "/"
+        path: "/" //pour les redirections
       });
       
       // Envoie TOUJOURS le refresh token (supprimé la condition if(!token))
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: false, // false en développement
-        sameSite: "lax", // CHANGÉ de "strict" à "lax"
+        secure: false, // false en développement, true en production (HTTPS)
+        sameSite: "strict", 
         maxAge: 604800000, // 7 jours
-        path: "/"
+        path: "/" 
       });
       
       // Renvoi des données (sans renvoyer le token en clair)
@@ -110,7 +110,7 @@ export const authentificationController = {
       res.cookie("authToken", newToken, {
         httpOnly: true,
         secure: false, // false en développement
-        sameSite: "lax", // CHANGÉ de "strict" à "lax"
+        sameSite: "strict", 
         maxAge: 3600000,
         path: "/"
       });
