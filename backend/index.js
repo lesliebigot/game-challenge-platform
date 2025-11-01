@@ -23,16 +23,16 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//* attention à  l'ordre des middlewares. Le middleware CSRF doit être appliqué après la route /api/csrf-token, 
-//* sinon toutes les requêtes (y compris celle pour obtenir le token) sont vérifiées.
+// Middleware pour la protection CSRF
+const csrfProtection = csurf({ cookie: true });
 
-// Route pour récupérer le token CSRF AVANT le middleware CSRF (nécessaire pour le frontend)
+// Appliquer le middleware CSRF AVANT la route csrf-token
+app.use(csrfProtection);
+
+// Route pour récupérer le token CSRF APRÈS le middleware CSRF
 app.get("/api/csrf-token", (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
-
-// Middleware pour la protection CSRF APRÈS la route csrf-token
-app.use(csurf({ cookie: true }));
 
 const PORT = process.env.PORT || 3000;
 
