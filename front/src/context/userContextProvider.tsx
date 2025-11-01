@@ -45,7 +45,6 @@ export default function UserContextProvider({ children }) {
       return false;
     } catch (error) {
       console.error("Erreur lors du rafraîchissement du token :", error);
-      logout();
       return false;
     }
   };

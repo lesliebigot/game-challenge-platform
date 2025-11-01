@@ -76,7 +76,7 @@ export function ParticipateChallenge(){
           },             
         }
       );
-      console.log(data.message);
+      alert(data.message);
       navigate("/games/1");
       setProof("");
     } catch (e) {
