@@ -12,24 +12,27 @@ export const app = express();
 app.use(
   cors({
     origin: "http://localhost:5173",
-    credentials: true, // ✅ Autorise l'envoi de cookies
+    credentials: true, // Autorise l'envoi de cookies
   })
 );
 
 // Middleware pour parser les cookies
 app.use(cookieParser());
 
-// Middleware pour la protection CSRF
-app.use(csurf({ cookie: true }));
-
 // on a besoin d'un parser pour récuperer les données en json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Route pour récupérer le token CSRF (nécessaire pour le frontend)
+//* attention à  l'ordre des middlewares. Le middleware CSRF doit être appliqué après la route /api/csrf-token, 
+//* sinon toutes les requêtes (y compris celle pour obtenir le token) sont vérifiées.
+
+// Route pour récupérer le token CSRF AVANT le middleware CSRF (nécessaire pour le frontend)
 app.get("/api/csrf-token", (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
+
+// Middleware pour la protection CSRF APRÈS la route csrf-token
+app.use(csurf({ cookie: true }));
 
 const PORT = process.env.PORT || 3000;
 
