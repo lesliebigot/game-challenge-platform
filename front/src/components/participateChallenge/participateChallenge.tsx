@@ -172,6 +172,7 @@ export function ParticipateChallenge(){
           {/* Formulaire de participation */}
           <form onSubmit={handleSubmit}>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6">
+              <span className="label-text">Lien de votre vidéo de participation ici</span>
               <div className="flex flex-row gap-3">
                 <select defaultValue="Youtube" className="select">
                   <option>Youtube</option>
@@ -189,7 +190,6 @@ export function ParticipateChallenge(){
                   onChange={(e) => setProof(e.target.value)}
                   required
                   disabled={loading}
-                  pattern="https://.*"// Force le https://
                 />
               </div>
               
