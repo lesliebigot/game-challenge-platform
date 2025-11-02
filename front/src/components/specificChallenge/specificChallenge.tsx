@@ -1,11 +1,14 @@
 import "./specificChallenge.css";
 import {useState} from "react";
 import { CardVideo } from "../cardVideo/cardVideo";
+import { useParams } from "react-router-dom";
 
 
 export function SpecificChallenge(){
 
   const [isLike, setIsLike] = useState(false);
+  const params = useParams();
+  const { id : challengeId } = params;
 
   return (
     <>
@@ -50,7 +53,7 @@ export function SpecificChallenge(){
               <i className={`${isLike ? "fa-solid text-blue-900" : "fa-regular"} fa-thumbs-up text-lg sm:text-xl`}></i>
             </button>
             
-            <a href="/participate-challenge"><button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">Participer au challenge</button></a>
+            <a href={`/participate-challenge/${challengeId}`}><button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">Participer au challenge</button></a>
             
           </div>            
         </div>

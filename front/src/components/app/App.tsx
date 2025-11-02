@@ -38,11 +38,11 @@ function App() {
           <Route path="/profil" element={<Profil />} />
           <Route path="/create-challenge" element={<CreateChallenge />} />
           <Route path="/edit-challenge" element={<EditChallenge />} />
-          <Route path="/participate-challenge" element={<ParticipateChallenge />} />
+          <Route path="/participate-challenge/:id" element={<ParticipateChallenge />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/legal-:idotice" element={<LegalNotice />} />
           <Route path="/games/1" element={<SpecificGame />} />
-          <Route path="/challenges/1" element={<SpecificChallenge />} />
+          <Route path="/challenges/:id" element={<SpecificChallenge />} />
           <Route path="/ranking" element={<Ranking />} />
           <Route path="/team" element={<Team />} />
         </Routes>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import "./participateChallenge.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { IChallenge } from "../../../@types/challenge";
 
@@ -11,6 +11,9 @@ export function ParticipateChallenge(){
   const [challenge, setChallenge] = useState<IChallenge | null>(null);
   const navigate = useNavigate();
   const [csrfToken, setCsrfToken] = useState("");
+  const params = useParams();
+  const { id : challengeId } = params;
+  console.log("Challenge ID 2:", challengeId);
 
   // Récupère le token CSRF au montage du composant
   useEffect(() => {
@@ -35,7 +38,7 @@ export function ParticipateChallenge(){
       try {
         setLoading(true);
         setError(null);
-        const { data } = await axios.get("http://localhost:3000/challenges/1", {
+        const { data } = await axios.get(`http://localhost:3000/challenges/${challengeId}`, {
           withCredentials: true,
         }); 
         console.log("données reçues :", data);
@@ -48,7 +51,7 @@ export function ParticipateChallenge(){
       }
     };
     fetchChallenge();
-  }, []); // (challengeId]
+  }, [challengeId]); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -133,59 +136,58 @@ export function ParticipateChallenge(){
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Affichage des erreurs */}
-      {error && (
-        <div className="alert alert-error mb-4">
-          <span>{error}</span>
-        </div>
-      )}
-
-      {/* Informations du challenge */}
-      {challenge && (
-        <div className="card bg-base-200 shadow-xl mb-6">
-          <div className="card-body">
-            <h2 className="card-title text-2xl">{challenge.title}</h2>
-            <p>{challenge.description}</p>
-            {/* Ajoute d'autres informations du challenge si nécessaire */}
-          </div>
-        </div>
-      )}
-
-      {/* Formulaire de participation */}
-      <div className="card bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h3 className="card-title">Participer au challenge</h3>
+    <div>
+      <div className="flex justify-center">
+        <img src="/images/bf6.webp" alt="battlefield 6" className="img mt-5"/>    
+      </div>
+      <h1 className="text-3xl font-bold mb-6 pt-8 pixel-font text-center">Participer au challenge</h1>      
+      
+      <div className="flex items-center justify-center px-4 pt-5 pb-10">
+        <div className="w-full max-w-lg">
           
-          <form onSubmit={handleSubmit}>
-            <div className="form-control w-full">
-              <label className="label" htmlFor="proof">
-                <span className="label-text">Preuve de participation</span>
-              </label>
-              {/* input type="url" */}
-              <input
-                id="proof"
-                type="url"
-                className="input input-bordered w-full"
-                placeholder="https://example.com/ma-preuve.png"
-                value={proof}
-                onChange={(e) => setProof(e.target.value)}
-                required
-                disabled={loading}
-                pattern="https://.*" // Force le https://
-              />
-              <label className="label">
-                <span className="label-text-alt text-info">
-                  💡 Uploadez votre preuve sur imgur.com, imgbb.com ou un service similaire
-                </span>
-              </label>
+          
+          {/* Informations du challenge */}
+          {challenge && (
+            <div className="mb-4 pb-4 bg-base-200 rounded-lg">
+              <h2 className="text-2xl font-bold mb-2">{challenge.title}</h2>
+              <p>{challenge.description}</p>
             </div>
-
-            <div className="card-actions justify-end mt-4">
+          )}
+          {/* Affichage des erreurs */}
+          {error && (
+            <div className="alert alert-error mb-4 mx-4">
+              <span>{error}</span>
+            </div>
+          )}
+          
+          {/* Formulaire de participation */}
+          <form onSubmit={handleSubmit}>
+            <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6">
+              <div className="flex flex-row gap-3">
+                <select defaultValue="Youtube" className="select">
+                  <option>Youtube</option>
+                  <option>Twitch</option>
+                  <option>DailyMotion</option>
+                  <option>Kick</option>
+                </select>
+                <input
+                  id="proof"
+                  name="proof"
+                  type="url"
+                  className="input w-full"
+                  placeholder="https://example.com/ma-preuve.png"
+                  value={proof}
+                  onChange={(e) => setProof(e.target.value)}
+                  required
+                  disabled={loading}
+                  pattern="https://.*"
+                />
+              </div>
+              
               <button 
                 type="submit" 
-                className="btn btn-primary"
-                disabled={loading || !csrfToken}
+                className="btn btn-primary mt-4 w-full"
+                disabled={loading}
               >
                 {loading ? (
                   <>
@@ -196,8 +198,9 @@ export function ParticipateChallenge(){
                   "Participer"
                 )}
               </button>
-            </div>
+            </fieldset>
           </form>
+          
         </div>
       </div>
     </div>
