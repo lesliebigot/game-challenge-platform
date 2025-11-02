@@ -6,6 +6,7 @@ import type { IChallenge } from "../../../@types/challenge";
 
 export function ParticipateChallenge(){
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [proof, setProof] = useState("");
   const [loading, setLoading] = useState(false);
   const [challenge, setChallenge] = useState<IChallenge | null>(null);
@@ -13,7 +14,6 @@ export function ParticipateChallenge(){
   const [csrfToken, setCsrfToken] = useState("");
   const params = useParams();
   const { id : challengeId } = params;
-  console.log("Challenge ID 2:", challengeId);
 
   // Récupère le token CSRF au montage du composant
   useEffect(() => {
@@ -70,7 +70,7 @@ export function ParticipateChallenge(){
       setError(null);
       console.log("🚀 Envoi de la participation...");
       const { data } = await axios.post(
-        "http://localhost:3000/challenges/1/participate",
+        `http://localhost:3000/challenges/${challengeId}/participate`,
         { proof },
         {
           withCredentials: true,  // Important pour envoyer cookie HttpOnly
@@ -79,8 +79,11 @@ export function ParticipateChallenge(){
           },             
         }
       );
-      console.log(data.message);
-      navigate("/games/1");
+      setSuccess(data.message);
+      // Rediriger après 2 secondes vers la page du jeu
+      setTimeout(() => {
+        navigate(`/games/${challenge?.game_id}`);
+      }, 2000);
       setProof("");
     } catch (e) {
       console.error("Erreur API :", e);
@@ -138,7 +141,7 @@ export function ParticipateChallenge(){
   return (
     <div>
       <div className="flex justify-center">
-        <img src="/images/bf6.webp" alt="battlefield 6" className="img mt-5"/>    
+        <img src={challenge?.game?.image} alt={challenge?.game?.title} className="img mt-5"/>    
       </div>
       <h1 className="text-3xl font-bold mb-6 pt-8 pixel-font text-center">Participer au challenge</h1>      
       
@@ -159,7 +162,13 @@ export function ParticipateChallenge(){
               <span>{error}</span>
             </div>
           )}
-          
+          {/* Affichage du message de succès */}
+          {success && (
+            <div className="alert alert-success mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>{success}</span>
+            </div>
+          )}         
           {/* Formulaire de participation */}
           <form onSubmit={handleSubmit}>
             <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-6">
@@ -180,7 +189,7 @@ export function ParticipateChallenge(){
                   onChange={(e) => setProof(e.target.value)}
                   required
                   disabled={loading}
-                  pattern="https://.*"
+                  pattern="https://.*"// Force le https://
                 />
               </div>
               
