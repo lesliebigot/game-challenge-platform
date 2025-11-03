@@ -41,7 +41,7 @@ router.post("/api/auth/refresh-token", authentificationController.refreshToken);
 router.post(
   "/games/:id/challenges",
   authMiddleware,
-  //checkEntityRbac("challenge"),
+  checkEntityRbac("challenge"),
   challengeController.createOne
 );
 // Créer un user
@@ -50,7 +50,7 @@ router.post("/register", userController.createOne);
 router.post(
   "/challenges/:id/participate",
   authMiddleware,
-  //checkEntityRbac("challenge"),
+  checkEntityRbac("challenge"),
   challengeController.submitToChallenge
 );
 
@@ -59,14 +59,14 @@ router.post(
 router.patch(
   "/challenges/:id",
   authMiddleware,
-  //checkEntityRbac("challenge"),
+  checkEntityRbac("challenge"),
   challengeController.updateOne
 );
 // supprimer son challenge
 router.delete(
   "/challenges/:id",
   authMiddleware,
-  //checkEntityRbac("challenge"),
+  checkEntityRbac("challenge"),
   challengeController.deleteOne
 );
 
@@ -74,14 +74,14 @@ router.delete(
 router.patch(
   "/challenges/:id/participate",
   authMiddleware,
-  //checkEntityRbac("challenge"),
+  checkEntityRbac("challenge"),
   challengeController.updateParticipation
 );
 // supprimer sa participation à un challenge
 router.delete(
   "/challenges/:id/participate",
   authMiddleware,
-  //checkEntityRbac("challenge"),
+  checkEntityRbac("challenge"),
   challengeController.deleteParticipation
 );
 
@@ -91,6 +91,8 @@ router.delete(
 
 // se connecter
 router.post("/signin", authentificationController.signin);
+// se déconnecter
+router.get("/logout", authMiddleware, authentificationController.logout);
 // supprimer un user
 router.delete("/users/:id", authMiddleware, userController.deleteOne);
 

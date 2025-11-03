@@ -75,6 +75,19 @@ export const authentificationController = {
       res.status(500).json({ error: "Erreur lors de la connexion" });
     }
   },
+
+  async logout(req, res) {
+    try {
+
+      // Supprimer les cookies authToken et refreshToken
+      res.clearCookie("authToken", { path: "/", httpOnly: true, sameSite: "strict" });
+      res.clearCookie("refreshToken", { path: "/", httpOnly: true, sameSite: "strict"});
+      res.status(200).json({ message: "Déconnexion réussie" });
+    }
+    catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    };
+  },
   
   // Fonction pour rafraîchir le token
   async refreshToken(req, res) {

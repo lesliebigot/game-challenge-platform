@@ -10,7 +10,7 @@ export default function UserContextProvider({ children }) {
   const [pseudo, setPseudo] = useState<null | string>(null);
   // STATE pour useId si pas null on est connecté
   const[userId, setUserId]= useState<null | number>(null);
-
+  
   // on prépare une fonction login qui met à jour les states , elle sera utilisée au moment de l'authentification de l'utilisateur (dans le submit du form du header)
   const login = (jwt: string, pseudo: string, userId: number) => {
     setJwt(jwt);
@@ -19,11 +19,17 @@ export default function UserContextProvider({ children }) {
   };
 
   // On prépare une fonction logout qui vide le pseudo et le userId du localStorage et du state et supprime le header Authorization d'Axios
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await axios.get("http://localhost:3000/logout", {
+        withCredentials: true
+      });
+    } catch (error) {console.error("Erreur lors de la déconnexion :", error);};
+
     // Supprimer les données du localStorage
     localStorage.removeItem("pseudo");
     localStorage.removeItem("userId");
-
+    
     // Réinitialiser les states
     setJwt(null);
     setPseudo(null);

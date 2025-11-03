@@ -46,7 +46,7 @@ export function CardChallengeSpecific({challenge}: ChallengesspecProps) {
             <i className="fa fa-star text-warning"></i>
             <span>500 votes</span>
           </div>
-          <a href="/participate-challenge"><button className="btn btn-primary">Participer</button></a>
+          <a href={`/participate-challenge/${challenge.id}`}><button className="btn btn-primary">Participer</button></a>
         </div>
       </div>
     </div>
