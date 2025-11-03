@@ -31,7 +31,6 @@ export function HomePage() {
     const fetchGames = async () => {
       try {
         const { data } = await axios.get("http://localhost:3000/games");
-        console.log("Données API reçues:", data);
         setGames(data);
       } catch (e: any) {
         console.error("Erreur API axios:", e.response || e.message || e);
