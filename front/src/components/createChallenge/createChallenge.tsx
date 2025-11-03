@@ -21,7 +21,9 @@ export function CreateChallenge() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/auth/validate-token");
+        const response = await axios.get(
+          "http://localhost:3000/api/auth/validate-token"
+        );
         setIsAuthenticated(response.data.valid);
       } catch (e) {
         setIsAuthenticated(false);
@@ -40,11 +42,12 @@ export function CreateChallenge() {
       try {
         setLoading(true);
         setError(null);
-        const { data } = await axios.get(`http://localhost:3000/games/0${gameId}`,
-          {withCredentials: true}); // ✅ Envoie les cookies;
+        const { data } = await axios.get(
+          `http://localhost:3000/games/0${gameId}`,
+          { withCredentials: true }
+        );
         setGame(data);
       } catch (e: unknown) {
-        console.error("Erreur API axios:", e instanceof Error ? e.message : e);
         setError("Erreur lors du chargement du jeu");
       } finally {
         setLoading(false);
@@ -53,14 +56,7 @@ export function CreateChallenge() {
     fetchGame();
   }, [gameId]);
 
-  // Récupère le token CSRF
-  const fetchCSRFToken = async () => {
-    const response = await axios.get("http://localhost:3000/api/csrf-token", {
-      withCredentials: true, // ✅ Envoie les cookies
-    });
-    return response.data.csrfToken;
-  }; 
-   
+  // ✅ Soumission avec récupération du token CSRF à jour
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!gameId) {
@@ -71,6 +67,10 @@ export function CreateChallenge() {
       setError("Veuillez remplir tous les champs");
       return;
     }
+    if (description.trim().length < 5) {
+      setError("La description du challenge est trop courte ");
+      return;
+    }
     if (!isAuthenticated) {
       setError("Vous devez être connecté pour créer un challenge");
       return;
@@ -79,23 +79,25 @@ export function CreateChallenge() {
       setLoading(true);
       setError(null);
 
-      const csrfToken = await fetchCSRFToken();
-      console.log(csrfToken);
+      // ↪️ Récupère le token CSRF juste avant le POST
+      const res = await axios.get("http://localhost:3000/api/csrf-token", {
+        withCredentials: true,
+      });
+      const csrfToken = res.data.csrfToken;
 
+      // ⬇️ Création du challenge avec le token CSRF valide
       const { data } = await axios.post(
         `http://localhost:3000/games/${gameId}/challenges`,
         { title, description },
         {
-          withCredentials: true, // ✅ Les cookies HTTP-only seront envoyés automatiquement
+          withCredentials: true,
           headers: {
-            "X-CSRF-Token": csrfToken, // ✅ Ajoute le token CSRF
+            "X-CSRF-Token": csrfToken,
           },
         }
       );
-      console.log("Challenge créé:", data);
       navigate(`/games/0${gameId}`);
     } catch (e: unknown) {
-      console.error("Erreur lors de la création:", e instanceof Error ? e.message : e);
       setError("Erreur lors de la création du challenge");
     } finally {
       setLoading(false);
@@ -106,24 +108,37 @@ export function CreateChallenge() {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="alert alert-error">
-          <span>ID du jeu manquant. Veuillez accéder à cette page depuis un jeu spécifique.</span>
+          <span>
+            ID du jeu manquant. Veuillez accéder à cette page depuis un jeu
+            spécifique.
+          </span>
         </div>
       </div>
     );
   }
 
-  // ✅ Vérification de l'authentification
   if (isAuthenticated === false) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="alert alert-error">
-          <span>Vous devez être connecté pour créer un challenge. <a href="/signin" className="link">Se connecter</a>.</span>
+          <span>
+            Vous devez être connecté pour créer un challenge.{" "}
+            <a href="/signin" className="link">
+              Se connecter
+            </a>
+            .
+          </span>
         </div>
       </div>
     );
   }
 
-  if (loading && !game) return <div className="flex justify-center"><span className="loading loading-spinner loading-lg"></span></div>;
+  if (loading && !game)
+    return (
+      <div className="flex justify-center">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
   if (error && !game) return <div className="alert alert-error">{error}</div>;
 
   return (
