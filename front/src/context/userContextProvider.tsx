@@ -36,7 +36,7 @@ export default function UserContextProvider({ children }) {
       const response = await axios.post(
         "http://localhost:3000/api/auth/refresh-token",
         {},
-        { withCredentials: true } // ✅ Envoie les cookies
+        { withCredentials: true } // Envoie les cookies
       );
       if (response.data.token) {
         setJwt(response.data.token); // Met à jour le contexte (optionnel)
@@ -45,7 +45,6 @@ export default function UserContextProvider({ children }) {
       return false;
     } catch (error) {
       console.error("Erreur lors du rafraîchissement du token :", error);
-      logout();
       return false;
     }
   };
@@ -78,7 +77,7 @@ export default function UserContextProvider({ children }) {
 
       if (storedPseudo && storedUserId) {
         axios.get("http://localhost:3000/api/auth/validate-token", {
-          withCredentials: true, // ✅ Envoie les cookies
+          withCredentials: true, // Envoie les cookies
         })
           .then((response) => {
             if (response.data.valid) {

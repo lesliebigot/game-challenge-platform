@@ -51,8 +51,9 @@ Content-Type: application/json
 }
 
 ### CREATE userparticipation to one challenge
-POST http://localhost:3000/challenges/22/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OCwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4NDEyNjYsImV4cCI6MTc2MTg0NDg2Nn0.g0MKWsbC8lMky73FPreCV6gT1ar3xIjCo30-wHyjtiw
+POST http://localhost:3000/challenges/10/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMDA2MDE3LCJleHAiOjE3NjIwMDk2MTd9.BzEb3Dct0lhIz08YvRl6Dlv2nQa4xvDqZlw87zupIh0
+X-XSRF-Token: 0SUBuHt7-rt7klXfc8P7KvGU8IXYzSL-1mSg
 Content-Type: application/json
 
 {  

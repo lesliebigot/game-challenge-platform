@@ -16,25 +16,27 @@ export function SignIn(){
   // Récupère le token CSRF
   const fetchCSRFToken = async () => {
     const response = await axios.get("http://localhost:3000/api/csrf-token", {
-      withCredentials: true, // ✅ Envoie les cookies
+      withCredentials: true, // Envoie les cookies
     });
     return response.data.csrfToken;
   };
 
   const checkCredentials = async (email: string, password: string) => {
     try {
+      console.log("Tentative de connexion avec :", email); // Log l'email
       const csrfToken = await fetchCSRFToken();
+      console.log("Token CSRF récupéré :", csrfToken); // Log le token CSRF
       const response = await axios.post(
         "http://localhost:3000/signin",
         { email, password },
         {
-          withCredentials: true, // ✅ Envoie les cookies
+          withCredentials: true, // Envoie les cookies
           headers: {
-            "X-CSRF-Token": csrfToken, // ✅ Ajoute le token CSRF
+            "X-CSRF-Token": csrfToken, // Ajoute le token CSRF
           },
         }
       );
-
+      console.log("Réponse du serveur :", response.data); // Log la réponse complète
       const { user } = response.data;
       if (user) {
         // Met à jour le contexte avec les données utilisateur
@@ -50,7 +52,7 @@ export function SignIn(){
       }
     } catch (e) {
       setError("Email ou mot de passe incorrect");
-      console.log(error);
+      console.error("Erreur de connexion :", e);
     }
   };
 

@@ -95,8 +95,8 @@ export const challengeController = {
 
   async createOne(req, res) { 
 
-    // Vérifier que l'utilisateur est connecté (req.userId existe)
-    if (!req.userId) {
+    // Vérifier que l'utilisateur est connecté (req.user.id existe)
+    if (!req.user.id) {
       return res.status(401).json({ error: "Non autorisé : connectez-vous." });
     }
     // Récupération et valider l'id du jeu
@@ -128,13 +128,13 @@ export const challengeController = {
     }
     // Récupère les données validées et netoyées par Zod
     const { title, description } = parsed.data;
-    console.log(title, description, req.userId, gameId);
+    console.log(title, description, req.user.id, gameId);
     
     // Créer le challenge avec l'ID de l'utilisateur connecté
     const challenge = await Challenge.create({
       title,
       description,
-      user_id: req.userId,
+      user_id: req.user.id,
       game_id: gameId,
     });
 
@@ -154,7 +154,7 @@ export const challengeController = {
 
   async submitToChallenge(req, res) {
     // Vérifier que l'utilisateur est connecté
-    if (!req.userId) {
+    if (!req.user.id) {
       return res.status(401).json({ error: "Non autorisé : connectez-vous." });
     }
     // Validation des données avec Zod
@@ -174,7 +174,6 @@ export const challengeController = {
     // Récupère les données validées et netoyées par Zod
     const { proof } = parsed.data;
     // Récupèrer et valider l'id de l'utilisateur et du challenge
-    //const userId = req.user.id;
     const challengeId = idSchema.parse(req.params.id);
     // Vérifie que le challenge existe
     const challenge = await Challenge.findByPk(challengeId);
@@ -183,14 +182,14 @@ export const challengeController = {
     }
     // Vérifier si l'utilisateur connecté a déjà participé à ce challenge
     const existingParticipation = await Participate.findOne({
-      where: { user_id: req.userId, challenge_id: challengeId }
+      where: { user_id: req.user.id, challenge_id: challengeId }
     });
     if (existingParticipation) {
       return res.status(400).json({ error: "Vous avez déjà participé à ce challenge." });
     }
     // Crée la participation
     const participation = await Participate.create({
-      user_id: req.userId,
+      user_id: req.user.id,
       challenge_id: challengeId,
       proof: proof,
     });
@@ -210,10 +209,10 @@ export const challengeController = {
   async updateOne(req, res) {
 
     // Vérifier que l'utilisateur est connecté
-    if (!req.userId) {
+    if (!req.user.id) {
       return res.status(401).json({ error: "Non autorisé : connectez-vous." });
     }
-   
+    
     // récuperer les informations de modifications   
     let data = req.body;
     // valider ces infos
@@ -223,7 +222,7 @@ export const challengeController = {
     
     // modifier uniquement si l'utilisateur connecté est celui qui a créé ce challenge
     // Si la permission est "self", vérifier que l'utilisateur est le propriétaire
-    const { userId, permission } = req;
+    const { permission } = req;
     if (permission === "self") {
     // récuperer le challenge concerné
       const challenge = await Challenge.findByPk(challengeId);
@@ -231,7 +230,7 @@ export const challengeController = {
       if (!challenge) {
         return res.status(404).json({ error: "challenge non trouvé" });
       }
-      if (challenge.user_id !== userId) {
+      if (challenge.user_id !== req.user.id) {
         return res.status(403).json({ message: "Vous ne pouvez modifier que vos propres challenges." });
       }
     }
@@ -261,7 +260,7 @@ export const challengeController = {
   // Supprimer le challenge qu'on a créé
   async deleteOne(req, res) {
     // Vérifier que l'utilisateur est connecté
-    if (!req.userId) {
+    if (!req.user.id) {
       return res.status(401).json({ error: "Non autorisé : connectez-vous." });
     }  
     // Récupérer et valider l'ID du challenge
@@ -272,8 +271,8 @@ export const challengeController = {
       return res.status(404).json({ error: "Challenge non trouvé." });
     } 
     // Vérifier si la permission est "self" et que l'utilisateur est le créateur du challenge
-    const { userId, permission } = req;
-    if (permission === "self" && challenge.user_id !== userId) {
+    const { permission } = req;
+    if (permission === "self" && challenge.user_id !== req.user.id) {
       return res.status(403).json({
         message: "Vous ne pouvez supprimer que vos propres challenges.",
       });
@@ -286,7 +285,7 @@ export const challengeController = {
 
   async updateParticipation(req, res) {  
     // Vérifier que l'utilisateur est connecté
-    if (!req.userId) {
+    if (!req.user.id) {
       return res.status(401).json({ error: "Non autorisé : connectez-vous." });
     }
     // Récupérer et valider l'id du challenge
@@ -299,7 +298,7 @@ export const challengeController = {
     // Récupérer la participation existante
     const participation = await Participate.findOne({
       where: { 
-        user_id: req.userId,
+        user_id: req.user.id,
         challenge_id: challengeId 
       }
     });
@@ -341,7 +340,7 @@ export const challengeController = {
 
   async deleteParticipation(req, res) {  
     // Vérifier que l'utilisateur est connecté
-    if (!req.userId) {
+    if (!req.user.id) {
       return res.status(401).json({ error: "Non autorisé : connectez-vous." });
     }
     // récuperer et valider l'id du challenge 
@@ -349,7 +348,7 @@ export const challengeController = {
     // Récupérer la participation existante
     const participation = await Participate.findOne({
       where: { 
-        user_id: req.userId,
+        user_id: req.user.id,
         challenge_id: challengeId 
       }
     });
