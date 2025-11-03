@@ -46,7 +46,7 @@ export function SpecificChallenge(){
             </p>
           </div>            
         </div>
-        {/* Description jeu */}
+        {/* Description Challenge */}
         <div className="flex flex-col lg:flex-row lg:justify-between mt-5 gap-4">
           <div className="flex-1 lg:pr-8">
             <p className="text-base lg:text-lg text-white mb-3">Description :</p>

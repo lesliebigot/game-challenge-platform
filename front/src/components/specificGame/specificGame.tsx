@@ -76,7 +76,7 @@ export function SpecificGame() {
                 } fa-star text-lg sm:text-xl`}
               ></i>
             </button>
-            <a href={`/create-challenge/${games?.id}`}>
+            <a href={`/create-challenge/0${games?.id}`}>
               <button className="btn btn-primary btn-sm sm:btn-md whitespace-nowrap">
                 Créer un challenge
               </button>

@@ -40,7 +40,7 @@ export function CreateChallenge() {
       try {
         setLoading(true);
         setError(null);
-        const { data } = await axios.get(`http://localhost:3000/games/${gameId}`,
+        const { data } = await axios.get(`http://localhost:3000/games/0${gameId}`,
           {withCredentials: true}); // ✅ Envoie les cookies;
         setGame(data);
       } catch (e: unknown) {
@@ -77,7 +77,6 @@ export function CreateChallenge() {
       return;
     }
     try {
-      console.log(gameId);
       const csrfToken = await fetchCSRFToken();
       console.log(csrfToken);
       setLoading(true);
@@ -93,7 +92,7 @@ export function CreateChallenge() {
         }
       );
       console.log("Challenge créé:", data);
-      navigate(`/games/${gameId}`);
+      navigate(`/games/0${gameId}`);
     } catch (e: unknown) {
       console.error("Erreur lors de la création:", e instanceof Error ? e.message : e);
       setError("Erreur lors de la création du challenge");
@@ -117,7 +116,7 @@ export function CreateChallenge() {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="alert alert-error">
-          <span>Vous devez être connecté pour créer un challenge. <a href="/login" className="link">Se connecter</a>.</span>
+          <span>Vous devez être connecté pour créer un challenge. <a href="/signin" className="link">Se connecter</a>.</span>
         </div>
       </div>
     );
