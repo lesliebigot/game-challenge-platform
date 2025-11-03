@@ -37,7 +37,8 @@ export const challengeController = {
         association: "likedByUsers",             
       },
       {
-        association: "game",             
+        association: "game", // avec plateformes 
+        include: [{ association: "platforms"}]           
       }]
     });
     // Gestion d'une erreur

@@ -1,21 +1,24 @@
 export interface IChallenge {
-    
+  id: number;
+  title: string;
+  description: string;
+  difficulty: string;
+  game_id: number;
+  created_at: string;
+  updated_at: string;
+  participantUsers: IParticipantUser[];
+  likedByUsers: ILikedByUser[];
+  likeCount?: number;
+  game: {
     id: number;
     title: string;
-    description: string;
-    difficulty: string;
-    game_id: number;
-    created_at: string;
-    updated_at: string;
-    participantUsers: IParticipantUser[];
-    likedByUsers: ILikedByUser[];
-    likeCount?: number;
-    game: {
-        id: number;
-        title: string;
-        image: string;
-    };
-  }
+    image: string;
+    platforms: {        
+      name: string;
+    }[];  // Remarquez le [] ici pour indiquer un tableau
+  };
+}
+
 
 export interface IParticipantUser {
     id: number;
