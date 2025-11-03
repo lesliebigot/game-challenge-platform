@@ -1,45 +1,57 @@
 import "./specificChallenge.css";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { CardVideo } from "../cardVideo/cardVideo";
 import { useParams } from "react-router-dom";
-
+import axios from "axios";
+import type { IChallenge } from "../../../@types/challenge";
 
 export function SpecificChallenge(){
-
   const [isLike, setIsLike] = useState(false);
+  const [challenge, setChallenge] = useState<IChallenge | null>(null);
   const params = useParams();
   const { id : challengeId } = params;
+
+  useEffect(() => {
+    const fetchChallenge = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/challenges/${challengeId}`);
+        console.log("Données API reçues:", response.data);
+        setChallenge(response.data);
+      } catch (e: unknown) {
+        console.error("Erreur API axios:", e instanceof Error ? e.message : e);
+      }
+    };
+    fetchChallenge();
+  }, [challengeId]);
 
   return (
     <>
       {/* Section image du jeu */}
       <section className="section-game w-[80%]">
-        <img src="../images/bf6.webp" alt="image du jeu" className="img_game"/>
+        <img src={challenge?.game?.image} alt={challenge?.game?.title} className="img_game"/>
       </section>
       {/* Section information et détails challenge */}          
       <section className="section-game max-w-[80%]">
         {/* Info spé jeux */}
         <div className="flex flex-col lg:flex-row lg:justify-between gap-4 lg:gap-0">
           <div className="flex-1">
-            <h1 className="text-2xl sm:text-3xl font-bold pixel-font text-white mb-2">Titre du challenge
+            <h1 className="text-2xl sm:text-3xl font-bold pixel-font text-white mb-2">{challenge?.title}
             </h1>  
           </div>
           <div className="flex-1 lg:text-right">
-            <p className="text-base lg:text-lg text-white">Jeu : Battlefield 6</p>   
-            <p className="text-base lg:text-lg text-white">Plateforme : PC, Xbox et Playstation</p>   
+            <p className="text-base lg:text-lg text-white">Jeu : {challenge?.game.title}</p>   
+            <p className="text-base lg:text-lg text-white">
+              Plateforme :
+              {(challenge?.game?.platforms || []).map(platform => platform.name).join(", ")}
+            </p>
           </div>            
         </div>
-        {/* Description jeu */}
+        {/* Description Challenge */}
         <div className="flex flex-col lg:flex-row lg:justify-between mt-5 gap-4">
           <div className="flex-1 lg:pr-8">
             <p className="text-base lg:text-lg text-white mb-3">Description :</p>
             <p className="text-sm lg:text-base text-white leading-relaxed">
-        Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, 
-        or even a very very short story. Body text for whatever you'd like to say. Add main 
-        takeaway points, quotes, anecdotes, or even a very very short story. Body text for 
-        whatever you'd like to say. Add main takeaway points, quotes, anecdotes, or even a 
-        very very short story. Body text for whatever you'd like to say. Add main takeaway 
-        points, quotes, anecdotes, or even a very very short story.
+              {challenge?.description}
             </p>
           </div>
     

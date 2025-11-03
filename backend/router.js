@@ -34,7 +34,11 @@ router.get("/api/auth/validate-token", authMiddleware, (req, res) => {
   res.json({ valid: true });
 });
 // Route pour rafraîchir le token
-router.post("/api/auth/refresh-token", authentificationController.refreshToken);
+router.post(
+  "/api/auth/refresh-token",
+  authMiddleware,
+  authentificationController.refreshToken
+);
 
 //POST
 // Créer un challenge
@@ -92,7 +96,7 @@ router.delete(
 // se connecter
 router.post("/signin", authentificationController.signin);
 // se déconnecter
-router.get("/logout", authMiddleware, authentificationController.logout);
+router.get("/logout", authentificationController.logout);
 // supprimer un user
 router.delete("/users/:id", authMiddleware, userController.deleteOne);
 

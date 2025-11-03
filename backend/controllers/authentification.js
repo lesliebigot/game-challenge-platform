@@ -82,6 +82,7 @@ export const authentificationController = {
       // Supprimer les cookies authToken et refreshToken
       res.clearCookie("authToken", { path: "/", httpOnly: true, sameSite: "strict" });
       res.clearCookie("refreshToken", { path: "/", httpOnly: true, sameSite: "strict"});
+      res.clearCookie("_csrf", { path: "/" });
       res.status(200).json({ message: "Déconnexion réussie" });
     }
     catch (error) {

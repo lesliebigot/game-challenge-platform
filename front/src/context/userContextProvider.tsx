@@ -9,8 +9,8 @@ export default function UserContextProvider({ children }) {
   // STATE pour le pseudo si pas null on est connecté
   const [pseudo, setPseudo] = useState<null | string>(null);
   // STATE pour useId si pas null on est connecté
-  const[userId, setUserId]= useState<null | number>(null);
-  
+  const [userId, setUserId] = useState<null | number>(null);
+
   // on prépare une fonction login qui met à jour les states , elle sera utilisée au moment de l'authentification de l'utilisateur (dans le submit du form du header)
   const login = (jwt: string, pseudo: string, userId: number) => {
     setJwt(jwt);
@@ -22,14 +22,15 @@ export default function UserContextProvider({ children }) {
   const logout = async () => {
     try {
       await axios.get("http://localhost:3000/logout", {
-        withCredentials: true
+        withCredentials: true,
       });
-    } catch (error) {console.error("Erreur lors de la déconnexion :", error);};
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion :", error);
+    }
 
     // Supprimer les données du localStorage
     localStorage.removeItem("pseudo");
     localStorage.removeItem("userId");
-    
     // Réinitialiser les states
     setJwt(null);
     setPseudo(null);
@@ -74,7 +75,7 @@ export default function UserContextProvider({ children }) {
 
     return () => axios.interceptors.response.eject(interceptor);
   }, []);
-  
+
   // Vérifie la connexion au montage
   useEffect(() => {
     try {
@@ -82,9 +83,10 @@ export default function UserContextProvider({ children }) {
       const storedUserId = localStorage.getItem("userId");
 
       if (storedPseudo && storedUserId) {
-        axios.get("http://localhost:3000/api/auth/validate-token", {
-          withCredentials: true, // Envoie les cookies
-        })
+        axios
+          .get("http://localhost:3000/api/auth/validate-token", {
+            withCredentials: true, // Envoie les cookies
+          })
           .then((response) => {
             if (response.data.valid) {
               login("dummy-token", storedPseudo, Number(storedUserId)); // Le vrai token est dans le cookie
@@ -99,7 +101,7 @@ export default function UserContextProvider({ children }) {
       logout();
     }
   }, []);
-  
+
   return (
     <UserContext.Provider value={{ jwt, pseudo, login, logout, userId }}>
       {children}

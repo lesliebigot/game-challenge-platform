@@ -1,24 +1,37 @@
 import "./cardChallenge.css";
 import type { IChallenge } from "../../../@types/challenge.d.ts";
+import type { Challenge, ParticipatedChallenge } from "../../../@types/user";
 
 interface ChallengesProps {
   topChallenge: IChallenge;
+}
+
+interface ChallengesProps {
+  topChallenges: IChallenge;
 }
 
 interface ChallengesspecProps {
   challenge: IChallenge;
 }
 
-export function CardChallenge({topChallenge} : ChallengesProps) {
+interface CardChallengeEditProps {
+  challenge: Challenge;
+}
+
+interface ParticipatedChallengesProps {
+  challenge: ParticipatedChallenge;
+}
+
+export function CardChallenge({ topChallenge }: ChallengesProps) {
   // Vérification si topChallenge existe et a les propriétés nécessaires
   if (!topChallenge || !topChallenge.game) {
     return <div>Chargement...</div>;
   }
-  
+
   return (
     <div className="card bg-base-100 max-w-96 shadow-sm">
       <figure>
-        <img src={topChallenge.game.image} alt={topChallenge.game.title}/>
+        <img src={topChallenge.game.image} alt={topChallenge.game.title} />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{topChallenge.title}</h2>
@@ -28,48 +41,50 @@ export function CardChallenge({topChallenge} : ChallengesProps) {
             <i className="fa fa-star text-warning"></i>
             <span>{topChallenge.likeCount} votes</span>
           </div>
-          <a href="/participate-challenge"><button className="btn btn-primary">Participer</button></a>
+          <a href={`/participate-challenge/${topChallenge.id}`}>
+            <button className="btn btn-primary">Participer</button>
+          </a>
         </div>
       </div>
     </div>
   );
 }
 
-export function CardChallengeSpecific({challenge}: ChallengesspecProps) {
+export function CardChallengeSpecific({ challenge }: ChallengesspecProps) {
   return (
     <div className="card bg-base-100 max-w-96 shadow-sm">
       <div className="card-body">
         <h2 className="card-title">{challenge.title}</h2>
         <p>{challenge.description}</p>
         <div className="card-actions justify-between">
-          <div className="flex items-center gap-2">
-            <i className="fa fa-star text-warning"></i>
-            <span>500 votes</span>
-          </div>
-          <a href={`/participate-challenge/${challenge.id}`}><button className="btn btn-primary">Participer</button></a>
+          <a href={`/challenges/${challenge.id}`}>
+            <button className="btn btn-primary">Voir</button>
+          </a>
+          <a href={`/participate-challenge/${challenge.id}`}>
+            <button className="btn btn-primary">Participer</button>
+          </a>
         </div>
       </div>
     </div>
   );
 }
 
-export function CardChallengeEdit() {
+export function CardChallengeEdit({ challenge }: CardChallengeEditProps) {
   return (
     <div className="card bg-base-100 max-w-96 shadow-sm">
-      <figure>
-        <img src="/images/bf6.webp" alt="Challenge"/>
-      </figure>
       <div className="card-body">
-        <h2 className="card-title">Speedrun Master</h2>
-        <p>Complétez le niveau 1 en moins de 2 minutes</p>
+        <h2 className="card-title">{challenge.title}</h2>
+        <p>{challenge.description}</p>
         <div className="card-actions justify-between">
-          <div className="flex items-center gap-2">
-            <i className="fa fa-star text-warning"></i>
-            <span>500 votes</span>
-          </div>
           <div className="flex gap-2">
-            <a href="/challenges/1"><button className="btn btn-primary">Voir</button></a>
-            <a href="/edit-challenge"><button className="btn btn-primary">Editer</button></a>
+            {/* Lien "Voir" dynamique */}
+            <a href={`/challenges/${challenge.id}`}>
+              <button className="btn btn-primary">Voir</button>
+            </a>
+            {/* Lien "Editer" dynamique */}
+            <a href={`/edit-challenge/${challenge.id}`}>
+              <button className="btn btn-primary">Editer</button>
+            </a>
           </div>
         </div>
       </div>
@@ -77,24 +92,21 @@ export function CardChallengeEdit() {
   );
 }
 
-export function ParticipatedChallenges() {
+export function ParticipatedChallenges({
+  challenge,
+}: ParticipatedChallengesProps) {
   return (
     <div className="card bg-base-100 max-w-96 shadow-sm">
-      <figure>
-        <img src="/images/bf6.webp" alt="Challenge"/>
-      </figure>
       <div className="card-body">
-        <h2 className="card-title">Speedrun Master</h2>
-        <p>Complétez le niveau 1 en moins de 2 minutes</p>
+        <h2 className="card-title">{challenge.title}</h2>
+        <p>{challenge.description}</p>
         <div className="card-actions justify-between">
-          <div className="flex items-center gap-2">
-            <i className="fa fa-star text-warning"></i>
-            <span>500 votes</span>
-          </div>
-          <a href="/challenges/1"><button className="btn btn-primary">Voir</button></a>
+          {/* Lien "Voir" dynamique */}
+          <a href={`/challenges/${challenge.id}`}>
+            <button className="btn btn-primary">Voir</button>
+          </a>
         </div>
       </div>
     </div>
   );
 }
-
