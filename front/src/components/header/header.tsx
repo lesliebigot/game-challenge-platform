@@ -36,7 +36,7 @@ export function Header() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li><a href="/" className="btn btn-ghost">Accueil</a></li>
-          <li><a href="/games" className="btn btn-ghost">Jeux</a></li>
+          <li><a href="/games" className="btn btn-ghost">Liste des jeux</a></li>
           <li><a href="/challenges" className="btn btn-ghost">Challenges</a></li>
           <li><a href="/ranking" className="btn btn-ghost">Classements</a></li>
         </ul>
