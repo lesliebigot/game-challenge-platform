@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import useUserContext from "../../context/useUserContext";
 import { useNavigate } from "react-router";
@@ -7,24 +7,23 @@ import { useNavigate } from "react-router";
 export function SignIn(){
   // STATE jwt, pseudo et userID sont maintenant dans le context USerContext
   const { login } = useUserContext();
-
   // STATE pour l'erreur de login
   const [error, setError] = useState<null | string>(null);
-
   const navigate = useNavigate();
+  const [csrfToken, setCsrfToken] = useState(""); // Ajout de l'état pour le token CSRF
 
-  // Récupère le token CSRF
-  const fetchCSRFToken = async () => {
-    const response = await axios.get("http://localhost:3000/api/csrf-token", {
-      withCredentials: true, // Envoie les cookies
-    });
-    return response.data.csrfToken;
-  };
+  // Récupère le token CSRF dès le montage du composant
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/csrf-token", { withCredentials: true })
+      .then((res) => {
+        setCsrfToken(res.data.csrfToken);
+      });
+  }, []);
 
   const checkCredentials = async (email: string, password: string) => {
     try {
       console.log("Tentative de connexion avec :", email); // Log l'email
-      const csrfToken = await fetchCSRFToken();
       console.log("Token CSRF récupéré :", csrfToken); // Log le token CSRF
       const response = await axios.post(
         "http://localhost:3000/signin",

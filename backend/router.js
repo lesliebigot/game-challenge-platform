@@ -34,7 +34,7 @@ router.get("/api/auth/validate-token", authMiddleware, (req, res) => {
   res.json({ valid: true });
 });
 // Route pour rafraîchir le token
-router.post("/api/auth/refresh-token", authentificationController.refreshToken);
+router.post("/api/auth/refresh-token", authMiddleware, authentificationController.refreshToken);
 
 //POST
 // Créer un challenge

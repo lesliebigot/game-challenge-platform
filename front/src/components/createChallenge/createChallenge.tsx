@@ -61,7 +61,6 @@ export function CreateChallenge() {
     return response.data.csrfToken;
   }; 
    
-  console.log(fetchCSRFToken());
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!gameId) {
@@ -77,10 +76,12 @@ export function CreateChallenge() {
       return;
     }
     try {
-      const csrfToken = await fetchCSRFToken();
-      console.log(csrfToken);
       setLoading(true);
       setError(null);
+
+      const csrfToken = await fetchCSRFToken();
+      console.log(csrfToken);
+
       const { data } = await axios.post(
         `http://localhost:3000/games/${gameId}/challenges`,
         { title, description },
