@@ -26,15 +26,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Middleware pour la protection CSRF
-const csrfProtection = csurf({ cookie: true });
+//const csrfProtection = csurf({ cookie: true });
 
 // Appliquer le middleware CSRF AVANT la route csrf-token
-app.use(csrfProtection);
+//app.use(csrfProtection);
 
 // Route pour récupérer le token CSRF APRÈS le middleware CSRF
-app.get("/api/csrf-token", (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
-});
+//app.get("/api/csrf-token", (req, res) => {
+//  res.json({ csrfToken: req.csrfToken() });
+//});
+
+if (process.env.NODE_ENV !== "test") {
+  const csrfProtection = csurf({ cookie: true });
+  app.use(csrfProtection);
+
+  app.get("/api/csrf-token", (req, res) => {
+    res.json({ csrfToken: req.csrfToken() });
+  });
+}
 
 const PORT = process.env.PORT || 3000;
 

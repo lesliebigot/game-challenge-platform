@@ -5,7 +5,9 @@ export default [
   js.configs.recommended,
   {
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node },
+      globals: { ...globals.browser,
+        ...globals.node,
+        ...globals.jest },
     },
     rules: {
       "semi": "error",

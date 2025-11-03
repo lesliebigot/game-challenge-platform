@@ -55,8 +55,11 @@ export const userController = {
       message: "Utilisateur créé avec succès",
       user: {
         id: user.id,
-        username: user.username,
+        pseudo: user.pseudo,
         email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        birthdate: user.birthdate
       },
     });
   },

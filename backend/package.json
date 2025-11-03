@@ -4,7 +4,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "dev": "node --watch index.js"
   },
   "keywords": [],
@@ -26,6 +26,12 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "eslint": "^9.38.0"
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "babel-jest": "^30.2.0",
+    "eslint": "^9.38.0",
+    "jest": "^30.2.0",
+    "node-mocks-http": "^1.17.2",
+    "supertest": "^7.1.4"
   }
 }
