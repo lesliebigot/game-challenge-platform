@@ -16,7 +16,9 @@ export function Challenges() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3000/users/${id}`);
+        const { data } = await axios.get(
+          `https://projet-gamer-challenges.onrender.com/users/${id}`
+        );
         setUser(data); // data est un objet User, pas un User[]
       } catch (e: any) {
         console.error("Erreur API axios:", e.response || e.message || e);

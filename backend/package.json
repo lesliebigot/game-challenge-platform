@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node database/migrations/01-create-tables.js && node database/migrations/02-seed-tables.js && node database/migrations/03-seed-tables-test.js",
+    "postdeploy": "npm run migrate",
     "dev": "node --watch index.js"
   },
   "keywords": [],

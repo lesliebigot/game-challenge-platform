@@ -1,20 +1,20 @@
 import "./gameList.css";
-import {CardGame} from "../cardGame/cardGame.tsx";
+import { CardGame } from "../cardGame/cardGame.tsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import type { IGameDetails } from "../../../@types/game.d.ts";
 
-
-
-export function GameList(){
+export function GameList() {
   const [games, setGames] = useState<IGameDetails[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
   const [searchValue, setSearchValue] = useState("");
-  
+
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/games");
+        const { data } = await axios.get(
+          "https://projet-gamer-challenges.onrender.com/games"
+        );
         console.log("Données API reçues:", data);
         setGames(data);
       } catch (e: any) {
@@ -33,43 +33,48 @@ export function GameList(){
   const uniqueGenres = Array.from(
     new Map(
       games
-        .filter(game => game.Genre !== null)  // filtre les jeux dont Genre est null
-        .map(game => [game.Genre.id, game.Genre])
+        .filter((game) => game.Genre !== null) // filtre les jeux dont Genre est null
+        .map((game) => [game.Genre.id, game.Genre])
     ).values()
   );
 
   // Filtre les jeux en fonction du genre sélectionné
   const filteredGames = selectedGenre
-    ? games.filter(game => game.Genre?.id === selectedGenre)
+    ? games.filter((game) => game.Genre?.id === selectedGenre)
     : games;
 
-  // Filtre jeux par barre recherche 
+  // Filtre jeux par barre recherche
   const searchedGames = filteredGames.filter((game) => {
     return game.title.toLowerCase().includes(searchValue.toLowerCase());
   });
 
-  return(
+  return (
     <>
       <div className="flex flex-row justify-center mt-5 gap-5">
         <div className="flex gap-2">
           <label className="input input-primary ">
-            <input type="search" 
+            <input
+              type="search"
               value={searchValue}
               onChange={(changeEvent) => {
                 const userSaisie = changeEvent.currentTarget.value;
                 setSearchValue(userSaisie);
-              } }required placeholder="Rechercher" 
+              }}
+              required
+              placeholder="Rechercher"
             />
           </label>
         </div>
         <fieldset className="fieldset fieldset-secondary">
-          <select 
+          <select
             value={selectedGenre ?? ""}
-            defaultValue="Genre" 
-            className="select select-primary" 
+            defaultValue="Genre"
+            className="select select-primary"
             onChange={(e) => {
               const value = e.target.value;
-              setSelectedGenre(value ? Number(e.target.value): null);}}>
+              setSelectedGenre(value ? Number(e.target.value) : null);
+            }}
+          >
             <option value="">Tous</option>
             {uniqueGenres.map((genre) => (
               <option key={genre.id} value={genre.id}>
@@ -77,15 +82,14 @@ export function GameList(){
               </option>
             ))}
           </select>
-        </fieldset> 
-
+        </fieldset>
       </div>
       <section className="flex justify-center">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 mt-12 mb-12">
-          {searchedGames.map((game)=>(
-            <CardGame key={game.id} game={game}/>
+          {searchedGames.map((game) => (
+            <CardGame key={game.id} game={game} />
           ))}
-        </div>            
+        </div>
       </section>
     </>
   );

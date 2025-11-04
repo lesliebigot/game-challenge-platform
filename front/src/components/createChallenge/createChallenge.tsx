@@ -22,7 +22,7 @@ export function CreateChallenge() {
     const checkAuth = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/api/auth/validate-token"
+          "https://projet-gamer-challenges.onrender.com/api/auth/validate-token"
         );
         setIsAuthenticated(response.data.valid);
       } catch (e) {
@@ -43,7 +43,7 @@ export function CreateChallenge() {
         setLoading(true);
         setError(null);
         const { data } = await axios.get(
-          `http://localhost:3000/games/0${gameId}`,
+          `https://projet-gamer-challenges.onrender.com/games/0${gameId}`,
           { withCredentials: true }
         );
         setGame(data);
@@ -80,14 +80,17 @@ export function CreateChallenge() {
       setError(null);
 
       // ↪️ Récupère le token CSRF juste avant le POST
-      const res = await axios.get("http://localhost:3000/api/csrf-token", {
-        withCredentials: true,
-      });
+      const res = await axios.get(
+        "https://projet-gamer-challenges.onrender.com/api/csrf-token",
+        {
+          withCredentials: true,
+        }
+      );
       const csrfToken = res.data.csrfToken;
 
       // ⬇️ Création du challenge avec le token CSRF valide
       const { data } = await axios.post(
-        `http://localhost:3000/games/${gameId}/challenges`,
+        `https://projet-gamer-challenges.onrender.com/games/${gameId}/challenges`,
         { title, description },
         {
           withCredentials: true,
