@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import UserContext from "./userContext";
 import axios from "axios";
 
 // ce composant contient les données global qu'on veut mettre dans le state
-export default function UserContextProvider({ children }) {
+export default function UserContextProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
   // STATE pour stocker le JWT
   const [jwt, setJwt] = useState<null | string>(null);
   // STATE pour le pseudo si pas null on est connecté

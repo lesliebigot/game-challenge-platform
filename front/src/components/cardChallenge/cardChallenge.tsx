@@ -8,7 +8,15 @@ interface ChallengesProps {
 }
 
 interface ChallengesspecProps {
-  challenge: IChallenge;
+  challenge: {
+    id: number;
+    title: string;
+    description: string;
+    difficulty?: string;
+    game_id?: number;
+    created_at?: string;
+    updated_at?: string;
+  };
 }
 
 interface CardChallengeEditProps {
