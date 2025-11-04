@@ -6,10 +6,6 @@ interface ChallengesProps {
   topChallenge: IChallenge;
 }
 
-interface ChallengesProps {
-  topChallenges: IChallenge;
-}
-
 interface ChallengesspecProps {
   challenge: IChallenge;
 }
