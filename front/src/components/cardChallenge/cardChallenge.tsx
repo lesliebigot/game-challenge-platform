@@ -1,6 +1,7 @@
 import "./cardChallenge.css";
 import type { IChallenge } from "../../../@types/challenge.d.ts";
 import type { Challenge, ParticipatedChallenge } from "../../../@types/user";
+import useUserContext from "../../context/useUserContext.tsx";
 
 interface ChallengesProps {
   topChallenge: IChallenge;
@@ -19,6 +20,8 @@ interface ParticipatedChallengesProps {
 }
 
 export function CardChallenge({ topChallenge }: ChallengesProps) {
+  const { pseudo } = useUserContext();
+
   // Vérification si topChallenge existe et a les propriétés nécessaires
   if (!topChallenge || !topChallenge.game) {
     return <div>Chargement...</div>;
@@ -26,9 +29,11 @@ export function CardChallenge({ topChallenge }: ChallengesProps) {
 
   return (
     <div className="card bg-base-100 max-w-96 shadow-sm">
-      <figure>
-        <img src={topChallenge.game.image} alt={topChallenge.game.title} />
-      </figure>
+      <a href={`/challenges/${topChallenge.id}`}>
+        <figure>
+          <img src={topChallenge.game.image} alt={topChallenge.game.title} />
+        </figure>
+      </a>
       <div className="card-body">
         <h2 className="card-title">{topChallenge.title}</h2>
         <p>{topChallenge.description}</p>
@@ -37,9 +42,16 @@ export function CardChallenge({ topChallenge }: ChallengesProps) {
             <i className="fa fa-star text-warning"></i>
             <span>{topChallenge.likeCount} votes</span>
           </div>
-          <a href={`/participate-challenge/${topChallenge.id}`}>
-            <button className="btn btn-primary">Participer</button>
-          </a>
+
+          {pseudo ? (
+            <a href={`/participate-challenge/${topChallenge.id}`}>
+              <button className="btn btn-primary">Participer</button>{" "}
+            </a>
+          ) : (
+            <a href={`/challenges/${topChallenge.id}`}>
+              <button className="btn btn-primary">Voir</button>
+            </a>
+          )}
         </div>
       </div>
     </div>
