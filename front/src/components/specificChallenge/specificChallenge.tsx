@@ -17,7 +17,7 @@ export function SpecificChallenge() {
     const fetchChallenge = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/challenges/${challengeId}`
+          `https://projet-gamer-challenges.onrender.com/challenges/${challengeId}`
         );
         console.log("Données API reçues:", response.data);
         setChallenge(response.data);

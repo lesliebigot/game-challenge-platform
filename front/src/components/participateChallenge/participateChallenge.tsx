@@ -19,9 +19,12 @@ export function ParticipateChallenge() {
   useEffect(() => {
     const fetchCSRFToken = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/csrf-token", {
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          "https://projet-gamer-challenges-1.onrender.com/csrf-token",
+          {
+            withCredentials: true,
+          }
+        );
         setCsrfToken(res.data.csrfToken);
       } catch (error) {
         console.error("Erreur lors de la récupération du token CSRF:", error);
@@ -39,7 +42,7 @@ export function ParticipateChallenge() {
         setLoading(true);
         setError(null);
         const { data } = await axios.get(
-          `http://localhost:3000/challenges/${challengeId}`,
+          `https://projet-gamer-challenges-1.onrender.com/challenges/${challengeId}`,
           {
             withCredentials: true,
           }
@@ -73,7 +76,7 @@ export function ParticipateChallenge() {
       setError(null);
       console.log("🚀 Envoi de la participation...");
       const { data } = await axios.post(
-        `http://localhost:3000/challenges/${challengeId}/participate`,
+        `https://projet-gamer-challenges-1.onrender.com/challenges/${challengeId}/participate`,
         { proof },
         {
           withCredentials: true, // Important pour envoyer cookie HttpOnly

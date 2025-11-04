@@ -14,7 +14,9 @@ export function SpecificGame() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/games/${id}`);
+        const response = await axios.get(
+          `https://projet-gamer-challenges.onrender.com/games/${id}`
+        );
         console.log("Données API reçues:", response.data);
         setGames(response.data);
       } catch (e: unknown) {
@@ -93,7 +95,9 @@ export function SpecificGame() {
               <CardChallengeSpecific key={index} challenge={challenge} />
             ))
           ) : (
-            <p className="text-center text-white">Aucun challenge disponible pour ce jeu.</p>
+            <p className="text-center text-white">
+              Aucun challenge disponible pour ce jeu.
+            </p>
           )}
         </div>
       </section>

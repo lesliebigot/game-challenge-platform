@@ -3,14 +3,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import type { IChallenge } from "../../../@types/challenge.d.ts";
 
-export function CarouselWithCards(){
-
+export function CarouselWithCards() {
   const [recentChallenges, setRecentChallenges] = useState<IChallenge[]>([]);
-    
+
   useEffect(() => {
     const fetchChallenges = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/challenges/recent");
+        const { data } = await axios.get(
+          "https://projet-gamer-challenges.onrender.com/challenges/recent"
+        );
         // console.log("Données API reçues:", data.recentChallenges);
         setRecentChallenges(data.recentChallenges);
       } catch (e: unknown) {
@@ -19,7 +20,7 @@ export function CarouselWithCards(){
     };
     fetchChallenges();
   }, []);
-  
+
   if (recentChallenges.length === 0) {
     return <div>Loading ...</div>;
   }
@@ -39,7 +40,6 @@ export function CarouselWithCards(){
         ))}
       </div>
 
-       
       {/* Boutons de navigation */}
       <div className="hidden sm:block absolute left-2 top-1/2 transform -translate-y-1/2 z-10">
         <button
@@ -50,7 +50,7 @@ export function CarouselWithCards(){
               ?.scrollBy({ left: -300, behavior: "smooth" })
           }
         >
-  ❮
+          ❮
         </button>
       </div>
 
@@ -63,7 +63,7 @@ export function CarouselWithCards(){
               ?.scrollBy({ left: 300, behavior: "smooth" })
           }
         >
-  ❯
+          ❯
         </button>
       </div>
 

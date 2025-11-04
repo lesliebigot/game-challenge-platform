@@ -18,7 +18,9 @@ export function HomePage() {
   useEffect(() => {
     const fetchAllChallenges = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/challenges");
+        const { data } = await axios.get(
+          "https://projet-gamer-challenges.onrender.com/challenges"
+        );
         setChallenges(data);
       } catch (e: any) {
         console.error("Erreur API axios:", e.response || e.message || e);
@@ -30,7 +32,9 @@ export function HomePage() {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/games");
+        const { data } = await axios.get(
+          "https://projet-gamer-challenges.onrender.com/games"
+        );
         setGames(data);
       } catch (e: any) {
         console.error("Erreur API axios:", e.response || e.message || e);
@@ -43,7 +47,7 @@ export function HomePage() {
     const fetchChallenges = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/challenges/top-liked"
+          "https://projet-gamer-challenges.onrender.com/challenges/top-liked"
         );
         //console.log("Données API reçues:", data.topChallenges);
         setTopChallenges(data.topChallenges);
@@ -58,7 +62,7 @@ export function HomePage() {
     const fetchMostChallengedGames = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/games/most-challenged"
+          "https://projet-gamer-challenges.onrender.com/games/most-challenged"
         );
         //console.log("Jeux les plus challengés:", data);
         setMostChallengedGames(data.games || data);

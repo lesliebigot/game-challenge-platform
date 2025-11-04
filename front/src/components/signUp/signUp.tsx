@@ -16,7 +16,9 @@ export function SignUp() {
   // Récupérer le token CSRF au montage
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/csrf-token", { withCredentials: true })
+      .get("https://projet-gamer-challenges.onrender.com/api/csrf-token", {
+        withCredentials: true,
+      })
       .then((res) => {
         setCsrfToken(res.data.csrfToken);
       });
@@ -26,7 +28,7 @@ export function SignUp() {
     try {
       // Inclusion du token CSRF dans les headers
       const response = await axios.post(
-        "http://localhost:3000/register",
+        "https://projet-gamer-challenges.onrender.com/register",
         {
           pseudo,
           lastname,

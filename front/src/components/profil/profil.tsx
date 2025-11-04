@@ -14,7 +14,9 @@ export function Profil() {
   // Récupérer le token CSRF au montage
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/csrf-token", { withCredentials: true })
+      .get("https://projet-gamer-challenges.onrender.com/api/csrf-token", {
+        withCredentials: true,
+      })
       .then((res) => {
         setCsrfToken(res.data.csrfToken);
       });
@@ -29,7 +31,7 @@ export function Profil() {
     try {
       // on envoie au back sur le endpoint /signup les credentials
       const response = await axios.delete(
-        `http://localhost:3000/users/${userId}`,
+        `https://projet-gamer-challenges.onrender.com/users/${userId}`,
         {
           headers: { "X-CSRF-Token": csrfToken },
           withCredentials: true,
