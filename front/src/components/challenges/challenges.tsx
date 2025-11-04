@@ -6,12 +6,10 @@ import {
 } from "../cardChallenge/cardChallenge.tsx";
 import { useParams } from "react-router";
 import type { IUser } from "../../../@types/user";
-import type { IChallenge } from "../../../@types/challenge";
 
 export function Challenges() {
   // 1. L'état doit être un seul utilisateur (ou null), pas un tableau.
   const [user, setUser] = useState<IUser | null>(null);
-  const [topChallenges, setTopChallenges] = useState<IChallenge[]>([]);
   const params = useParams();
   const { id } = params;
 
@@ -26,21 +24,6 @@ export function Challenges() {
     };
     fetchUser();
   }, [id]);
-
-  useEffect(() => {
-    const fetchChallenges = async () => {
-      try {
-        const { data } = await axios.get(
-          "http://localhost:3000/challenges/top-liked"
-        );
-        //console.log("Données API reçues:", data.topChallenges);
-        setTopChallenges(data.topChallenges);
-      } catch (e: unknown) {
-        console.error("Erreur API axios:", e instanceof Error ? e.message : e);
-      }
-    };
-    fetchChallenges();
-  }, []);
 
   // 2. Gérer l'état de chargement
   if (!user) {

@@ -97,6 +97,7 @@ export function CreateChallenge() {
         }
       );
       navigate(`/games/0${gameId}`);
+      console.log(data);
     } catch (e: unknown) {
       setError("Erreur lors de la création du challenge");
     } finally {
