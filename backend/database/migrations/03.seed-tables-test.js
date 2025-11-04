@@ -1,4 +1,14 @@
-import { sequelize, Game, User, Role, Challenge, Genre, Platform, Editor, _Participate } from "../models/index.js";
+import {
+  sequelize,
+  Game,
+  User,
+  Role,
+  Challenge,
+  Genre,
+  Platform,
+  Editor,
+  Participate,
+} from "../models/index.js";
 
 console.log("🚧 Seeding des tables");
 
@@ -56,14 +66,16 @@ const user2 = await User.create({
 // 3. Créer 2 défis (1 pour chaque jeu)
 const challenge1 = await Challenge.create({
   title: "Terminer Zelda en mode difficile",
-  description: "Terminer The Legend of Zelda: Breath of the Wild en mode difficile avant le 30/11/2025.",
+  description:
+    "Terminer The Legend of Zelda: Breath of the Wild en mode difficile avant le 30/11/2025.",
 });
 await challenge1.setGame(game1);
 await challenge1.setCreatorUser(user2); // Défi créé par l'admin
 
 const challenge2 = await Challenge.create({
   title: "100% Assassin's Creed Valhalla",
-  description: "Terminer tous les quêtes secondaires et collectibles d'Assassin's Creed Valhalla.",
+  description:
+    "Terminer tous les quêtes secondaires et collectibles d'Assassin's Creed Valhalla.",
 });
 await challenge2.setGame(game2);
 await challenge2.setCreatorUser(user2);
@@ -88,4 +100,3 @@ console.log("- 1 jeu favori");
 console.log("- 1 like de défi");
 
 await sequelize.close();
-

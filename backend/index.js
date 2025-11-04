@@ -2,20 +2,46 @@
 import "dotenv/config";
 import express from "express";
 import { router } from "./router.js";
-
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import csurf from "csurf";
 
 export const app = express();
+
+// Autoriser les requêtes venant de http://localhost:5173 (frontend)
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Origine exacte du frontend
+    credentials: true, // Autorise l'envoi de cookies
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"], // Méthodes autorisées
+    allowedHeaders: ["Content-Type", "Authorization", "X-CSRF-Token"], // Headers autorisés
+  })
+);
+
+// Middleware pour parser les cookies
+app.use(cookieParser());
 
 // on a besoin d'un parser pour récuperer les données en json
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware pour la protection CSRF
+const csrfProtection = csurf({ cookie: true });
+
+// Appliquer le middleware CSRF AVANT la route csrf-token
+app.use(csrfProtection);
+
+// Route pour récupérer le token CSRF APRÈS le middleware CSRF
+app.get("/api/csrf-token", (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
 
 const PORT = process.env.PORT || 3000;
 
 app.use(router);
 
 // Try/Catch global
- 
+
 app.use((error, req, res, next) => {
   console.error("Erreur globale :", error);
 
@@ -29,6 +55,9 @@ app.use((error, req, res, next) => {
     message: error.message || "Une erreur interne est survenue.",
   });
 });
+
+// TODO factoriser la gestion des erreurs 500 dans un middleware
+// TODO gestion globale des erreurs 404 dans un midddleware
 
 app.listen(PORT, () => {
   console.log(`🚀 l'api a démarré sur http://localhost:${PORT}`);

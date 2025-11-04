@@ -1,84 +1,86 @@
 import { CardChallenge } from "../cardChallenge/cardChallenge.tsx";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import type { IChallenge } from "../../../@types/challenge.d.ts";
 
+export function CarouselWithCards(){
 
+  const [recentChallenges, setRecentChallenges] = useState<IChallenge[]>([]);
+    
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      try {
+        const { data } = await axios.get("http://localhost:3000/challenges/recent");
+        // console.log("Données API reçues:", data.recentChallenges);
+        setRecentChallenges(data.recentChallenges);
+      } catch (e: unknown) {
+        console.error("Erreur API axios:", e instanceof Error ? e.message : e);
+      }
+    };
+    fetchChallenges();
+  }, []);
+  
+  if (recentChallenges.length === 0) {
+    return <div>Loading ...</div>;
+  }
+  const visibleChallenges = recentChallenges.slice(0, 6);
 
-export function CarouselWithCards() {
   return (
     <div className="relative w-full max-w-7xl mx-auto">
       {/* Carousel Container */}
-      <div className="carousel carousel-center bg-neutral rounded-box w-full space-x-2 sm:space-x-4 p-2 sm:p-4 overflow-x-auto">
-        {/* Slides */}
-        <div id="slide1" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
-        </div>
-        <div id="slide2" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
-        </div>
-        <div id="slide3" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
-        </div>
-        <div id="slide4" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
-        </div>
-        <div id="slide5" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
-        </div>
-        <div id="slide6" className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96">
-          <CardChallenge />
-        </div>
+      <div className="carousel carousel-center bg-neutral rounded-box w-full space-x-4 p-4 overflow-x-auto">
+        {visibleChallenges.map((topChallenge) => (
+          <div
+            key={topChallenge.id}
+            className="carousel-item flex-none w-64 sm:w-72 md:w-80 lg:w-96"
+          >
+            <CardChallenge topChallenge={topChallenge} />
+          </div>
+        ))}
       </div>
 
-      {/* Boutons de navigation - Cachés sur mobile */}
+       
+      {/* Boutons de navigation */}
       <div className="hidden sm:block absolute left-2 top-1/2 transform -translate-y-1/2 z-10">
-        <a
-          href="#slide1"
+        <button
           className="btn btn-circle btn-sm"
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById("slide1")?.scrollIntoView({ 
-              behavior: "smooth", 
-              block: "nearest", 
-              inline: "start" 
-            });
-          }}
+          onClick={() =>
+            document
+              .querySelector(".carousel")
+              ?.scrollBy({ left: -300, behavior: "smooth" })
+          }
         >
-          ❮
-        </a>
-      </div>
-      
-      <div className="hidden sm:block absolute right-2 top-1/2 transform -translate-y-1/2 z-10">
-        <a
-          href="#slide6"
-          className="btn btn-circle btn-sm"
-          onClick={(e) => {
-            e.preventDefault();
-            document.getElementById("slide6")?.scrollIntoView({ 
-              behavior: "smooth", 
-              block: "nearest", 
-              inline: "start" 
-            });
-          }}
-        >
-          ❯
-        </a>
+  ❮
+        </button>
       </div>
 
-      {/* Indicateurs de pagination - Visibles sur mobile */}
+      <div className="hidden sm:block absolute right-2 top-1/2 transform -translate-y-1/2 z-10">
+        <button
+          className="btn btn-circle btn-sm"
+          onClick={() =>
+            document
+              .querySelector(".carousel")
+              ?.scrollBy({ left: 300, behavior: "smooth" })
+          }
+        >
+  ❯
+        </button>
+      </div>
+
+      {/* Indicateurs de pagination (mobile) */}
       <div className="flex justify-center mt-4 space-x-2 sm:hidden">
-        {[1, 2, 3, 4, 5, 6].map((slide) => (
+        {visibleChallenges.map((_, i) => (
           <button
-            key={slide}
+            key={i}
             className="w-2 h-2 rounded-full bg-base-content/30 hover:bg-base-content/60"
             onClick={() => {
-              document.getElementById(`slide${slide}`)?.scrollIntoView({ 
-                behavior: "smooth", 
-                block: "nearest", 
-                inline: "start" 
-              });
+              document
+                .querySelector(".carousel")
+                ?.scrollTo({ left: i * 300, behavior: "smooth" });
             }}
           />
         ))}
       </div>
     </div>
   );
-};
+}

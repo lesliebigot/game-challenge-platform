@@ -1,6 +1,7 @@
 import {User} from "../database/models/index.js";
 import argon2 from "argon2";
-//import { userSignupSchema } from "../schemas/userSchema.js";
+import { userSignupSchema } from "../schemas/userSchema.js";
+import { idSchema } from "../schemas/utils.js";
 
 export const userController = {
   
@@ -42,7 +43,7 @@ export const userController = {
   async createOne(req, res) {
     
     const data = req.body;
-    console.log(data);
+    
     // Hachage du mot de passe avec Argon2
     if (data.password) {
       data.password = await argon2.hash(data.password);
@@ -58,6 +59,42 @@ export const userController = {
         email: user.email,
       },
     });
+  },
+
+  // Supprimer un user 
+  async deleteOne(req, res) {
+    
+    const userId = idSchema.parse(req.params.id);   
+    // récuperer le User concerné
+    const user = await User.findByPk(userId);
+    // est ce que ce user existe ?
+    if (!user) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
+    }
+    // supprimer ce user
+    await user.destroy();
+    // retourner une reponse vide avec le code 204
+    res.status(204).json();
+  },
+
+  // modifier son user
+  async updateOne(req, res) {
+    // récuperer les informations de modifications   
+    let data = req.body;
+    // valider ces infos
+    data = userSignupSchema.parse(data);
+    // récuperer et valider l'id du user à modifier
+    const userId = idSchema.parse(req.params.id);   
+    // récuperer le user concerné
+    const user = await User.findByPk(userId);
+    // est ce que ce user existe ?
+    if (!user) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
+    }
+    // modifier le user récuperé avec les données fournies
+    await user.update(data);
+    // retourner le user en json avec le status 200
+    res.json(user);
   },
 
 };

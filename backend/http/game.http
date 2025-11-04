@@ -3,7 +3,7 @@
 GET http://localhost:3000/games
 ###
 # GET one game
-GET http://localhost:3000/games/13
+GET http://localhost:3000/games/2
 ###
 # GET all challenges
 GET http://localhost:3000/challenges
@@ -16,20 +16,22 @@ GET http://localhost:3000/challenges/1
 ###
 # GET one user with challenges created
 GET http://localhost:3000/users
+
 ###
 # GET one user with challenges created
-GET http://localhost:3000/users/1
+GET http://localhost:3000/users/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzA5MzQsImV4cCI6MTc2MTgzNDUzNH0.yLTMRm3peWiBg7e1mMRAaYiDNIjLI-FNBokVUPZgnys
 ###
 
 ###
 ### CREATE one challenge
-POST http://localhost:3000/games/1/challenges
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+POST http://localhost:3000/games/2/challenges
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzQ3MjAsImV4cCI6MTc2MTgzODMyMH0.MyZvxtDjfMmEeQMkHvm6Uem2VdxHIr546yds1WRBiJU
 Content-Type: application/json
 
 {
-  "title": "test ddddd",
-  "description": "Terminer le jeu en difficile dddd"
+  "title": "test perm 3",
+  "description": "Terminer le jeu en difficile x"
  
 }
 ### CREATE one user
@@ -38,23 +40,24 @@ Content-Type: application/json
 
 {
   
-    "pseudo": "alex",
-    "lastname": "Villey",
-    "firstname": "Alexis",
-    "email": "alexisvilley@hotmailcom",
-    "password": "azerty123",
+    "pseudo": "bibi",
+    "lastname": "bibi",
+    "firstname": "bibi",
+    "email": "bibi@hotmail.com",
+    "password": "azerty321",
     "birthdate": "1990-01-01T00:00:00.000Z",
     "role_id": 1
  
 }
 
 ### CREATE userparticipation to one challenge
-POST http://localhost:3000/challenges/1/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+POST http://localhost:3000/challenges/10/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzYyMDA2MDE3LCJleHAiOjE3NjIwMDk2MTd9.BzEb3Dct0lhIz08YvRl6Dlv2nQa4xvDqZlw87zupIh0
+X-XSRF-Token: 0SUBuHt7-rt7klXfc8P7KvGU8IXYzSL-1mSg
 Content-Type: application/json
 
 {  
-    "proof": "http://e.xxx/nts_win"
+    "proof": "https://e.xx/nts_win"
 }
 
 ### CREATE Sign in for your account
@@ -62,8 +65,8 @@ POST http://localhost:3000/signin
 Content-Type: application/json
 
 {
-  "email":"alexisvilley@hotmailcom",
-  "password":"azerty123"
+  "email":"test@hotmail.com",
+  "password":"azerty321"
 }
 ### GET one user with challenges created
 GET http://localhost:3000/users/1
@@ -71,11 +74,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxN
 Content-Type: application/json
 
 
-###
 
 ### UPDATE userparticipation to one challenge
-PATCH http://localhost:3000/challenges/6/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+PATCH http://localhost:3000/challenges/23/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4NDA5NTYsImV4cCI6MTc2MTg0NDU1Nn0.hUwNMqPbBVMOhFne_YkqDXzWZKYnubanaDlcbjj3RRk
 Content-Type: application/json
 
 {  
@@ -84,25 +86,20 @@ Content-Type: application/json
  
 }
 ### DELETE userparticipation to one challenge
-DELETE http://localhost:3000/challenges/6/participate
+DELETE http://localhost:3000/challenges/22/participate
 Content-Type: application/json
-
-
-###
-# DELETE one participation to a challenge
-DELETE  http://localhost:3000/challenges/6/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzQ4ODIsImV4cCI6MTc2MTgzODQ4Mn0.BWhuBmw7_pkr928vH9E2Ff1qn12XUlIrfOKBl6yn8qc
 
 ### Update one challenge
-PATCH http://localhost:3000/challenges/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+PATCH http://localhost:3000/challenges/24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzQ4ODIsImV4cCI6MTc2MTgzODQ4Mn0.BWhuBmw7_pkr928vH9E2Ff1qn12XUlIrfOKBl6yn8qc
 Content-Type: application/json
 
 {
-  "description": "Finir le jeu"
+  "description": "rFinir le jeu"
 }
 
 ###
 # DELETE one challenge
-DELETE  http://localhost:3000/challenges/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzYxNTczODAyLCJleHAiOjE3NjE1Nzc0MDJ9.OCX6g7mTfvJk-lN3brR33c7lMPucAgg69p2fQv4zlac
+DELETE  http://localhost:3000/challenges/24
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywicm9sZSI6InVzZXIiLCJpYXQiOjE3NjE4MzQ4ODIsImV4cCI6MTc2MTgzODQ4Mn0.BWhuBmw7_pkr928vH9E2Ff1qn12XUlIrfOKBl6yn8qc

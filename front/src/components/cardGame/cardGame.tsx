@@ -1,33 +1,50 @@
 import "./cardGame.css";
-import { useState } from "react";
 
-export function CardGame(){
+import { useState } from "react";
+import type { IGameDetails } from "../../../@types/game";
+
+interface CardGameProps {
+  game: IGameDetails;
+}
+
+export function CardGame({ game }: CardGameProps) {
   const [isLike, setIsLike] = useState(false);
 
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
-      <figure>
-        <img
-          src="../../images/bf6.webp" alt="Battlefield 6"/>
-      </figure>
-      <div className="card-body">
-        <h2 className="card-title text-center">Battlefield 6</h2>
-        <p className="mb-5 mt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        </p>
-        <div className="card-actions justify-between">
-          <a href="/games/1">
-            <button className="btn btn-primary">Voir les challenges</button>
-          </a>
-          {/*-- Bouton favoris --*/}
-          <button 
-            className="btn_star btn btn-sm sm:btn-md btn-circle btn-primary"
-            onClick={() => setIsLike(!isLike)}
-            title={isLike ? "Retirer des favoris" : "Ajouter aux favoris"}
-          >
-            <i className={`${isLike ? "fa-solid text-yellow-300" : "fa-regular"} fa-star text-lg sm:text-xl`}></i>
-          </button>
+    <div>
+      <div
+        key={game.id}
+        className="card bg-base-100 max-w-96 min-h-full shadow-sm mb-4 "
+      >
+        <a href={`/games/0${game.id}`}>
+          <figure className="w-auto">
+            <img src={game.image} alt={game.title} />
+          </figure>
+        </a>
+        <div className="card-body">
+          <h2 className="card-title text-md">{game.title}</h2>
+          <p>{game.description}</p>
+          <div className="flex gap-2 justify-center">
+            <a href={`/games/0${game.id}`}>
+              <button type="button" className="btn btn-primary">
+                Voir le détail
+              </button>
+            </a>
+            <button
+              type="button"
+              className="btn_star btn btn-sm sm:btn-md btn-circle btn-primary"
+              onClick={() => setIsLike(!isLike)}
+              title={isLike ? "Retirer des favoris" : "Ajouter aux favoris"}
+            >
+              <i
+                className={`${
+                  isLike ? "fa-solid text-yellow-300" : "fa-regular"
+                } fa-star text-lg sm:text-xl`}
+              ></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div> 
+    </div>
   );
-};
+}

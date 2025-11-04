@@ -28,20 +28,21 @@ function App() {
       {/* Le contenu principal s’étend pour remplir l’espace libre */}
       <main className="flex-1 flex flex-col">
         <Routes>
-          <Route path="*" element={<HomePage />} />
+         
           <Route path="/" element={<HomePage />} />
           <Route path="/games" element={<GameList />} />
+          <Route path="/games/:id" element={<SpecificGame />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profil" element={<Profil />} />
-          <Route path="/create-challenge" element={<CreateChallenge />} />
+          <Route path="/create-challenge/:id" element={<CreateChallenge />} />
           <Route path="/edit-challenge" element={<EditChallenge />} />
-          <Route path="/participate-challenge" element={<ParticipateChallenge />} />
+          <Route path="/participate-challenge/:id" element={<ParticipateChallenge />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/legal-notice" element={<LegalNotice />} />
           <Route path="/games/1" element={<SpecificGame />} />
-          <Route path="/challenges/1" element={<SpecificChallenge />} />
+          <Route path="/challenges/:id" element={<SpecificChallenge />} />
           <Route path="/ranking" element={<Ranking />} />
           <Route path="/team" element={<Team />} />
         </Routes>
