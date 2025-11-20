@@ -1,4 +1,4 @@
-import {Challenge, User} from "../database/models/index.js";
+import {Challenge} from "../database/models/index.js";
 
 export const profilController = {async getUserChallenges(req, res) {
     
