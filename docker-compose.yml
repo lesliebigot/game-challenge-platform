@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: gamerchallenge_db
+    environment:
+      POSTGRES_DB: gamer
+      POSTGRES_USER: gamer
+      POSTGRES_PASSWORD: gamer_password
+    ports:
+      - "5440:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - gc_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gamerchallenge_backend
+    environment:
+      PORT: 3000
+      JWT_SECRET: monsupersercret
+      # IMPORTANT : ici on utilise le nom de service "db", pas "localhost"
+      PG_URL: postgres://gamer:gamer_password@gamerchallenge_db:5432/gamer
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    networks:
+      - gc_network
+
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    container_name: gamerchallenge_frontend
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+    networks:
+      - gc_network
+
+volumes:
+  db_data:
+
+networks:
+  gc_network:

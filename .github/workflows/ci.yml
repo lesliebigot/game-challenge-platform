@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 📦 Install backend dependencies
+      run: cd backend && npm install
+
+    - name: 🔍 Lint backend
+      run: cd backend && npx eslint .
+
+    - name: 📦 Install frontend dependencies
+      run: cd frontend && npm install
+
+    - name: 🔍 Lint frontend
+      run: cd frontend && npx eslint .
