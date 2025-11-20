@@ -20,8 +20,8 @@ jobs:
     - name: 🔍 Lint backend
       run: cd backend && npx eslint .
 
-    - name: 📦 Install frontend dependencies
-      run: cd frontend && npm install
+    - name: 📦 Install front dependencies
+      run: cd front && npm install
 
-    - name: 🔍 Lint frontend
-      run: cd frontend && npx eslint .
+    - name: 🔍 Lint front
+      run: cd front && npx eslint .
