@@ -13,7 +13,7 @@ import { CreateChallenge } from "../createChallenge/createChallenge.tsx";
 import { ParticipateChallenge } from "../participateChallenge/participateChallenge.tsx";
 import { EditChallenge } from "../editChallenge/editChallenge.tsx";
 import { Contact } from "../contact/contact.tsx";
-import { LegalNotice } from "../legalNotice/legalNotice.tsx"; 
+import { LegalNotice } from "../legalNotice/legalNotice.tsx";
 import { SpecificGame } from "../specificGame/specificGame.tsx";
 import { SpecificChallenge } from "../specificChallenge/specificChallenge.tsx";
 import { Ranking } from "../ranking/ranking.tsx";
@@ -28,7 +28,7 @@ function App() {
       {/* Le contenu principal s’étend pour remplir l’espace libre */}
       <main className="flex-1 flex flex-col">
         <Routes>
-         
+
           <Route path="/" element={<HomePage />} />
           <Route path="/games" element={<GameList />} />
           <Route path="/games/:id" element={<SpecificGame />} />
@@ -37,7 +37,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/create-challenge/:id" element={<CreateChallenge />} />
-          <Route path="/edit-challenge" element={<EditChallenge />} />
+          <Route path="/edit-challenge/:id" element={<EditChallenge />} />
           <Route path="/participate-challenge/:id" element={<ParticipateChallenge />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/legal-notice" element={<LegalNotice />} />
