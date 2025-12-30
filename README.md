@@ -5,6 +5,7 @@
 [![React](https://img.shields.io/badge/React-18.x-61DAFB?logo=react)](https://reactjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js)](https://nodejs.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.x-4169E1?logo=postgresql)](https://www.postgresql.org/)
+[![Sequelize](https://img.shields.io/badge/Sequelize-6.x-52B0E7?logo=sequelize)](https://sequelize.org/)
 
 ---
 
@@ -18,7 +19,7 @@ Game Challenge Platform est une application full stack développée en **3 semai
 - 📊 Découvrir les jeux les plus challengés et les défis populaires
 - 👤 Gérer leur profil et suivre leurs participations
 
-**Projet réalisé en équipe de 5 développeurs** avec méthodologie Agile (Scrum, Kanban).
+**Projet imposé réalisé en équipe de 5 développeurs** avec méthodologie Agile (Scrum, Kanban).
 
 ⚠️ Note importante : Ce projet est resté en l'état depuis la fin de ma formation en novembre 2025. Il s'agit d'un travail d'équipe réalisé en conditions d'apprentissage et je suis 
 pleinement consciente qu'il nécessite des refactorisations, nettoyages, corrections et améliorations. Vos retours et suggestions d'amélioration sont les bienvenus ! 
@@ -138,7 +139,7 @@ GET    /games/:id                     Détails d'un jeu
 
 ## 🎯 Mon rôle dans le projet
 
-**Développeuse Full Stack (50% Backend / 50% Frontend) + Product Owner**
+**Développeuse Full Stack (60% Backend / 40% Frontend) + Product Owner**
 
 ### Backend
 - Architecture complète de l'API REST en pattern MVC
@@ -173,7 +174,7 @@ GET    /games/:id                     Détails d'un jeu
 - Daily stand-ups quotidiens
 - Gestion Kanban sur GitHub Projects
 - Branches de fonctionnalités + Pull Requests
-- Revues de code systématiques entre pairs
+- Revues de code
 - Rétrospectives hebdomadaires
 
 ---
@@ -183,12 +184,12 @@ GET    /games/:id                     Détails d'un jeu
 - Tests unitaires avec **Jest** (backend)
 - Tests de composants avec **Vitest** (frontend)
 - Tests d'intégration API
-- Validation des middlewares de sécurité
-
 ---
 
 ## 🚧 Fonctionnalités futures
-
+<details>
+<summary> Voir les évolutions prévues</summary>
+        
 - [ ] Système de notifications en temps réel
 - [ ] Classement global des joueurs
 - [ ] Sanitisation de inputs
@@ -196,13 +197,79 @@ GET    /games/:id                     Détails d'un jeu
 - [ ] Partage sur les réseaux sociaux
 - [ ] Gestion des votes sur les jeux et les défis
 - [ ] Accéssibilité
+- [ ] Dockerisation complète
+      
+</details>
 
 ---
+
+## 💻 Installation et lancement en local
+
+⚠️ En attendant la dockerisation qui simplifiera l'installation du projet, voici une procédure manuelle pour tester l'application.
+<details>
+<summary> Étapes pour visualiser le projet</summary>
+
+Prérequis
+- Node.js 20.x ou supérieur
+- PostgreSQL 16.x installé et en cours d'exécution
+- npm ou yarn
+
+### Étape 1 : Cloner le projet
+```
+git clone https://github.com/VOTRE-USERNAME/game-challenge-platform.git
+cd game-challenge-platform
+```
+### Étape 2 : Configuration du backend
+```
+cd backend
+npm install
+```
+Créer une base de données et un utilisateur postgresql, puis renseigner les informations dans le fichier .env :
+- Créer la base postgres
+
+```
+cp .env.example .env
+```
+- Créer le fichier .env avec vos paramètres de connexion PostgreSQL dans ```PG_URL```
+
+### Étape 3 : Initialisation de la base de données
+- Exécuter les scripts dé création et d'ensemencement de la base de données pour créer les tables et l'échantillon de données :
+```
+node 'database/migrations/01.create-tables.js'
+node 'database/migrations/02.seed-tables.js'
+```
+
+### Étape 4 : Lancer le serveur backend
+```
+npm run dev
+```
+L'api sera accessible par défaut à l'adresse ```http://localhost:3000``` ou sur le port de votre choix défini dans le fichier ```.env```. 
+Possibilité de vérifier dasn un navigateur avec la route ```http://localhost:3000/users``` par exemple.
+
+### Étape 5 : Configuration du frontend
+
+- Dans un nouveau terminal, depuis la racine du projet :
+```
+cd frontend
+npm install
+```
+- Lancer le serveur frontend
+```
+npm run dev
+```
+Le frontend sera accessible sur le port 5173 (port par défaut Vite).
+Ouvrez votre navigateur et accédez à ```http://localhost:5173``` pour utiliser l'application.
+
+</details>
 
 ## 👥 Équipe de développement
 
 Projet réalisé par une équipe de 5 développeurs Full Stack JavaScript dans le cadre de la formation O'Clock (Titre Professionnel Concepteur Développeur d'Applications - Niveau 6).
-
+### Mes co-équipiers :
+- [Sammy](https://github.com/Sammy-Mekrez)
+- [Olivier](https://github.com/oliviersenant)
+- [Alexis](https://github.com/AlexisV-prog)
+- [Virgile](https://github.com/Virgile-M)
 ---
 
 ## 📞 Contact
