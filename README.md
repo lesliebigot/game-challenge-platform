@@ -207,7 +207,7 @@ GET    /games/:id                     Détails d'un jeu
 
 ⚠️ En attendant la dockerisation qui simplifiera l'installation du projet, voici une procédure manuelle pour tester l'application.
 <details>
-<summary> Étapes pour visualiser le projet</summary>
+<summary> Cliquer pour voir les étapes afin de visualiser le projet</summary>
 
 Prérequis
 - Node.js 20.x ou supérieur
@@ -216,7 +216,7 @@ Prérequis
 
 ### Étape 1 : Cloner le projet
 ```
-git clone https://github.com/VOTRE-USERNAME/game-challenge-platform.git
+git clone git@github.com:lesliebigot/game-challenge-platform.git
 cd game-challenge-platform
 ```
 ### Étape 2 : Configuration du backend
