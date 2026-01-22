@@ -21,7 +21,7 @@ Game Challenge Platform est une application full stack développée en **3 semai
 
 **Projet imposé réalisé en équipe de 5 développeurs** avec méthodologie Agile (Scrum, Kanban).
 
-⚠️ Note importante : Ce projet est resté en l'état depuis la fin de ma formation en novembre 2025. Il s'agit d'un travail d'équipe réalisé en conditions d'apprentissage et je suis 
+⚠️ Note : Ce projet est encore en chantier depuis la fin de ma formation en novembre 2025. Il s'agit d'un travail d'équipe réalisé en conditions d'apprentissage et je suis 
 pleinement consciente qu'il nécessite des refactorisations, nettoyages, corrections et améliorations. Vos retours et suggestions d'amélioration sont les bienvenus ! 
 N'hésitez pas à ouvrir une issue ou à proposer une pull request.
 
